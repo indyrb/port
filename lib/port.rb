@@ -9,6 +9,9 @@ require 'port/game'
 require 'port/window'
 require 'port/sprite'
 require 'port/vehicle'
+Dir.glob(File.join(APP_ROOT, 'lib', 'port', 'vehicles', '*.rb')) do |file|
+  require file
+end
 
 class Application
   attr_accessor :window

@@ -7,6 +7,12 @@ class Game
     self.window = window
     self.score = 0
     self.objects = []
+    
+    add_vehicle
+  end
+  
+  def add_vehicle
+    objects << Submarine.new(self, rand(window.width), rand(window.height))
   end
 
   def start

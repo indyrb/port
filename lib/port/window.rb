@@ -44,6 +44,8 @@ class Window < Gosu::Window
       close
     when Gosu::KbS
       self.sound = !sound
+    when Gosu::KbV
+      game.add_vehicle
     end
   end
 end
