@@ -8,15 +8,18 @@ require "port"
 unless ARGV[0] == "console"
   Application.new.run
 else
+  require 'irb'
+
   @app = Application.new
   @window = @app.window
   @game = @window.game
+  Thread.new do
+    puts "Instantiated variables: "
+    puts "  @port = Application"
+    puts "  @window = Window"
+    puts "  @game = Game"
+    ARGV.shift; IRB.start
+  end
 
-  require 'irb'
-
-  puts "Instantiated variables: "
-  puts "  @port = Application"
-  puts "  @window = Window"
-  puts "  @game = Game"
-  ARGV.shift; IRB.start
+  @app.run
 end
