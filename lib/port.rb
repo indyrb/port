@@ -1,0 +1,29 @@
+require 'rubygems'
+require 'gosu'
+require 'logger'
+
+$: << File.join(File.dirname(__FILE__))
+
+require 'port/gosu_extras'
+require 'port/game'
+require 'port/window'
+require 'port/sprite'
+require 'port/vehicle'
+
+class Application
+  attr_accessor :window
+
+  def self.logger
+    self.logger ||= Logger.new(STDOUT)
+  end
+  
+  def initialize
+    self.window = Window.new(self)
+  end
+
+  def run
+    @window.show
+  end
+
+end
+

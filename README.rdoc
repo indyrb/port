@@ -1,0 +1,18 @@
+= Port
+
+A game loosely based off of Flight Control for the iPhone.
+
+
+== Running
+
+# you'll need the gosu gem
+gem install gosu
+
+# then run the port executable
+bin/port
+
+
+== Development
+
+Ruby Gosu docs:
+  http://code.google.com/p/gosu/wiki/RubyReference
