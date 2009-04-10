@@ -17,17 +17,17 @@ class Sprite
     end
 
     def default_sprite_options
-      { :tiles => -1 }
+      { :tiles => 1 }
     end
     
-    # assumes horizontal tiling
     def sprite_options(options)
       @sprite_options = default_sprite_options.merge(options)
     end
     
     def sprites(window)
+      # assumes horizontal tiling
       @sprites = Gosu::Image.load_tiles(window, 
-        File.join(APP_ROOT, 'images', @sprite_options[:file]), @sprite_options[:tiles], -1, false)          
+        File.join(APP_ROOT, 'images', @sprite_options[:file]), -@sprite_options[:tiles], -1, false)          
     end
   end
   
