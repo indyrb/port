@@ -6,14 +6,14 @@ class Sprite
       if value
         @z_order = value
       end
-      @z_order
+      @score || superclass.score
     end
     
     def score(value = nil)
       if value
         @score = value
       end
-      @score
+      @score || superclass.score
     end
 
     def default_sprite_options
@@ -49,7 +49,8 @@ class Sprite
   def update(time)
   end
   
-  def draw    
+  def draw
+    sprite.draw(x, y, z_order)
   end
 
   def destroy
