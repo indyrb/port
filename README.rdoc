@@ -5,11 +5,13 @@ A game loosely based off of Flight Control for the iPhone.
 
 == Running
 
-# you'll need the gosu gem
-gem install gosu
+Install the Gosu gem.
 
-# then run the port executable
-bin/port
+  gem install gosu
+
+Run the executable
+
+  bin/port
 
 
 == Development
