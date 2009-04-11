@@ -54,7 +54,7 @@ class Sprite
     self.class.z_order
   end
 
-  def update(time)
+  def update(time, ms)
   end
   
   def draw

@@ -10,7 +10,7 @@ class Path < Sprite
     super(game, x, y)
   end
   
-  def update(ts)
+  def update(ts, ms)
     if active && window.button_down?(Gosu::Button::MsLeft)
       self.points << [window.mouse_x, window.mouse_y]
     elsif active
