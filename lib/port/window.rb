@@ -1,5 +1,5 @@
 class Window < Gosu::Window
-  attr_accessor :images, :sound, :sounds, :game, :application, :cursor
+  attr_accessor :images, :sound, :sounds, :game, :application, :cursor, :assets, :field
 
   def initialize(application)
     super(480, 512, false)
@@ -8,8 +8,9 @@ class Window < Gosu::Window
     self.game = Game.new(self)
     self.sound = true
     self.application = application
-    @assets = Assets.new(self)
-    @cursor = @assets.by_name('cursor')
+    self.assets = Assets.new(self)
+    self.cursor = assets.by_name('cursor')
+    self.field = Field.new(self)
   end
   
   def sounds
@@ -34,13 +35,10 @@ class Window < Gosu::Window
 
   def draw
     game.draw
-    @cursor.draw(mouse_x - 13, mouse_y - 4, 10)
+    cursor.draw(mouse_x - 13, mouse_y - 4, 10)
+    field.draw
   end
   
-  def cursor
-    
-  end
-
   def button_down(id)
     case id
     when Gosu::Button::KbEscape
@@ -49,6 +47,12 @@ class Window < Gosu::Window
       self.sound = !sound
     when Gosu::KbV
       game.add_vehicle
+    when Gosu::MsLeft
+      game.mouse_down(:left, self.mouse_x, self.mouse_y)
+    when Gosu::MsMiddle
+      game.mouse_down(:middle, self.mouse_x, self.mouse_y)
+    when Gosu::MsRight
+      game.mouse_down(:right, self.mouse_x, self.mouse_y)
     end
   end
 end
