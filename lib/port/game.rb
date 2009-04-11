@@ -1,14 +1,16 @@
 class Game
-  attr_accessor :score, :objects, :level, :logger, :window, :active_path
+  attr_accessor :score, :objects, :level, :logger, :window, :active_path, :fps_counter
 
   def initialize(window)
     @start_time = nil
     @end_time = nil
-    @font = Gosu::Font.new(window, Gosu::default_font_name, 20)
+    @score_text = Gosu::Font.new(window, Gosu::default_font_name, 20)
+    @fps_text = Gosu::Font.new(window, Gosu::default_font_name, 15)
     self.window = window
     self.score = 0
     self.objects = []
     self.logger = Application.logger
+    self.fps_counter = FpsCounter.new
     add_vehicle
   end
   
@@ -73,13 +75,15 @@ class Game
         e.update(diff)
       end
     end
+    self.fps_counter.register_tick
   end
 
   def draw
     objects.each do |e|
       e.draw
     end
-    @font.draw("Score: #{self.score}", (window.width - 75), 10, 1, 1.0, 1.0, 0xffffff00)
+    @score_text.draw("Score: #{self.score}", (window.width - 75), 10, 1, 1.0, 1.0, 0xffffff00)
+    @fps_text.draw("FPS: #{self.fps_counter.fps}", (window.width - 60), (window.height - 20), 1, 1.0, 1.0, 0xffffffff)
   end
   
   def remove(*objs)

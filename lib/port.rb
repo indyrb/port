@@ -14,6 +14,7 @@ require 'port/path'
 require 'port/vehicle'
 require 'port/assets'
 require 'port/field'
+require 'port/fps_counter'
 Dir.glob(File.join(APP_ROOT, 'lib', 'port', 'vehicles', '*.rb')) do |file|
   require file
 end
