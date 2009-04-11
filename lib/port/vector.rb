@@ -21,7 +21,7 @@ class Vector
   end
 
   def magnitude
-    Math.sqrt(self.dot(this))
+    Math.sqrt(self.dot(self))
   end
 
   def dot(other_vector)
