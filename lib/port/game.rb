@@ -19,14 +19,16 @@ class Game
     self.logger = Application.logger
     self.fps_counter = FpsCounter.new
 
+    @angle = 0.0
+
     add_landing_strip
     add_vehicle
   end
   
   def add_landing_strip
-#     obj = LandingStrip.new(self, rand * window.width, rand * window.height,
-#                            rand * 360)
-    obj = LandingStrip.new(self, window.width / 2, window.height / 2, 0)
+    obj = LandingStrip.new(self, rand * window.width, rand * window.height,
+                           rand * 360)
+    # obj = LandingStrip.new(self, window.width / 2, window.height / 2, rand(360))
     @landing_strip = obj
   end
 
@@ -82,7 +84,7 @@ class Game
   end
 
   def mouse_down(button, x, y)
-    @landing_strip.contains?(x, y)
+    @landing_strip.contains?(x, y) if debugging
     object = find_vehicle(x, y)
 
     if object
@@ -209,7 +211,20 @@ class Game
     deg * Math::PI / 180.0
   end
 
+  Steps = 20.0
   def draw_debuggings
+    Steps.to_i.times do |xi|
+      x = xi / Steps * window.width
+      Steps.to_i.times do |yi|
+        y = yi / Steps * window.height
+        color = @landing_strip.contains?(x, y) ? 0x40ff0000 : 0x400000ff
+        window.draw_quad(x, y, color,
+                         x + Steps, y, color,
+                         x, y + Steps, color,
+                         x+Steps, y+Steps, color,
+                         100)
+      end
+    end
   end
 
 

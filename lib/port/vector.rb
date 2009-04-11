@@ -81,12 +81,12 @@ class Vector
   def rotate_radians(angle)
     sin = Math.sin(angle)
     cos = Math.cos(angle)
-    Vector[cos*self.y - sin*self.x, cos*self.x - sin*self.y]
+    Vector[x*cos - y*sin, x*sin + y*cos]
   end
 
   # degrees
   def rotate_degrees(angle)
-    self.rotate_radians(angle.gosu_to_radians)
+    self.rotate_radians(Math::PI * angle / 180.0) # .gosu_to_radians)
   end
 
   def to_s

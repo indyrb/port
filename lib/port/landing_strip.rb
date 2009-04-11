@@ -41,15 +41,17 @@ class LandingStrip
   def contains?(x, y)
     hw = width / 2
 
-    v = Vector[@starting.x, @starting.y] - Vector[x, y]
+    v = @starting - Vector[x, y]
     # v.y *= -1
     # v.x *= -1
-    ov = v.dup
+    # ov = v.dup
     v = v.rotate_degrees(-angle)
-    ret = (-hw..hw).include?(v.x) && (0..height).include?(v.y)
+    # ret = (-hw..hw).include?(v.x) && (0..height).include?(v.y)
+    ret = Range.new(-hw, hw).include?(v.x) && Range.new(0.0, height).include?(v.y)
 
-#     @game.logger.debug("Rotated #{ov.inspect} by #{angle} to #{v}")
-#     @game.logger.debug("\tStarting: #{@starting.inspect}")
+#     @game.logger.debug("Rotated #{ov} by #{angle} to #{v}")
+#     @game.logger.debug("\tStarting: #{@starting}")
+#     @game.logger.debug("\tTranslated: #{@starting - Vector[x, y]}")
 #     @game.logger.debug("\tPoint: #{x}, #{y}")
 #     @game.logger.debug("\tBounds: #{-hw}..#{hw}, #{0}..#{height}")
 #     @game.logger.debug("#{x}, #{y} is landing") if ret
