@@ -1,5 +1,5 @@
 class Path < Sprite
-  z_order 0
+  z_order 3
   score 0
   
   attr_accessor :points, :active, :vehicle
