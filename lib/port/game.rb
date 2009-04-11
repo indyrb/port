@@ -76,8 +76,8 @@ class Game
   end
 
   def mouse_up(button, x, y)
-    if @selection && @selection.respond_to?(:path) && (p=@selection.path)
-      p.highlighted = true
+    if self.active_path
+      self.active_path.highlighted = window.field.in_landing_zone?(x, y)
     end
   end
 
