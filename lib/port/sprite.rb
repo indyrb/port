@@ -6,14 +6,14 @@ class Sprite
       if value
         @z_order = value
       end
-      @score || superclass.score
+      @z_order || superclass.z_order if superclass.respond_to?(:z_order)
     end
     
     def score(value = nil)
       if value
         @score = value
       end
-      @score || superclass.score
+      @score || superclass.score if superclass.respond_to?(:score)
     end
 
     def default_sprite_options
