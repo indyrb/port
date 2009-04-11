@@ -1,7 +1,7 @@
 class LandingStrip
   class Sprite < ::Sprite
     z_order 1
-    sprite_options :file => 'landing_strip.png'
+    sprite_options :file => 'landing_strip'
   end
 
   def initialize(game, cx, cy, angle)

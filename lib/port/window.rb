@@ -5,11 +5,11 @@ class Window < Gosu::Window
     super(480, 512, false, 0)
     GosuExtras::setup_keyboard_constants(self)
         
-    self.game = Game.new(self)
     self.sound = true
     self.application = application
     self.assets = Assets.new(self)
     self.cursor = assets.by_name('cursor')
+    self.game = Game.new(self)
     self.field = Field.new(self)
   end
   

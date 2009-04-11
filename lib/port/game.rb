@@ -125,7 +125,6 @@ class Game
     end
 
     if in_play?
-      update_path
       update_objects(diff, diff_fractional)
     end
 
@@ -136,7 +135,7 @@ class Game
     self.fps_counter.register_tick
   end
 
-  def update_objects(ts)
+  def update_objects(diff, diff_fractional)
     objects.each_with_index do |e, i|
       if @landing_strip.contains?(e.x, e.y)
         land(e)
@@ -154,6 +153,10 @@ class Game
         end
       end
     end
+  end
+
+  def in_landing_zone?(x, y)
+    @landing_strip.contains?(x, y)
   end
 
   def land(obj)
