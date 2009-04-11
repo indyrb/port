@@ -1,5 +1,5 @@
 class Vehicle < Sprite
-  attr_accessor :path
+  attr_accessor :path, :entered
   
   score 1
   z_order 10
@@ -12,6 +12,11 @@ class Vehicle < Sprite
     
   end
 
+  def initialize(*args)
+    self.entered = false
+    super
+  end
+  
   def new_path(start_x, start_y)
     path.destroy if path
     self.path = Path.new(game, start_x, start_y, self)
@@ -50,13 +55,27 @@ class Vehicle < Sprite
   end
 
   def update(ts, ms)
-    unless landed? 
+    if landed? 
+      score_and_destroy
+    else
+      if entered
+        if x > window.width || x < 0
+          self.heading = Vector[-velocity.x, velocity.y]
+        elsif y > window.width || y < 0
+          self.heading = Vector[velocity.x, -velocity.y]
+        end
+      else
+        if x > 10 && x < window.width &&
+          y > 10 && y < window.height
+          
+          self.entered = true
+        end
+      end
+      
       update_physics(ts, ms)
       if path && (new_location = path.move_along(self.x, self.y, ts * 0.3))
         self.heading = Vector[*new_location]
       end
-    else
-      score_and_destroy
     end
   end
 
