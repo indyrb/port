@@ -14,13 +14,34 @@ class Path < Sprite
   
   def update(ts, ms)
     if active && window.button_down?(Gosu::Button::MsLeft)
-      self.points << [window.mouse_x, window.mouse_y]
+      self.points << [constrained_x, constrained_y]
     elsif active
       self.active = false
       game.active_path = nil
     end
   end
   
+  def constrained_x
+    if window.mouse_x > window.width
+      window.width
+    elsif window.mouse_x < 1
+      1
+    else
+      window.mouse_x
+    end
+  end
+  
+  def constrained_y
+    # puts window.mouse_y
+    if window.mouse_y > window.height
+      window.height
+    elsif window.mouse_y < 1
+      1
+    else
+      window.mouse_y
+    end
+  end
+
   def draw
     previous_x = previous_y = nil
     points.each do |x, y|
