@@ -85,10 +85,8 @@ class Window < Gosu::Window
       self.sound = !sound
     when 'd'
       game.debugging = !game.debugging
-    when 'f'
-      game.add_vehicle(Fighter)
     when 'v'
-      game.add_vehicle(Submarine)
+      game.add_vehicle(Vehicle.subclasses.rand.constantize)
     when 'p'
       game.pause
     when 'l'

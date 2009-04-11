@@ -46,7 +46,7 @@ class Game
   end
 
   def add_vehicle(type = nil)
-    type ||= [ Submarine, Fighter, Jet ].rand
+    type ||= Vehicle.subclasses.rand.constantize
 
     obj = type.new(self, rand(window.width), rand(window.height))
     case(rand(4).to_i)

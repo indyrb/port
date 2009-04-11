@@ -5,7 +5,6 @@ class Vehicle < Scorable
   z_order 10
 
   class << self
-
     def terminal_velocity 
       Vector[20, 20]
     end

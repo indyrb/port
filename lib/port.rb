@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'gosu'
 require 'logger'
+require 'activesupport'
 
 $: << File.join(File.dirname(__FILE__))
 
