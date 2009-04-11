@@ -1,4 +1,3 @@
-
 class Sprite
   attr_accessor :x, :y, :image, :game, :window, :angle, :logger
 
@@ -97,6 +96,10 @@ class Sprite
   def contains?(check_x, check_y)
     dist = Gosu.distance(x, y, check_x, check_y)
     (dist <= width)
+  end
+
+  def collided?(sprite)
+    Gosu.distance(center_x, center_y, sprite.center_x, sprite.center_y) <= width + sprite.width
   end
 
 end

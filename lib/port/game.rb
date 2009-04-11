@@ -117,6 +117,14 @@ class Game
         diff_fractional = diff / 1000.0
         objects.each do |e|
           e.update(diff, diff_fractional)
+          objects.each do |o|
+            if o != e && o.collided?(e)
+              o.destroy
+              e.destroy
+              logger.debug("Destroyed #{o.center_x},#{o.center_y} and #{e.center_x},#{e.center_y}")
+              # Game over, mother fucker.
+            end
+          end
         end
       end
     end
