@@ -7,6 +7,8 @@ class Path < Sprite
   def initialize(game, x, y, vehicle)
     self.active = true
     self.points = [[x, y]]
+    self.vehicle = vehicle
+    vehicle.path = self
     super(game, x, y)
   end
   
@@ -29,6 +31,34 @@ class Path < Sprite
     end
   end
   
+  def move_along(distance)
+    if !points.empty? && !active
+      logger.debug "Moving along path #{distance}, #{points.size} points."
+      current_x, current_y = points.shift
+      loop do
+        x, y = points.first
+        unless x
+          destroy
+        end
+        new_distance = distance - Gosu::distance(current_x.to_i, current_y.to_i, x.to_i, y.to_i)
+        if new_distance <= 0
+          logger.debug "  reached endpoint, last step was #{distance}"
+          angle = Gosu::angle(current_x.to_i, current_y.to_i, x.to_i, y.to_i)
+          current_x += Gosu::offset_x(angle, distance)
+          current_y += Gosu::offset_y(angle, distance)
+
+          points.unshift [current_x, current_y]
+          return points.first
+        end
+        points.shift
+        logger.debug "  stepped #{distance - new_distance}, #{points.size} points."
+        distance = new_distance
+        current_x = x
+        current_y = y
+      end
+    end
+  end
+  
   def color
     0xffff0000
   end
@@ -36,4 +66,10 @@ class Path < Sprite
   def contains?(check_x, check_y)
     false
   end
+  
+  def destroy
+    vehicle.path = nil
+    super
+  end
+  
 end

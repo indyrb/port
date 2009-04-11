@@ -1,4 +1,5 @@
 class Vehicle < Sprite
+  attr_accessor :path
   
   score 1
   z_order 10
@@ -54,27 +55,36 @@ class Vehicle < Sprite
   def velocity
     @velocity || Vector[0,0]
   end
-  
 
   def update(ts)
-    update_physics(ts)
-
-    if is_heading_to_point?
-      self.x = interpolate(self.x, self.heading.x, @time_until, ts)
-      self.y = interpolate(self.y, self.heading.y, @time_until, ts)
-    else
-      self.x += self.velocity.x
-      self.y += self.velocity.y
+    if path && (new_location = path.move_along(ts * 0.3))
+      self.x, self.y = new_location
     end
+
+    # update_physics(ts)
+    # 
+    # if is_heading_to_point?
+    #   self.x = interpolate(self.x, self.heading.x, @time_until, ts)
+    #   self.y = interpolate(self.y, self.heading.y, @time_until, ts)
+    # else
+    #   self.x += self.velocity.x
+    #   self.y += self.velocity.y
+    # end
   end
   
   def landed?
     window.field.in_landing_zone?(x, y)
   end
 
+  def destroy
+    path.destroy if path
+    super
+  end
+
   private
 
   def update_physics(ts)
+    
     @last_update ||= 0
     @last_update += ts
     if @last_update > 1000 # update physics every 1s
@@ -99,7 +109,7 @@ class Vehicle < Sprite
       val
     end
   end
-
+  
 end
 
 
