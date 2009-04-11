@@ -26,7 +26,21 @@ class Game
     type ||= [ Submarine, Fighter, Jet ].rand
 
     obj = type.new(self, rand(window.width), rand(window.height))
-    obj.velocity = Vector[20, 20]
+    case(rand(4).to_i)
+    when 0
+      obj.y = -30
+      obj.velocity = Vector[0, 40]
+    when 1
+      obj.x = window.width + 30
+      obj.velocity = Vector[-40, 0]
+    when 2
+      obj.y = window.height + 30
+      obj.velocity = Vector[0, -40]
+    when 3
+      obj.x = -30
+      obj.velocity = Vector[40, 0]
+    end
+
     objects << obj
   end
   
