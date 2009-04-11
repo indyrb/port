@@ -101,7 +101,7 @@ class Game
 
     objects.each do |object|
       if object.respond_to?(:landed?) && object.landed?
-        remove(object)
+        object.destroy
         num += 1
       end
     end
