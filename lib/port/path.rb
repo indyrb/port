@@ -74,6 +74,9 @@ class Path < Sprite
     vehicle.path = nil
     super
   end
-  
+
+  def collided?(sprite)
+    false
+  end
 end
 

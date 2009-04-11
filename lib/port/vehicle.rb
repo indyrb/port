@@ -66,6 +66,12 @@ class Vehicle < Sprite
     super
   end
 
+  def collided?(sprite)
+    if sprite.is_a?(Vehicle)
+      super
+    end
+  end
+
   private
 
   def update_physics(ts, ms)
