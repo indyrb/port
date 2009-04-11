@@ -75,6 +75,8 @@ class Window < Gosu::Window
       game.add_vehicle(Fighter)
     when 'v'
       game.add_vehicle(Submarine)
+    when 'p'
+      game.pause
     else
       return false
     end
