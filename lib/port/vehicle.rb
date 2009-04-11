@@ -11,9 +11,12 @@ class Vehicle < Sprite
   end
 
   attr_accessor :velocity, :acceleration, :heading
+
+  def acceleration=()
+  end
   
 
-  def update
+  def update(ts)
 
   end
 
