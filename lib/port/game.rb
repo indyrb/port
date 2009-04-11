@@ -76,9 +76,6 @@ class Game
   end
 
   def mouse_up(button, x, y)
-    if self.active_path
-      self.active_path.highlighted = window.field.in_landing_zone?(x, y)
-    end
   end
 
   def in_play?
