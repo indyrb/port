@@ -12,6 +12,11 @@ class Vehicle < Sprite
     
   end
 
+  def new_path(start_x, start_y)
+    path.destroy if path
+    self.path = Path.new(game, start_x, start_y, self)
+  end
+  
   def heading
     @heading || Vector[0, 0]
   end

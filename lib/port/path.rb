@@ -25,7 +25,9 @@ class Path < Sprite
     previous_x = previous_y = nil
     points.each do |x, y|
       if previous_x
-        window.draw_line(previous_x, previous_y, color, x, y, color, z_order)
+        window.draw_line(previous_x - 1, previous_y, color, x - 1, y, color, z_order) 
+        window.draw_line(previous_x, previous_y, color, x, y, color, z_order) 
+        window.draw_line(previous_x, previous_y - 1, color, x , y - 1, color, z_order) 
       end
       previous_x, previous_y = x, y
     end
@@ -33,17 +35,17 @@ class Path < Sprite
 
   
   def move_along(sx, sy, distance)
-    if !points.empty? && !active
-      logger.debug "Moving along path #{distance}, #{points.size} points."
+    if !points.empty?
+      # logger.debug "Moving along path #{distance}, #{points.size} points."
       current_x, current_y = sx, sy #points.shift
       loop do
         x, y = points.first
-        unless x
+        if !x && !active
           destroy
         end
         new_distance = distance - Gosu::distance(current_x.to_i, current_y.to_i, x.to_i, y.to_i)
         if new_distance <= 0
-          logger.debug "  reached endpoint, last step was #{distance}"
+          # logger.debug "  reached endpoint, last step was #{distance}"
           angle = Gosu::angle(current_x.to_i, current_y.to_i, x.to_i, y.to_i)
           current_x += Gosu::offset_x(angle, distance)
           current_y += Gosu::offset_y(angle, distance)
@@ -52,7 +54,7 @@ class Path < Sprite
           return points.first
         end
         points.shift
-        logger.debug "  stepped #{distance - new_distance}, #{points.size} points."
+        # logger.debug "  stepped #{distance - new_distance}, #{points.size} points."
         distance = new_distance
         current_x = x
         current_y = y
@@ -61,7 +63,7 @@ class Path < Sprite
   end
   
   def color
-    0xffff0000
+    0x88ffffff
   end
   
   def contains?(check_x, check_y)
