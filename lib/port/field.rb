@@ -18,7 +18,12 @@ class Field
   end
   
   def draw
-    background.draw(0, 0, 0)
+    (window.width.to_f / background.width).ceil.times do |xc|
+      (window.height.to_f / background.height).ceil.times do |yc|
+        background.draw(xc * background.width, yc * background.height, 0)
+      end
+    end
+
     clouds.each do |cloud|
       cloud.draw
     end
