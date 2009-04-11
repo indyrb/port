@@ -86,9 +86,9 @@ class Sprite
     sprite.height
   end
   
-  def contains?(x, y)
-    (x..(x + width * 2)).include?(x) && 
-    (y..(y + height * 2)).include?(y)
+  def contains?(check_x, check_y)
+    (x..(x + width)).include?(check_x) && 
+    (y..(y + height)).include?(check_y)
   end
 
 end
