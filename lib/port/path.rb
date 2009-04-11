@@ -2,12 +2,12 @@ class Path < Sprite
   z_order 0
   score 0
   
-  attr_accessor :points, :active
+  attr_accessor :points, :active, :vehicle
   
-  def initialize(game, x, y)
+  def initialize(game, x, y, vehicle)
     self.active = true
     self.points = [[x, y]]
-    super
+    super(game, x, y)
   end
   
   def update(ts)

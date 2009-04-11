@@ -15,8 +15,8 @@ class Game
     objects << Submarine.new(self, rand(window.width), rand(window.height))
   end
   
-  def add_path
-    self.active_path = Path.new(self, window.mouse_x, window.mouse_y)
+  def add_path(target)
+    self.active_path = Path.new(self, window.mouse_x, window.mouse_y, target)
     objects << active_path
   end
 
@@ -41,9 +41,17 @@ class Game
     !(@paused || @end_time)
   end
 
+  def find_object(x, y)
+    objects.detect do |object|
+      object.contains?(x, y)
+    end
+  end
+  
   def update(ts=nil)
     if !active_path && window.button_down?(Gosu::Button::MsLeft)
-      add_path
+      if target = find_object(window.mouse_x, window.mouse_y)
+        add_path(target)
+      end
     end
     
     ts ||= Gosu::milliseconds
