@@ -36,7 +36,7 @@ class Path < Sprite
   
   def move_along(sx, sy, distance)
     if !points.empty?
-      logger.debug "Moving along path #{distance}, #{points.size} points."
+      # logger.debug "Moving along path #{distance}, #{points.size} points."
       current_x, current_y = sx, sy #points.shift
       loop do
         x, y = points.first
@@ -45,7 +45,7 @@ class Path < Sprite
         end
         new_distance = distance - Gosu::distance(current_x.to_i, current_y.to_i, x.to_i, y.to_i)
         if new_distance <= 0
-          logger.debug "  reached endpoint, last step was #{distance}"
+          # logger.debug "  reached endpoint, last step was #{distance}"
           angle = Gosu::angle(current_x.to_i, current_y.to_i, x.to_i, y.to_i)
           current_x += Gosu::offset_x(angle, distance)
           current_y += Gosu::offset_y(angle, distance)
@@ -54,7 +54,7 @@ class Path < Sprite
           return points.first
         end
         points.shift
-        logger.debug "  stepped #{distance - new_distance}, #{points.size} points."
+        # logger.debug "  stepped #{distance - new_distance}, #{points.size} points."
         distance = new_distance
         current_x = x
         current_y = y
