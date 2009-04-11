@@ -32,4 +32,8 @@ class Path < Sprite
   def color
     0xffff0000
   end
+  
+  def contains?(check_x, check_y)
+    false
+  end
 end
