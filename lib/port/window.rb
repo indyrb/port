@@ -40,19 +40,44 @@ class Window < Gosu::Window
   end
   
   def button_down(id)
+    unless handle_raw_button_down(id)
+      handle_char_button_down(button_id_to_char(id))
+    end
+  end
+
+  def logger
+    game.logger
+  end
+
+  protected
+
+  def handle_raw_button_down(id)
     case id
     when Gosu::Button::KbEscape
       close
-    when Gosu::KbS
-      self.sound = !sound
-    when Gosu::KbV
-      game.add_vehicle
-    when Gosu::MsLeft
+    when Gosu::MsLeft, Gosu::MsMiddle, Gosu::MsRight
       game.mouse_down(:left, self.mouse_x, self.mouse_y)
-    when Gosu::MsMiddle
-      game.mouse_down(:middle, self.mouse_x, self.mouse_y)
-    when Gosu::MsRight
-      game.mouse_down(:right, self.mouse_x, self.mouse_y)
+    else
+      return false
     end
+
+    return true
   end
+
+  def handle_char_button_down(c)
+    case c
+    when 's'
+      self.sound = !sound
+    when 'f'
+      game.logger.debug("Added fighter")
+      game.add_vehicle(Fighter)
+    when 'v'
+      game.add_vehicle(Submarine)
+    else
+      return false
+    end
+
+    return true
+  end
+
 end

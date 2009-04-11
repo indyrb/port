@@ -11,8 +11,8 @@ class Game
     add_vehicle
   end
   
-  def add_vehicle
-    @cheater = Submarine.new(self, rand(window.width), rand(window.height))
+  def add_vehicle(type = Submarine)
+    @cheater = type.new(self, rand(window.width), rand(window.height))
     @cheater.velocity = Vector[0.1, 0.1]
     @cheater.acceleration = Vector[0.1, 0.1]
     objects << @cheater

@@ -58,6 +58,7 @@ class Vehicle < Sprite
 
   def update(ts)
     update_physics(ts)
+
     if is_heading_to_point?
       self.x = interpolate(self.x, self.heading.x, @time_until, ts)
       self.y = interpolate(self.y, self.heading.y, @time_until, ts)
@@ -65,7 +66,6 @@ class Vehicle < Sprite
       self.x += self.velocity.x
       self.y += self.velocity.y
     end
-
   end
   
   def landed?
