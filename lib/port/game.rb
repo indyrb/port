@@ -79,8 +79,9 @@ class Game
     update_path
     update_objects(ts)
 
-    self.score += landed.inject(0) { |acc, v| acc += v.score }
-    landed.size.times { |i| add_vehicle }
+    (score * 2 - objects.size).times do
+      add_vehicle
+    end
 
     self.fps_counter.register_tick
   end
@@ -106,16 +107,11 @@ class Game
   end
 
   def clear_landing_strip
-    landed = Array.new
-
     objects.each do |object|
       if object.respond_to?(:landed?) && object.landed?
-        object.destroy
-        landed << object
+        object.score_and_destroy
       end
     end
-
-    landed
   end
 
   def draw
