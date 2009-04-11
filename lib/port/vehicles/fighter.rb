@@ -1,3 +1,4 @@
 class Fighter < Vehicle
-  sprite_options :file => 'planes/cyan.png', :tiles => 1
+  score 2
+  sprite_options :file => 'planes/cyan.png'
 end

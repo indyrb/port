@@ -21,7 +21,9 @@ class Game
     add_vehicle
   end
   
-  def add_vehicle(type = Fighter)
+  def add_vehicle(type = nil)
+    type ||= [ Submarine, Fighter, Jet ].rand
+
     obj = type.new(self, rand(window.width), rand(window.height))
     obj.velocity = Vector[0.1, 0.1]
     obj.acceleration = Vector[0.1, 0.1]
@@ -72,12 +74,13 @@ class Game
   end
   
   def update(ts=nil)
-    num_landed = clear_landing_strip
+    landed = clear_landing_strip
+
     update_path
     update_objects(ts)
 
-    self.score += num_landed
-    num_landed.times { |i| add_vehicle }
+    self.score += landed.inject(0) { |acc, v| acc += v.score }
+    landed.size.times { |i| add_vehicle }
 
     self.fps_counter.register_tick
   end
@@ -103,16 +106,16 @@ class Game
   end
 
   def clear_landing_strip
-    num = 0
+    landed = Array.new
 
     objects.each do |object|
       if object.respond_to?(:landed?) && object.landed?
         object.destroy
-        num += 1
+        landed << object
       end
     end
 
-    num
+    landed
   end
 
   def draw
@@ -152,12 +155,12 @@ class Game
   def draw_debuggings
   end
 
-  def draw_circle(cx, cy, radius, color, z = 0)
-    lx = cx + radius * Math.sin(0)
-    ly = cy + radius * Math.cos(0)
+  def draw_circle(cx, cy, radius, color, z = 0, steps = 20)
+    zx = lx = cx + radius * Math.sin(0)
+    zy = ly = cy + radius * Math.cos(0)
 
-    90.times do |quarter_angle|
-      angle = deg2rad(quarter_angle * 4)
+    steps.times do |step|
+      angle = step * 2.0 * Math::PI / steps
       x = cx + radius * Math.sin(angle)
       y = cy + radius * Math.cos(angle)
 
@@ -165,6 +168,9 @@ class Game
 
       lx, ly = x, y
     end
+
+    # connect the end to the beginning
+    window.draw_line(lx, ly, color, zx, zy, color, z)
   end
 
 end
