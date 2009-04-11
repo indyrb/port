@@ -17,7 +17,7 @@ class Assets
 
   def preload
     @assets ||= {}
-    Dir.glob(File.join(self.class.asset_dirs, '*')).each do |file|
+    Dir.glob(File.join(self.class.asset_dirs, '*.png')).each do |file|
       if !File.directory?(file)
         @assets[File.basename(file).gsub(File.extname(file), '')] = Gosu::Image.new(@window, file)
       end
@@ -29,7 +29,7 @@ class Assets
   end
 
   def by_name(name)
-    @assets[name]
+    @assets[name] || raise("Could not find image #{name.inspect}")
   end
 
 end

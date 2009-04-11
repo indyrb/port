@@ -1,3 +1,3 @@
 class Submarine < Vehicle
-  sprite_options :file => 'planes/white.png'
+  sprite_options :file => 'white'
 end

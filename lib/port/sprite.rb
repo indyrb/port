@@ -28,10 +28,8 @@ class Sprite
       end
     end
     
-    def sprites(window)
-      # assumes horizontal tiling
-      @sprites = Gosu::Image.load_tiles(window, 
-        File.join(APP_ROOT, 'images', sprite_options[:file]), -sprite_options[:tiles], -1, false)          
+    def sprite(window)
+      @sprite ||= window.assets.by_name(sprite_options[:file])
     end
   end
   
@@ -70,13 +68,9 @@ class Sprite
   end
 
   def sprite
-    sprites.first
+    self.class.sprite(window)
   end
-  
-  def sprites
-    self.class.sprites(window)
-  end
-  
+
   def center_x
     x + width.to_f / 2
   end
@@ -86,11 +80,11 @@ class Sprite
   end
   
   def width
-    sprite.width
+    @width ||= sprite.width
   end
   
   def height
-    sprite.height
+    @height ||= sprite.height
   end
   
   def contains?(check_x, check_y)
