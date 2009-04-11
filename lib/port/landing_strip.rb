@@ -27,15 +27,25 @@ class LandingStrip
 
   def draw
     @sprite.draw
-    @game.window.draw_line(@starting.x, @starting.y, 0xffff0000,
-                           @ending.x, @ending.y, 0xffff0000,
-                           100)
+
+    if @game.debugging
+      @game.window.draw_line(@starting.x, @starting.y, 0xffff0000,
+                             @ending.x, @ending.y, 0xffff0000,
+                             100)
+    end
   end
 
   def update(ts, millis)
   end
 
   def contains?(x, y)
-    false
+    hw = width / 2
+
+    v = @starting - Vector[x, y]
+    v = v.rotate_degrees(angle)
+
+    ret = (-hw..hw).include?(v.x) && (0..height).include?(v.y)
+    @game.logger.debug("#{x}, #{y} is landing") if ret
+    ret
   end
 end

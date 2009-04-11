@@ -26,6 +26,7 @@ class Game
   def add_landing_strip
     obj = LandingStrip.new(self, rand * window.width, rand * window.height,
                            rand * 360)
+    # obj = LandingStrip.new(self, 100, 100, 0)
     @landing_strip = obj
     objects << obj
   end
@@ -83,7 +84,7 @@ class Game
   end
 
   def mouse_down(button, x, y)
-    object = find_object(x, y)
+    object = find_vehicle(x, y)
 
     if object
       logger.debug("Selected #{object.object_id}")
@@ -102,6 +103,11 @@ class Game
       object.contains?(x, y)
     end
   end
+
+  def find_vehicle(x, y)
+    obj = find_object(x, y)
+    return obj if obj.kind_of?(Vehicle)
+  end
   
   def update(ts=nil)
     update_path
@@ -116,7 +122,7 @@ class Game
 
   def update_path
     if !active_path && window.button_down?(Gosu::Button::MsLeft)
-      if target = find_object(window.mouse_x, window.mouse_y)
+      if target = find_vehicle(window.mouse_x, window.mouse_y)
         add_path(target)
       end
     end
