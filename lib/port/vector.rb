@@ -35,7 +35,8 @@ class Vector
   end
 
   def magnitude
-    Math.sqrt((self.x * self.x) + (self.y * self.y))
+    arg = (self.x * self.x) + (self.y * self.y)
+    (arg.nan?) ? 0 : Math.sqrt(arg) 
   end
 
   def dot(other_vector)
@@ -47,12 +48,21 @@ class Vector
   end
 
   def project(other_vector)
-    scalar = self.dot(other_vector) / Math.pow(other_vector.magnitude, 2)
-    
+    scalar = self.dot(other_vector) / (other_vector.magnitude**2)
+    other_vector.unit * scalar
+  end
+
+  def unit
+    mag = self.magnitude
+    Vector.new(self.x / mag, self.y / mag)
   end
 
   def *(scalar)
     Vector.new(self.x * scalar, self.y * scalar)
+  end
+
+  def /(scalar)
+    Vector.new(self.x / scalar, self.y / scalar)
   end
 
   def +(other_vector_or_scalar)
@@ -65,6 +75,18 @@ class Vector
     xm = (other_vector_or_scalar.respond_to?(:x)) ? other_vector_or_scalar.x : other_vector_or_scalar
     ym = (other_vector_or_scalar.respond_to?(:y)) ? other_vector_or_scalar.y : other_vector_or_scalar
     Vector.new(self.x - xm, self.y - ym)
+  end
+
+  # radians
+  def rotate_radians(angle)
+    sin = Math.sin(angle)
+    cos = Math.cos(angle)
+    Vector[cos*self.x - sin*self.y, sin*self.x + cos*self.y]
+  end
+
+  # degrees
+  def rotate_degrees(angle)
+    self.rotate_radians(angle.gosu_to_radians)
   end
 
   def to_s
