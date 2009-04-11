@@ -1,6 +1,6 @@
 
 class Sprite
-  attr_accessor :x, :y, :image, :game, :window, :angle
+  attr_accessor :x, :y, :image, :game, :window, :angle, :logger
 
   class << self
     def z_order(value = nil)
@@ -38,6 +38,7 @@ class Sprite
     self.x = x
     self.y = y
     self.angle = 0
+    self.logger = game.logger
   end
   
   def score
