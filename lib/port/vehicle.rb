@@ -64,7 +64,10 @@ class Vehicle < Sprite
   def landed?
     if path
       px, py = path.points.last
-      window.field.in_landing_zone?(x, y) && window.field.in_landing_zone?(px, py)
+      allowed_dist = 5
+      window.field.in_landing_zone?(x, y) &&
+        window.field.in_landing_zone?(px, py) &&
+        Gosu::distance(self.x, self.y, px, py) < allowed_dist
     else
       false
     end
