@@ -81,7 +81,7 @@ class Vector
   def rotate_radians(angle)
     sin = Math.sin(angle)
     cos = Math.cos(angle)
-    Vector[cos*self.x - sin*self.y, sin*self.x + cos*self.y]
+    Vector[cos*self.y - sin*self.x, cos*self.x - sin*self.y]
   end
 
   # degrees

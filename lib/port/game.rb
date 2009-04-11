@@ -18,9 +18,23 @@ class Game
     self.objects = []
     self.logger = Application.logger
     self.fps_counter = FpsCounter.new
+
+    add_landing_strip
     add_vehicle
   end
   
+  def add_landing_strip
+#     obj = LandingStrip.new(self, rand * window.width, rand * window.height,
+#                            rand * 360)
+    obj = LandingStrip.new(self, window.width / 2, window.height / 2, 0)
+    @landing_strip = obj
+  end
+
+  def reset_landing_strip
+    logger.info("Resetting landing strip")
+    @landing_strip = nil
+    add_landing_strip
+  end
 
   def add_vehicle(type = nil)
     type ||= [ Submarine, Fighter, Jet ].rand
@@ -68,7 +82,9 @@ class Game
   end
 
   def mouse_down(button, x, y)
-    object = find_object(x, y)
+    @landing_strip.contains?(x, y)
+    object = find_vehicle(x, y)
+
     if object
       logger.debug("Selected #{object.object_id}")
       add_path(object)
@@ -87,9 +103,31 @@ class Game
       object.contains?(x, y)
     end
   end
+
+  def find_vehicle(x, y)
+    obj = find_object(x, y)
+    return obj if obj.kind_of?(Vehicle)
+  end
   
   def update(ts=nil)
-    update_objects(ts)
+    diff = diff_fractional = nil
+
+    if @last.nil?
+      @last = Gosu::milliseconds
+      return
+    else
+      ts ||= Gosu::milliseconds
+      if in_play?
+        diff = ts - @last
+        @last = ts
+        diff_fractional = diff / 1000.0
+      end
+    end
+
+    if in_play?
+      update_path
+      update_objects(diff, diff_fractional)
+    end
 
     ((score / 2) - objects.size).times do
       add_vehicle
@@ -99,32 +137,33 @@ class Game
   end
 
   def update_objects(ts)
-    if @last.nil?
-      @last = Gosu::milliseconds
-    else
-      ts ||= Gosu::milliseconds
-      if in_play?
-        diff = ts - @last
-        @last = ts
-        diff_fractional = diff / 1000.0
-        objects.each_with_index do |e, i|
-          e.update(diff, diff_fractional)
-          
-          (objects[(i + 1)..-1] || []).each do |o|
-            if o != e && o.collided?(e)
-              window.play_sound('death')
-              o.destroy
-              e.destroy
-              logger.debug("Destroyed #{o.center_x},#{o.center_y} and #{e.center_x},#{e.center_y}")
-              # Game over, mother fucker.
-            end
+    objects.each_with_index do |e, i|
+      if @landing_strip.contains?(e.x, e.y)
+        land(e)
+      else
+        e.update(diff, diff_fractional)
+        
+        (objects[(i + 1)..-1] || []).each do |o|
+          if o != e && o.collided?(e)
+            window.play_sound('death')
+            o.destroy
+            e.destroy
+            logger.debug("Destroyed #{o.center_x},#{o.center_y} and #{e.center_x},#{e.center_y}")
+            # Game over, mother fucker.
           end
         end
       end
     end
   end
 
+  def land(obj)
+    @score += obj.score if obj.respond_to?(:score)
+    obj.destroy
+  end
+
   def draw
+    @landing_strip.draw
+
     objects.each do |e|
       e.draw
     end

@@ -90,6 +90,8 @@ class Window < Gosu::Window
       game.add_vehicle(Submarine)
     when 'p'
       game.pause
+    when 'l'
+      game.reset_landing_strip
     else
       return false
     end

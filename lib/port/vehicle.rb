@@ -1,6 +1,6 @@
-class Vehicle < Sprite
+class Vehicle < Scorable
   attr_accessor :path, :entered
-  
+
   score 1
   z_order 10
 

@@ -9,13 +9,6 @@ class Sprite
       @z_order || superclass.z_order if superclass.respond_to?(:z_order)
     end
     
-    def score(value = nil)
-      if value
-        @score = value
-      end
-      @score || superclass.score if superclass.respond_to?(:score)
-    end
-
     def default_sprite_options
       { :tiles => 1, :file => 'mushroom.png' }
     end
@@ -33,20 +26,16 @@ class Sprite
     end
   end
   
-  def initialize(game, x, y)
+  def initialize(game, x, y, angle = 0)
     self.game = game
     self.window = game.window
     self.x = x
     self.y = y
-    self.angle = 0
+    self.angle = angle
     self.logger = game.logger
     logger.debug "Added #{self.class} at #{x}, #{y}"
   end
   
-  def score
-    self.class.score
-  end
-
   def z_order
     self.class.z_order
   end
@@ -60,11 +49,6 @@ class Sprite
 
   def destroy
     game.remove(self)    
-  end
-
-  def score_and_destroy
-    game.score += score
-    destroy
   end
 
   def sprite
