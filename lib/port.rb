@@ -22,7 +22,7 @@ class Application
   attr_accessor :window
 
   def self.logger
-    self.logger ||= Logger.new(STDOUT)
+    @logger ||= Logger.new(STDOUT)
   end
   
   def initialize
