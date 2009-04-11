@@ -18,7 +18,9 @@ class Assets
   def preload
     @assets ||= {}
     Dir.glob(File.join(self.class.asset_dirs, '*')).each do |file|
-      @assets[File.basename(file).gsub(File.extname(file), '')] = Gosu::Image.new(@window, file)
+      if !File.directory?(file)
+        @assets[File.basename(file).gsub(File.extname(file), '')] = Gosu::Image.new(@window, file)
+      end
     end
   end
 
