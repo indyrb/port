@@ -31,16 +31,6 @@ class Vehicle < Sprite
     !!@heading
   end
 
-  def acceleration=(v)
-    if v.magnitude < self.class.max_acceleration.magnitude
-      @acceleration = v
-    end
-  end
-
-  def acceleration
-    @acceleration || Vector[0, 0]
-  end
-
   def velocity=(v)
     @velocity = v
   end
