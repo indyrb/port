@@ -1,5 +1,5 @@
 class Window < Gosu::Window
-  attr_accessor :images, :sound, :sounds, :game, :application
+  attr_accessor :images, :sound, :sounds, :game, :application, :cursor
 
   def initialize(application)
     super(480, 512, false)
@@ -8,6 +8,7 @@ class Window < Gosu::Window
     self.game = Game.new(self)
     self.sound = true
     self.application = application
+    @cursor = Gosu::Image.new(self, File.join(File.dirname(__FILE__), '..', '..', 'images', 'cursor.png'))
   end
   
   def sounds
@@ -36,8 +37,13 @@ class Window < Gosu::Window
 
   def draw
     game.draw
+    @cursor.draw(mouse_x, mouse_y, 0)
   end
   
+  def cursor
+    
+  end
+
   def button_down(id)
     case id
     when Gosu::Button::KbEscape
