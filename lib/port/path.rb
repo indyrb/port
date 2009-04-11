@@ -35,12 +35,12 @@ class Path < Sprite
 
   
   def move_along(sx, sy, distance)
-    if !points.empty? && !active
+    if !points.empty?
       logger.debug "Moving along path #{distance}, #{points.size} points."
       current_x, current_y = sx, sy #points.shift
       loop do
         x, y = points.first
-        unless x
+        if !x && !active
           destroy
         end
         new_distance = distance - Gosu::distance(current_x.to_i, current_y.to_i, x.to_i, y.to_i)
