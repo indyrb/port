@@ -8,7 +8,8 @@ class Window < Gosu::Window
     self.game = Game.new(self)
     self.sound = true
     self.application = application
-    @cursor = Gosu::Image.new(self, File.join(APP_ROOT, 'images', 'cursor.png'))
+    @assets = Assets.new(self)
+    @cursor = @assets.by_name('cursor')
   end
   
   def sounds
