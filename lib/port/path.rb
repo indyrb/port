@@ -2,7 +2,7 @@ class Path < Sprite
   z_order 3
   score 0
   
-  attr_accessor :points, :active, :vehicle
+  attr_accessor :points, :active, :vehicle, :highlighted
   
   def initialize(game, x, y, vehicle)
     self.active = true
@@ -44,11 +44,20 @@ class Path < Sprite
 
   def draw
     previous_x = previous_y = nil
+    segment_size = 10.0
     points.each do |x, y|
       if previous_x
-        window.draw_line(previous_x - 1, previous_y, color, x - 1, y, color, z_order) 
-        window.draw_line(previous_x, previous_y, color, x, y, color, z_order) 
-        window.draw_line(previous_x, previous_y - 1, color, x , y - 1, color, z_order) 
+        iters = (Gosu::distance(previous_x, previous_y, x, y) / segment_size).ceil
+        lpx, lpy = previous_x, previous_y
+        1.upto(iters) do |seg|
+          if (seg % 2) != 0
+            lx, ly = lerp(previous_x, x, iters, seg), lerp(previous_y, y, iters, seg)
+            window.draw_line(lpx - 1, lpy, color, lx - 1, ly, color, z_order) 
+            window.draw_line(lpx, lpy, color, lx, ly, color, z_order) 
+            window.draw_line(lpx, lpy - 1, color, lx , ly - 1, color, z_order)
+            lpx, lpy = lx, ly
+          end
+        end
       end
       previous_x, previous_y = x, y
     end
@@ -84,7 +93,7 @@ class Path < Sprite
   end
   
   def color
-    0x88ffffff
+    (highlighted) ? 0xFFFF0000 : 0x88ffffff
   end
   
   def contains?(check_x, check_y)
@@ -94,6 +103,22 @@ class Path < Sprite
   def destroy
     vehicle.path = nil
     super
+  end
+
+  private
+
+  def lerp(a, b, p, t)
+    clamp(t, 0, p) * (b - a) / p + a
+  end
+
+  def clamp(v, low, high)
+    if v < low
+      low
+    elsif v > high
+      high
+    else
+      v
+    end
   end
   
 end
