@@ -2,7 +2,7 @@ class Window < Gosu::Window
   attr_accessor :images, :sound, :sounds, :game, :application, :cursor, :assets, :field
 
   def initialize(application)
-    super(480, 512, false)
+    super(480, 512, false, 0)
     GosuExtras::setup_keyboard_constants(self)
         
     self.game = Game.new(self)
