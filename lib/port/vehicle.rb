@@ -58,7 +58,13 @@ class Vehicle < Sprite
   end
 
   def landed?
-    window.field.in_landing_zone?(x, y)
+    if path
+      px, py = path.points.last
+      window.field.in_landing_zone?(x, y) && window.field.in_landing_zone?(px, py)
+    else
+      false
+    end
+
   end
     
   def destroy
