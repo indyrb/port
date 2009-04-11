@@ -44,6 +44,10 @@ class Vehicle < Sprite
   end
 
   def update(ts, ms)
+    if landed?
+      score_and_destroy
+    end
+
     update_physics(ts, ms)
   end
 

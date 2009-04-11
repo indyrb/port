@@ -74,8 +74,6 @@ class Game
   end
   
   def update(ts=nil)
-    landed = clear_landing_strip
-
     update_path
     update_objects(ts)
 
@@ -106,14 +104,6 @@ class Game
         objects.each do |e|
           e.update(diff, diff_fractional)
         end
-      end
-    end
-  end
-
-  def clear_landing_strip
-    objects.each do |object|
-      if object.respond_to?(:landed?) && object.landed?
-        object.score_and_destroy
       end
     end
   end
