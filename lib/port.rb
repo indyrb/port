@@ -30,7 +30,8 @@ class Application
   end
   
   def initialize
-    self.window = Window.new(self)
+    options = { :width => 1024, :height => 768, :fullscreen => true } unless ENV['DEBUG']
+    self.window = Window.new(self, options)
   end
 
   def run

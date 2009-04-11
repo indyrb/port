@@ -1,11 +1,12 @@
 class Window < Gosu::Window
   attr_accessor :images, :sound, :sounds, :game, :application, :cursor, :assets, :field
 
-  def initialize(application)
-    super(480, 512, false, 0)
+  def initialize(application, options = nil)
+    options = { :width => 480, :height => 512, :fullscreen => false, :sound => true }.merge(options || Hash.new)
+    super(options[:width], options[:height], options[:fullscreen], 0)
     GosuExtras::setup_keyboard_constants(self)
         
-    self.sound = true
+    self.sound = options[:sound]
     self.application = application
     self.assets = Assets.new(self)
     self.cursor = assets.by_name('cursor')
