@@ -30,11 +30,12 @@ class Path < Sprite
       previous_x, previous_y = x, y
     end
   end
+
   
-  def move_along(distance)
+  def move_along(sx, sy, distance)
     if !points.empty? && !active
       logger.debug "Moving along path #{distance}, #{points.size} points."
-      current_x, current_y = points.shift
+      current_x, current_y = sx, sy #points.shift
       loop do
         x, y = points.first
         unless x
@@ -47,7 +48,7 @@ class Path < Sprite
           current_x += Gosu::offset_x(angle, distance)
           current_y += Gosu::offset_y(angle, distance)
 
-          points.unshift [current_x, current_y]
+          #points.unshift [current_x, current_y]
           return points.first
         end
         points.shift

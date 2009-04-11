@@ -40,6 +40,16 @@ class Vehicle < Sprite
     @velocity || Vector[0,0]
   end
 
+
+  def update(ts, ms)
+    return score_and_destroy if landed?
+    update_physics(ts, ms)
+    if path && (new_location = path.move_along(self.x, self.y, ts * 0.3))
+      self.heading = Vector[*new_location]
+    end
+
+  end
+
   def landed?
     window.field.in_landing_zone?(x, y)
   end
