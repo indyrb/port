@@ -36,6 +36,10 @@ class Vehicle < Sprite
     @velocity || Vector[0,0]
   end
 
+  def draw
+    #sprite.draw_rot(x-10, y-10, z_order, angle, 0.5, 0.5, 0.7, 0.7, 0xffffffff, :additive) #, 0.5, 0.5, 1, 1, 0xffffff)
+    super
+  end
 
   def update(ts, ms)
     unless landed? 
