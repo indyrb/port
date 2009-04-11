@@ -4,7 +4,9 @@ require 'logger'
 
 $: << File.join(File.dirname(__FILE__))
 
+
 require 'port/gosu_extras'
+require 'port/vector'
 require 'port/game'
 require 'port/window'
 require 'port/sprite'
