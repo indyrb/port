@@ -18,9 +18,24 @@ class Game
     self.objects = []
     self.logger = Application.logger
     self.fps_counter = FpsCounter.new
+
+    add_landing_strip
     add_vehicle
   end
   
+  def add_landing_strip
+    obj = LandingStrip.new(self, rand * window.width, rand * window.height,
+                           rand * 360)
+    @landing_strip = obj
+    objects << obj
+  end
+
+  def reset_landing_strip
+    logger.info("Resetting landing strip")
+    remove(@landing_strip)
+    @landing_strip = nil
+    add_landing_strip
+  end
 
   def add_vehicle(type = nil)
     type ||= [ Submarine, Fighter, Jet ].rand
