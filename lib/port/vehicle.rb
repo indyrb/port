@@ -65,8 +65,8 @@ class Vehicle < Sprite
           self.heading = Vector[x, y] + Vector[velocity.x, -velocity.y]
         end
       else
-        if x > 10 && x < window.width &&
-          y > 10 && y < window.height
+        if x > width / 2 && x < window.width - height / 2 &&
+          y > width / 2 && y < window.height - height / 2
           
           self.entered = true
         end
