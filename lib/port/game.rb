@@ -113,7 +113,7 @@ class Game
         objects.each_with_index do |e, i|
           e.update(diff, diff_fractional)
           
-          objects[(i + 1)..-1].each do |o|
+          (objects[(i + 1)..-1] || []).each do |o|
             if o != e && o.collided?(e)
               window.play_sound('death')
               o.destroy
