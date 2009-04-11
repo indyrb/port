@@ -60,9 +60,9 @@ class Vehicle < Sprite
     else
       if entered
         if x > window.width || x < 0
-          self.heading = Vector[x, y] + Vector[-velocity.x, velocity.y]
+          self.heading = Vector[x, y] + Vector[-velocity.x, velocity.y] * 5
         elsif y > window.width || y < 0
-          self.heading = Vector[x, y] + Vector[velocity.x, -velocity.y]
+          self.heading = Vector[x, y] + Vector[velocity.x, -velocity.y] * 5
         end
       else
         if x > width / 2 && x < window.width - height / 2 &&
