@@ -39,6 +39,7 @@ class Sprite
     self.y = y
     self.angle = 0
     self.logger = game.logger
+    logger.debug "Added #{self.class} at #{x}, #{y}"
   end
   
   def score
