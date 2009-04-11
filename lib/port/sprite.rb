@@ -60,7 +60,7 @@ class Sprite
   end
 
   def score_and_destroy
-    game.score += self.class.score
+    game.score += score
     destroy
   end
 

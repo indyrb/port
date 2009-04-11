@@ -12,12 +12,26 @@ class Vector
   end
 
   def distance_to(other_vector)
-    Math.sqrt(self.dot(other_vector))
+    Gosu::distance(self.x, self.y, other_vector.x, other_vector.y)
   end
 
   def angle_between(other_vector)
-    cos = self.dot(other_vector) / (self.magnitude * other_vector.magnitude)
-    Math.acos(cos)
+    sm = self.magnitude; om = other_vector.magnitude
+    if (denom = sm*om) == 0
+      if sm == 0
+        tan = other_vector.y / other_vector.x
+      elsif om == 0
+        tan = self.y / self.x
+      end
+      Math.atan(tan)
+    else
+      cos = self.dot(other_vector) / denom
+      Math.acos(cos)            
+    end
+  end
+
+  def angle_between_gosu(other_vector)
+    Gosu::angle(self.x, self.y, other_vector.x, other_vector.y)    
   end
 
   def magnitude

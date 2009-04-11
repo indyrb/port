@@ -6,19 +6,24 @@ class Vehicle < Sprite
   class << self
 
     def max_acceleration()
-      Vector[0.5, 0.5]
+      Vector[5, 5]
     end
 
     def terminal_velocity()
-      Vector[0.5, 0.5]
+      Vector[5, 5]
     end
     
   end
 
-  attr_accessor :heading
 
   def heading
     @heading || Vector[0, 0]
+  end
+
+  def heading=(v)
+    @heading = v
+    @time_until = (self.velocity.magnitude() / self.acceleration.magnitude()) * 1000    
+    self.angle = Vector[self.x, self.y].angle_between_gosu(v)
   end
 
   def acceleration=(v)
@@ -48,12 +53,14 @@ class Vehicle < Sprite
 
   def update(ts)
     update_physics(ts)
-    time_until = (self.velocity.magnitude() / self.acceleration.magnitude())
-    old_x = self.x
-    old_y = self.y
-    self.x = interpolate(self.x, self.heading.x, time_until, ts)
-    self.y = interpolate(self.y, self.heading.y, time_until, ts)
-    self.game.logger.info("Updating from #{old_x}, #{old_y} to #{self.x}, #{self.y}: V#{self.velocity} A#{self.acceleration}")
+    if self.heading
+
+      self.x = interpolate(self.x, self.heading.x, time_until, ts)
+      self.y = interpolate(self.y, self.heading.y, time_until, ts)
+    else
+      
+    end
+
   end
 
   private
