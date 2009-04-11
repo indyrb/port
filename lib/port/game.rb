@@ -4,6 +4,7 @@ class Game
   def initialize(window)
     @start_time = nil
     @end_time = nil
+    @font = Gosu::Font.new(window, Gosu::default_font_name, 20)
     self.window = window
     self.score = 0
     self.objects = []
@@ -78,6 +79,7 @@ class Game
     objects.each do |e|
       e.draw
     end
+    @font.draw("Score: #{self.score}", (window.width - 75), 10, 1, 1.0, 1.0, 0xffffff00)
   end
   
   def remove(*objs)
