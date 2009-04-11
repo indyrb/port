@@ -70,6 +70,14 @@ class Sprite
     self.class.sprites(window)
   end
   
+  def center_x
+    x + width.to_f / 2
+  end
+  
+  def center_y
+    y + height.to_f / 2
+  end
+  
   def width
     sprite.width
   end
