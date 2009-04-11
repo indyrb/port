@@ -21,3 +21,6 @@ You can also run the game with an IRB console.
 
 Ruby Gosu docs:
   http://code.google.com/p/gosu/wiki/RubyReference
+
+Gitjour on Linux
+  http://yob.id.au/blog/2008/06/01/gitjour_on_linux/
