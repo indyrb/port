@@ -21,6 +21,7 @@ class Game
     add_vehicle
   end
   
+
   def add_vehicle(type = nil)
     type ||= [ Submarine, Fighter, Jet ].rand
 
@@ -92,6 +93,7 @@ class Game
         add_path(target)
       end
     end
+<<<<<<< HEAD:lib/port/game.rb
   end
 
   def update_objects(ts)
@@ -102,6 +104,18 @@ class Game
       @last = ts
       objects.each do |e|
         e.update(diff)
+=======
+    if @last.nil?
+      @last = Gosu::milliseconds
+    else
+      ts ||= Gosu::milliseconds
+      if in_play?
+        diff = ts - @last
+        @last = ts
+        objects.each do |e|
+          e.update(diff)
+        end
+>>>>>>> fix update timing, don't send raw millisecond value:lib/port/game.rb
       end
     end
   end
