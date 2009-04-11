@@ -28,10 +28,6 @@ class Vehicle < Sprite
     @angle =a
   end
 
-  def is_heading_to_point?
-    !!@heading
-  end
-
   def velocity=(v)
     @velocity = v
   end
