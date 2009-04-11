@@ -18,17 +18,21 @@ class Sprite
     end
 
     def default_sprite_options
-      { :tiles => 1 }
+      { :tiles => 1, :file => 'mushroom.png' }
     end
     
-    def sprite_options(options)
-      @sprite_options = default_sprite_options.merge(options)
+    def sprite_options(options = nil)
+      if options
+        @sprite_options = sprite_options.merge(options)
+      else
+        @sprite_options ||= default_sprite_options
+      end
     end
     
     def sprites(window)
       # assumes horizontal tiling
       @sprites = Gosu::Image.load_tiles(window, 
-        File.join(APP_ROOT, 'images', @sprite_options[:file]), -@sprite_options[:tiles], -1, false)          
+        File.join(APP_ROOT, 'images', sprite_options[:file]), -sprite_options[:tiles], -1, false)          
     end
   end
   
@@ -91,8 +95,8 @@ class Sprite
   end
   
   def contains?(check_x, check_y)
-    (x..(x + width)).include?(check_x) && 
-    (y..(y + height)).include?(check_y)
+    dist = Gosu.distance(x, y, check_x, check_y)
+    (dist <= width)
   end
 
 end

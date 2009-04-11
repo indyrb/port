@@ -68,6 +68,8 @@ class Window < Gosu::Window
     case c
     when 's'
       self.sound = !sound
+    when 'd'
+      game.debugging = !game.debugging
     when 'f'
       game.logger.debug("Added fighter")
       game.add_vehicle(Fighter)
