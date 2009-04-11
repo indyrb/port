@@ -7,8 +7,8 @@ class Vector
   end
 
   def initialize(x,y)
-    self.x = x
-    self.y = y
+    self.x = x.to_f
+    self.y = y.to_f
   end
 
   def distance_to(other_vector)
@@ -21,7 +21,7 @@ class Vector
   end
 
   def magnitude
-    Math.sqrt(self.dot(self))
+    Math.sqrt((self.x * self.x) + (self.y * self.y))
   end
 
   def dot(other_vector)
@@ -53,6 +53,8 @@ class Vector
     Vector.new(self.x - xm, self.y - ym)
   end
 
-
+  def to_s
+    "(#{self.x}, #{self.y})"
+  end
   
 end
