@@ -22,6 +22,7 @@ class Vehicle < Sprite
 
   def heading=(v)
     @heading = v
+    @time_until = (self.velocity.magnitude() / self.acceleration.magnitude()) * 1000    
     self.angle = Vector[self.x, self.y].angle_between_gosu(v)
   end
 
@@ -52,9 +53,14 @@ class Vehicle < Sprite
 
   def update(ts)
     update_physics(ts)
-    time_until = (self.velocity.magnitude() / self.acceleration.magnitude()) * 1000
-    self.x = interpolate(self.x, self.heading.x, time_until, ts)
-    self.y = interpolate(self.y, self.heading.y, time_until, ts)
+    if self.heading
+
+      self.x = interpolate(self.x, self.heading.x, time_until, ts)
+      self.y = interpolate(self.y, self.heading.y, time_until, ts)
+    else
+      
+    end
+
   end
 
   private
