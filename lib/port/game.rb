@@ -93,18 +93,9 @@ class Game
         add_path(target)
       end
     end
-<<<<<<< HEAD:lib/port/game.rb
   end
 
   def update_objects(ts)
-    @last ||= 0
-    ts ||= Gosu::milliseconds
-    if in_play?
-      diff = ts - @last
-      @last = ts
-      objects.each do |e|
-        e.update(diff)
-=======
     if @last.nil?
       @last = Gosu::milliseconds
     else
@@ -116,7 +107,6 @@ class Game
         objects.each do |e|
           e.update(diff, diff_fractional)
         end
->>>>>>> fix update timing, don't send raw millisecond value:lib/port/game.rb
       end
     end
   end
