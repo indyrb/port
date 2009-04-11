@@ -1,5 +1,5 @@
 class Sprite
-  attr_accessor :x, :y, :image, :game, :window, :angle, :logger
+  attr_accessor :x, :y, :image, :game, :window, :angle, :logger, :scale, :color
 
   class << self
     def z_order(value = nil)
@@ -32,6 +32,8 @@ class Sprite
     self.x = x
     self.y = y
     self.angle = angle
+    self.scale = 1
+    self.color = 0xffffffff
     self.logger = game.logger
     logger.debug "Added #{self.class} at #{x}, #{y}"
   end
@@ -44,9 +46,9 @@ class Sprite
   end
   
   def draw
-    sprite.draw_rot(x, y, z_order, angle)
+    sprite.draw_rot(x, y, z_order, angle, 0.5, 0.5, scale, scale, color)
   end
-
+  
   def destroy
     game.remove(self)    
   end

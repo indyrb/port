@@ -153,6 +153,8 @@ class Game
         end
       end
     end
+    
+    window.field.update
   end
 
   def in_landing_zone?(x, y)
