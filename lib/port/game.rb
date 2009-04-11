@@ -108,6 +108,21 @@ class Game
     end
   end
 
+
+  def clear_landing_strip
+    num = 0
+
+    objects.each do |object|
+      if object.respond_to?(:landed?) && object.landed?
+        object.destroy
+        num += 1
+      end
+    end
+
+    num
+  end
+
+
   def draw
     objects.each do |e|
       e.draw
