@@ -120,6 +120,7 @@ class Game
           e.update(diff, diff_fractional)
           objects.each do |o|
             if o != e && o.collided?(e)
+              window.play_sound('death')
               o.destroy
               e.destroy
               logger.debug("Destroyed #{o.center_x},#{o.center_y} and #{e.center_x},#{e.center_y}")
