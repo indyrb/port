@@ -1,4 +1,10 @@
 class Game
+  module Colors
+    Selection = 0xffff0000 # red
+    Score = 0xffffffff     # white
+    FPS = 0xffffff00       # yellow
+  end
+
   attr_accessor :score, :objects, :level, :logger, :window, :active_path, :fps_counter, :debugging
 
   def initialize(window)
@@ -114,10 +120,11 @@ class Game
       e.draw
     end
 
+    draw_selection
     draw_debuggings if debugging
 
-    @score_text.draw("Score: #{self.score}", (window.width - 75), 10, 1, 1.0, 1.0, 0xffffff00)
-    @fps_text.draw("FPS: #{self.fps_counter.fps}", (window.width - 60), (window.height - 20), 1, 1.0, 1.0, 0xffffffff)
+    @score_text.draw("Score: #{self.score}", (window.width - 75), 10, 1, 1.0, 1.0, Colors::Score)
+    @fps_text.draw("FPS: #{self.fps_counter.fps}", (window.width - 60), (window.height - 20), 1, 1.0, 1.0, Colors::FPS)
   end
   
   def remove(*objs)
@@ -131,15 +138,32 @@ class Game
 
   protected
 
+  def draw_selection
+    return unless @selection
+
+    draw_circle(@selection.x, @selection.y, 1.1 * @selection.width / 2.0,
+                Colors::Selection, 50)
+  end
+
+  def deg2rad(deg)
+    deg * Math::PI / 180.0
+  end
+
   def draw_debuggings
-    if @selection
-      x = @selection.x - @selection.width / 2.0
-      y = @selection.y - @selection.height / 2.0
-      window.draw_quad(x, y, 0xffff0000,
-                       x + @selection.width, y, 0xffff0000,
-                       x, y + @selection.height, 0xffff0000,
-                       x + @selection.width, y + @selection.height, 0xffff0000,
-                       1)
+  end
+
+  def draw_circle(cx, cy, radius, color, z = 0)
+    lx = cx + radius * Math.sin(0)
+    ly = cy + radius * Math.cos(0)
+
+    90.times do |quarter_angle|
+      angle = deg2rad(quarter_angle * 4)
+      x = cx + radius * Math.sin(angle)
+      y = cy + radius * Math.cos(angle)
+
+      window.draw_line(lx, ly, color, x, y, color, z)
+
+      lx, ly = x, y
     end
   end
 
