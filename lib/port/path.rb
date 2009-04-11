@@ -13,13 +13,34 @@ class Path < Sprite
   
   def update(ts, ms)
     if active && window.button_down?(Gosu::Button::MsLeft)
-      self.points << [window.mouse_x, window.mouse_y]
+      self.points << [constrained_x, constrained_y]
     elsif active
       self.active = false
       game.active_path = nil
     end
   end
   
+  def constrained_x
+    if window.mouse_x > window.width
+      window.width
+    elsif window.mouse_x < 1
+      1
+    else
+      window.mouse_x
+    end
+  end
+  
+  def constrained_y
+    # puts window.mouse_y
+    if window.mouse_y > window.height
+      window.height
+    elsif window.mouse_y < 1
+      1
+    else
+      window.mouse_y
+    end
+  end
+
   def draw
     previous_x = previous_y = nil
     points.each do |x, y|
@@ -34,17 +55,17 @@ class Path < Sprite
 
   
   def move_along(sx, sy, distance)
-    if !points.empty? && !active
-      logger.debug "Moving along path #{distance}, #{points.size} points."
+    if !points.empty?
+      # logger.debug "Moving along path #{distance}, #{points.size} points."
       current_x, current_y = sx, sy #points.shift
       loop do
         x, y = points.first
-        unless x
+        if !x && !active
           destroy
         end
         new_distance = distance - Gosu::distance(current_x.to_i, current_y.to_i, x.to_i, y.to_i)
         if new_distance <= 0
-          logger.debug "  reached endpoint, last step was #{distance}"
+          # logger.debug "  reached endpoint, last step was #{distance}"
           angle = Gosu::angle(current_x.to_i, current_y.to_i, x.to_i, y.to_i)
           current_x += Gosu::offset_x(angle, distance)
           current_y += Gosu::offset_y(angle, distance)
@@ -53,7 +74,7 @@ class Path < Sprite
           return points.first
         end
         points.shift
-        logger.debug "  stepped #{distance - new_distance}, #{points.size} points."
+        # logger.debug "  stepped #{distance - new_distance}, #{points.size} points."
         distance = new_distance
         current_x = x
         current_y = y

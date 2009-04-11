@@ -41,6 +41,10 @@ class Vehicle < Scorable
     @velocity || Vector[0,0]
   end
 
+  def draw
+    #sprite.draw_rot(x-10, y-10, z_order, angle, 0.5, 0.5, 0.7, 0.7, 0xffffffff, :additive) #, 0.5, 0.5, 1, 1, 0xffffff)
+    super
+  end
 
   def update(ts, ms)
     unless landed? 
@@ -54,7 +58,13 @@ class Vehicle < Scorable
   end
 
   def landed?
-    window.field.in_landing_zone?(x, y)
+    if path
+      px, py = path.points.last
+      window.field.in_landing_zone?(x, y) && window.field.in_landing_zone?(px, py)
+    else
+      false
+    end
+
   end
     
   def destroy
