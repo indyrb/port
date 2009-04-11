@@ -7,12 +7,15 @@ class Game
     self.window = window
     self.score = 0
     self.objects = []
-    
+    self.logger = Application.logger
     add_vehicle
   end
   
   def add_vehicle
-    objects << Submarine.new(self, rand(window.width), rand(window.height))
+    @cheater = Submarine.new(self, rand(window.width), rand(window.height))
+    @cheater.velocity = Vector[0.1, 0.1]
+    @cheater.acceleration = Vector[0.1, 0.1]
+    objects << @cheater
   end
   
   def add_path(target)
@@ -37,6 +40,10 @@ class Game
     @paused
   end
 
+  def mouse_down(button, x, y)
+    @cheater.heading = Vector[x, y]
+  end
+
   def in_play?
     !(@paused || @end_time)
   end
@@ -53,11 +60,13 @@ class Game
         add_path(target)
       end
     end
-    
+    @last ||= 0
     ts ||= Gosu::milliseconds
     if in_play?
+      diff = ts - @last
+      @last = ts
       objects.each do |e|
-        e.update(ts)
+        e.update(diff)
       end
     end
   end
