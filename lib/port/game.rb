@@ -78,6 +78,12 @@ class Game
     end
   end
 
+  def mouse_up(button, x, y)
+    if @selection && @selection.respond_to?(:path) && (p=@selection.path)
+      p.highlighted = true
+    end
+  end
+
   def in_play?
     !(@paused || @end_time)
   end
