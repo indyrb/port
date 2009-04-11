@@ -10,7 +10,7 @@ class Vehicle < Sprite
     end
 
     def terminal_velocity()
-      Vector[5, 5]
+      Vector[2, 2]
     end
     
   end
@@ -22,8 +22,13 @@ class Vehicle < Sprite
 
   def heading=(v)
     @heading = v
-    @time_until = (self.velocity.magnitude() / self.acceleration.magnitude()) * 1000    
-    self.angle = Vector[self.x, self.y].angle_between_gosu(v)
+    position = Vector[self.x, self.y]
+    @time_until = position.distance_to(v) / self.velocity.magnitude()
+    self.angle = position.angle_between_gosu(v)
+  end
+
+  def is_heading_to_point?
+    !!@heading
   end
 
   def acceleration=(v)
@@ -53,12 +58,12 @@ class Vehicle < Sprite
 
   def update(ts)
     update_physics(ts)
-    if self.heading
-
-      self.x = interpolate(self.x, self.heading.x, time_until, ts)
-      self.y = interpolate(self.y, self.heading.y, time_until, ts)
+    if is_heading_to_point?
+      self.x = interpolate(self.x, self.heading.x, @time_until, ts)
+      self.y = interpolate(self.y, self.heading.y, @time_until, ts)
     else
-      
+      self.x += self.velocity.x
+      self.y += self.velocity.y
     end
 
   end
