@@ -30,7 +30,7 @@ class LandingStrip
 
     if @game.debugging
       @game.window.draw_line(@starting.x, @starting.y, 0xffff0000,
-                             @ending.x, @ending.y, 0xffff0000,
+                             @ending.x, @ending.y, 0xff0000ff,
                              100)
     end
   end
@@ -41,11 +41,19 @@ class LandingStrip
   def contains?(x, y)
     hw = width / 2
 
-    v = @starting - Vector[x, y]
-    v = v.rotate_degrees(angle)
-
+    v = Vector[@starting.x, @starting.y] - Vector[x, y]
+    # v.y *= -1
+    # v.x *= -1
+    ov = v.dup
+    v = v.rotate_degrees(-angle)
     ret = (-hw..hw).include?(v.x) && (0..height).include?(v.y)
-    @game.logger.debug("#{x}, #{y} is landing") if ret
+
+#     @game.logger.debug("Rotated #{ov.inspect} by #{angle} to #{v}")
+#     @game.logger.debug("\tStarting: #{@starting.inspect}")
+#     @game.logger.debug("\tPoint: #{x}, #{y}")
+#     @game.logger.debug("\tBounds: #{-hw}..#{hw}, #{0}..#{height}")
+#     @game.logger.debug("#{x}, #{y} is landing") if ret
+
     ret
   end
 end

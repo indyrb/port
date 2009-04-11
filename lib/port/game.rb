@@ -24,16 +24,14 @@ class Game
   end
   
   def add_landing_strip
-    obj = LandingStrip.new(self, rand * window.width, rand * window.height,
-                           rand * 360)
-    # obj = LandingStrip.new(self, 100, 100, 0)
+#     obj = LandingStrip.new(self, rand * window.width, rand * window.height,
+#                            rand * 360)
+    obj = LandingStrip.new(self, window.width / 2, window.height / 2, 0)
     @landing_strip = obj
-    objects << obj
   end
 
   def reset_landing_strip
     logger.info("Resetting landing strip")
-    remove(@landing_strip)
     @landing_strip = nil
     add_landing_strip
   end
@@ -84,6 +82,7 @@ class Game
   end
 
   def mouse_down(button, x, y)
+    @landing_strip.contains?(x, y)
     object = find_vehicle(x, y)
 
     if object
@@ -110,8 +109,24 @@ class Game
   end
   
   def update(ts=nil)
-    update_path
-    update_objects(ts)
+    diff = diff_fractional = nil
+
+    if @last.nil?
+      @last = Gosu::milliseconds
+      return
+    else
+      ts ||= Gosu::milliseconds
+      if in_play?
+        diff = ts - @last
+        @last = ts
+        diff_fractional = diff / 1000.0
+      end
+    end
+
+    if in_play?
+      update_path
+      update_objects(diff, diff_fractional)
+    end
 
     ((score / 2) - objects.size).times do
       add_vehicle
@@ -128,38 +143,24 @@ class Game
     end
   end
 
-  def update_objects(ts)
-    if @last.nil?
-      @last = Gosu::milliseconds
-    else
-      ts ||= Gosu::milliseconds
-      if in_play?
-        diff = ts - @last
-        @last = ts
-        diff_fractional = diff / 1000.0
-        objects.each do |e|
-          e.update(diff, diff_fractional)
-        end
+  def update_objects(diff, fractional)
+    objects.each do |e|
+      if @landing_strip.contains?(e.x, e.y)
+        land(e)
+      else
+        e.update(diff, fractional)
       end
     end
   end
 
-
-  def clear_landing_strip
-    num = 0
-
-    objects.each do |object|
-      if object.respond_to?(:landed?) && object.landed?
-        object.destroy
-        num += 1
-      end
-    end
-
-    num
+  def land(obj)
+    @score += obj.score if obj.respond_to?(:score)
+    obj.destroy
   end
-
 
   def draw
+    @landing_strip.draw
+
     objects.each do |e|
       e.draw
     end

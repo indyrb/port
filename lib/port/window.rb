@@ -36,7 +36,7 @@ class Window < Gosu::Window
   def draw
     game.draw
     cursor.draw(mouse_x - 13, mouse_y - 4, 10)
-    # field.draw
+    field.draw
   end
   
   def button_down(id)
