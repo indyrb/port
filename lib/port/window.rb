@@ -45,6 +45,12 @@ class Window < Gosu::Window
     end
   end
 
+  def button_up(id)
+    unless handle_raw_button_up(id)
+      handle_raw_button_up(button_id_to_char(id))
+    end
+  end
+
   def logger
     game.logger
   end
@@ -52,16 +58,24 @@ class Window < Gosu::Window
   protected
 
   def handle_raw_button_down(id)
+
     case id
     when Gosu::Button::KbEscape
       close
     when Gosu::MsLeft, Gosu::MsMiddle, Gosu::MsRight
-      game.mouse_down(:left, self.mouse_x, self.mouse_y)
+      game.mouse_down(id, self.mouse_x, self.mouse_y)
     else
       return false
     end
 
     return true
+  end
+
+  def handle_raw_button_up(id)
+    case id
+    when Gosu::MsLeft, Gosu::MsMiddle, Gosu::MsRight
+      game.mouse_up(id, self.mouse_x, self.mouse_y)
+    end
   end
 
   def handle_char_button_down(c)
@@ -81,6 +95,10 @@ class Window < Gosu::Window
     end
 
     return true
+  end
+
+  def handle_char_button_up(c)
+    false
   end
 
 end
