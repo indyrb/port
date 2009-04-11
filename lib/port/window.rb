@@ -28,10 +28,6 @@ class Window < Gosu::Window
   end
   
   def update
-    if button_down?(Gosu::Button::MsLeft)
-
-    end
-
     game.update
   end
 

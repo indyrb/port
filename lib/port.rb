@@ -8,6 +8,7 @@ require 'port/gosu_extras'
 require 'port/game'
 require 'port/window'
 require 'port/sprite'
+require 'port/path'
 require 'port/vehicle'
 Dir.glob(File.join(APP_ROOT, 'lib', 'port', 'vehicles', '*.rb')) do |file|
   require file

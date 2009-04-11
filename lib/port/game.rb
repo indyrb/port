@@ -1,5 +1,5 @@
 class Game
-  attr_accessor :score, :objects, :level, :logger, :window
+  attr_accessor :score, :objects, :level, :logger, :window, :active_path
 
   def initialize(window)
     @start_time = nil
@@ -13,6 +13,11 @@ class Game
   
   def add_vehicle
     objects << Submarine.new(self, rand(window.width), rand(window.height))
+  end
+  
+  def add_path
+    self.active_path = Path.new(self, window.mouse_x, window.mouse_y)
+    objects << active_path
   end
 
   def start
@@ -37,6 +42,10 @@ class Game
   end
 
   def update(ts=nil)
+    if !active_path && window.button_down?(Gosu::Button::MsLeft)
+      add_path
+    end
+    
     ts ||= Gosu::milliseconds
     if in_play?
       objects.each do |e|
