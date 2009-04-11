@@ -12,7 +12,7 @@ class Field
   end
   
   def landing_zones
-    [[[215, 245], [240, 496]]]
+    [[[208, 271], [218, 512]]]
   end
   
   def in_landing_zone?(x, y)
