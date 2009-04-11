@@ -8,7 +8,26 @@ class Game
     self.score = 0
     self.objects = []
     
+    announce_game
+    watch_for_games
     add_vehicle
+  end
+  
+  def hostname
+    @hostname ||= `hostname`.chomp
+  end
+  
+  def announce_game
+    puts "Annoucing new game at #{hostname}"
+    Easyjour.serve(hostname, 'port', 4815)
+  end
+  
+  def watch_for_games
+    Easyjour::Search.new('port') do |result|
+      if !(result.target.sub(/\.$/, '') == hostname && result.port == 4815)
+        puts "Discovered a game at #{result.target}:#{result.port}"
+      end
+    end
   end
   
   def add_vehicle

@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'gosu'
 require 'logger'
+require 'easyjour'
 
 $: << File.join(File.dirname(__FILE__))
 
