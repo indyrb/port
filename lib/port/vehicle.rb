@@ -42,6 +42,10 @@ class Vehicle < Sprite
   end
 
   def draw
+    if path && path.active
+      game.draw_circle(x, y, 1.1 * width / 2.0, Game::Colors::Selection, 50)
+    end
+
     #sprite.draw_rot(x-10, y-10, z_order, angle, 0.5, 0.5, 0.7, 0.7, 0xffffffff, :additive) #, 0.5, 0.5, 1, 1, 0xffffff)
     super
   end
@@ -79,7 +83,6 @@ class Vehicle < Sprite
     self.x += v.x
     self.y += v.y
   end
-
 
   # I removed the interpolation code
   # because

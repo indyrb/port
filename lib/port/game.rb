@@ -1,6 +1,6 @@
 class Game
   module Colors
-    Selection = 0xffff0000 # red
+    Selection = 0xffffffff # white
     Score = 0xffffffff     # white
     FPS = 0xffffff00       # yellow
   end
@@ -69,12 +69,9 @@ class Game
 
   def mouse_down(button, x, y)
     object = find_object(x, y)
-
     if object
       logger.debug("Selected #{object.object_id}")
-      @selection = object
-    elsif @selection
-      @selection.heading = Vector[x, y]
+      add_path(object)
     end
   end
 
@@ -89,7 +86,6 @@ class Game
   end
   
   def update(ts=nil)
-    update_path
     update_objects(ts)
 
     ((score / 2) - objects.size).times do
@@ -97,14 +93,6 @@ class Game
     end
 
     self.fps_counter.register_tick
-  end
-
-  def update_path
-    if !active_path && window.button_down?(Gosu::Button::MsLeft)
-      if target = find_object(window.mouse_x, window.mouse_y)
-        add_path(target)
-      end
-    end
   end
 
   def update_objects(ts)
@@ -143,7 +131,6 @@ class Game
       e.draw
     end
 
-    draw_selection
     draw_debuggings if debugging
 
     @score_text.draw("Score: #{self.score}", (window.width - 75), 10, 1, 1.0, 1.0, Colors::Score)
@@ -151,28 +138,9 @@ class Game
   end
   
   def remove(*objs)
-    objs = objs.flatten
-    @selection = nil if @selection && objs.include?(@selection)
-
-    objs.each do |o|
+    objs.flatten.each do |o|
       self.objects.delete(o)
     end
-  end
-
-  protected
-
-  def draw_selection
-    return unless @selection
-
-    draw_circle(@selection.x, @selection.y, 1.1 * @selection.width / 2.0,
-                Colors::Selection, 50)
-  end
-
-  def deg2rad(deg)
-    deg * Math::PI / 180.0
-  end
-
-  def draw_debuggings
   end
 
   def draw_circle(cx, cy, radius, color, z = 0, steps = 20)
@@ -192,6 +160,16 @@ class Game
     # connect the end to the beginning
     window.draw_line(lx, ly, color, zx, zy, color, z)
   end
+
+  protected
+
+  def deg2rad(deg)
+    deg * Math::PI / 180.0
+  end
+
+  def draw_debuggings
+  end
+
 
 end
 
