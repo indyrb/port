@@ -112,8 +112,9 @@ class Game
       if in_play?
         diff = ts - @last
         @last = ts
+        diff_fractional = diff / 1000.0
         objects.each do |e|
-          e.update(diff)
+          e.update(diff, diff_fractional)
         end
 >>>>>>> fix update timing, don't send raw millisecond value:lib/port/game.rb
       end
