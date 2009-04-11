@@ -28,24 +28,25 @@ class Game
     obj = type.new(self, rand(window.width), rand(window.height))
     case(rand(4).to_i)
     when 0
+      vector = Vector[0, 40]
       obj.y = -30
-      obj.velocity = Vector[0, 40]
     when 1
+      vector = Vector[-40, 0]
       obj.x = window.width + 30
-      obj.velocity = Vector[-40, 0]
     when 2
+      vector = Vector[0, -40]
       obj.y = window.height + 30
-      obj.velocity = Vector[0, -40]
     when 3
+      vector = Vector[40, 0]
       obj.x = -30
-      obj.velocity = Vector[40, 0]
     end
-
+    obj.velocity = vector
+    obj.angle = vector.angle_between_gosu(Vector[-vector.x, -vector.y]) - 180
     objects << obj
   end
   
   def add_path(target)
-    self.active_path = Path.new(self, window.mouse_x, window.mouse_y, target)
+    self.active_path = target.new_path(window.mouse_x, window.mouse_y)
     objects << active_path
   end
 

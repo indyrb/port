@@ -12,6 +12,11 @@ class Vehicle < Sprite
     
   end
 
+  def new_path(start_x, start_y)
+    path.destroy if path
+    self.path = Path.new(game, start_x, start_y, self)
+  end
+  
   def heading
     @heading || Vector[0, 0]
   end
@@ -28,10 +33,6 @@ class Vehicle < Sprite
     @angle =a
   end
 
-  def is_heading_to_point?
-    !!@heading
-  end
-
   def velocity=(v)
     @velocity = v
   end
@@ -40,12 +41,19 @@ class Vehicle < Sprite
     @velocity || Vector[0,0]
   end
 
+  def draw
+    #sprite.draw_rot(x-10, y-10, z_order, angle, 0.5, 0.5, 0.7, 0.7, 0xffffffff, :additive) #, 0.5, 0.5, 1, 1, 0xffffff)
+    super
+  end
 
   def update(ts, ms)
-    return score_and_destroy if landed?
-    update_physics(ts, ms)
-    if path && (new_location = path.move_along(self.x, self.y, ts * 0.3))
-      self.heading = Vector[*new_location]
+    unless landed? 
+      update_physics(ts, ms)
+      if path && (new_location = path.move_along(self.x, self.y, ts * 0.3))
+        self.heading = Vector[*new_location]
+      end
+    else
+      score_and_destroy
     end
   end
 
