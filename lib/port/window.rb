@@ -71,7 +71,6 @@ class Window < Gosu::Window
     when 'd'
       game.debugging = !game.debugging
     when 'f'
-      game.logger.debug("Added fighter")
       game.add_vehicle(Fighter)
     when 'v'
       game.add_vehicle(Submarine)
