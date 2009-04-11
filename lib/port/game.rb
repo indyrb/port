@@ -1,4 +1,11 @@
 class Game
+  module Direction
+    North = Vector[ 0, -1]
+    East =  Vector[ 1,  0]
+    South = Vector[ 0,  1]
+    West =  Vector[-1,  0]
+  end
+  
   module Colors
     Selection = 0xffffffff # white
     Score = 0xffffffff     # white
@@ -44,16 +51,16 @@ class Game
     obj = type.new(self, rand(window.width), rand(window.height))
     case(rand(4).to_i)
     when 0
-      vector = Vector[0, 40]
+      vector = Direction::South * type.terminal_velocity
       obj.y = -30
     when 1
-      vector = Vector[-40, 0]
+      vector = Direction::West * type.terminal_velocity
       obj.x = window.width + 30
     when 2
-      vector = Vector[0, -40]
+      vector = Direction::North * type.terminal_velocity
       obj.y = window.height + 30
     when 3
-      vector = Vector[40, 0]
+      vector = Direction::North * type.terminal_velocity
       obj.x = -30
     end
     obj.velocity = vector

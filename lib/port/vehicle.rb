@@ -6,7 +6,7 @@ class Vehicle < Scorable
 
   class << self
 
-    def terminal_velocity()
+    def terminal_velocity 
       Vector[20, 20]
     end
     
