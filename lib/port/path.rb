@@ -105,6 +105,10 @@ class Path < Sprite
     super
   end
 
+  def collided?(sprite)
+    false
+  end
+  
   private
 
   def lerp(a, b, p, t)
