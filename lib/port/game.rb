@@ -79,7 +79,7 @@ class Game
     update_path
     update_objects(ts)
 
-    (score * 2 - objects.size).times do
+    ((score / 2) - objects.size).times do
       add_vehicle
     end
 
