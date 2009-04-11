@@ -1,4 +1,5 @@
 class Vehicle < Sprite
+  attr_accessor :path
   
   score 1
   z_order 10
@@ -44,11 +45,13 @@ class Vehicle < Sprite
   end
 
   def update(ts, ms)
-    if landed?
-      score_and_destroy
-    end
-
+    return score_and_destroy if landed?
     update_physics(ts, ms)
+  end
+    
+  def destroy
+    path.destroy if path
+    super
   end
 
   private
@@ -59,10 +62,9 @@ class Vehicle < Sprite
     self.y += v.y
   end
 
+
   # I removed the interpolation code
   # because
   # I HATE BABIES
 
 end
-
-
