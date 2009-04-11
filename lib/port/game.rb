@@ -55,6 +55,9 @@ class Game
   end
   
   def update(ts=nil)
+    if @cheater.landed?
+      remove(@cheater)
+    end
     if !active_path && window.button_down?(Gosu::Button::MsLeft)
       if target = find_object(window.mouse_x, window.mouse_y)
         add_path(target)

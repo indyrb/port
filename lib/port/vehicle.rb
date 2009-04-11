@@ -67,6 +67,10 @@ class Vehicle < Sprite
     end
 
   end
+  
+  def landed?
+    window.field.in_landing_zone?(x, y)
+  end
 
   private
 
