@@ -93,7 +93,7 @@ class Path < Sprite
   end
   
   def color
-    (highlighted) ? 0xFFFF0000 : 0x88ffffff
+    (highlighted) ? 0x88FF0000 : 0x88ffffff
   end
   
   def contains?(check_x, check_y)
