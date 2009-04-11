@@ -24,7 +24,7 @@ class Path < Sprite
   def draw
     previous_x = previous_y = nil
     points.each do |x, y|
-      if previous_x && rand(5) > 2
+      if previous_x
         window.draw_line(previous_x - 1, previous_y, color, x - 1, y, color, z_order) 
         window.draw_line(previous_x, previous_y, color, x, y, color, z_order) 
         window.draw_line(previous_x, previous_y - 1, color, x , y - 1, color, z_order) 
