@@ -15,7 +15,7 @@ class Game
     add_vehicle
   end
   
-  def add_vehicle(type = Submarine)
+  def add_vehicle(type = Fighter)
     obj = type.new(self, rand(window.width), rand(window.height))
     obj.velocity = Vector[0.1, 0.1]
     obj.acceleration = Vector[0.1, 0.1]
@@ -66,14 +66,25 @@ class Game
   end
   
   def update(ts=nil)
-    clear_landing_strip
+    num_landed = clear_landing_strip
+    update_path
+    update_objects(ts)
 
+    self.score += num_landed
+    num_landed.times { |i| add_vehicle }
+
+    self.fps_counter.register_tick
+  end
+
+  def update_path
     if !active_path && window.button_down?(Gosu::Button::MsLeft)
       if target = find_object(window.mouse_x, window.mouse_y)
         add_path(target)
       end
     end
+  end
 
+  def update_objects(ts)
     @last ||= 0
     ts ||= Gosu::milliseconds
     if in_play?
@@ -83,13 +94,19 @@ class Game
         e.update(diff)
       end
     end
-    self.fps_counter.register_tick
   end
 
   def clear_landing_strip
+    num = 0
+
     objects.each do |object|
-      remove(object) if object.respond_to?(:landed?) && object.landed?
+      if object.respond_to?(:landed?) && object.landed?
+        remove(object)
+        num += 1
+      end
     end
+
+    num
   end
 
   def draw
