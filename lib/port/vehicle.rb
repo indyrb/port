@@ -45,8 +45,7 @@ class Vehicle < Sprite
     if path && path.active
       game.draw_circle(x, y, 1.1 * width / 2.0, Game::Colors::Selection, 50)
     end
-
-    #sprite.draw_rot(x-10, y-10, z_order, angle, 0.5, 0.5, 0.7, 0.7, 0xffffffff, :additive) #, 0.5, 0.5, 1, 1, 0xffffff)
+    sprite.draw_rot(x-10, y-10, z_order, angle, 0.5, 0.5, 0.7, 0.7, 0x88000000) #, 0.5, 0.5, 1, 1, 0xffffff)
     super
   end
 
@@ -64,10 +63,10 @@ class Vehicle < Sprite
   def landed?
     if path
       px, py = path.points.last
-      allowed_dist = 5
+      allowed_dist = 10
       window.field.in_landing_zone?(x, y) &&
         window.field.in_landing_zone?(px, py) &&
-        Gosu::distance(self.x, self.y, px, py) < allowed_dist
+        Gosu::distance(self.x, self.y, px, py).abs < allowed_dist
     else
       false
     end
