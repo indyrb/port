@@ -47,6 +47,12 @@ class Window < Gosu::Window
       self.sound = !sound
     when Gosu::KbV
       game.add_vehicle
+    when Gosu::MsLeft
+      game.mouse_down(:left, self.mouse_x, self.mouse_y)
+    when Gosu::MsMiddle
+      game.mouse_down(:middle, self.mouse_x, self.mouse_y)
+    when Gosu::MsRight
+      game.mouse_down(:right, self.mouse_x, self.mouse_y)
     end
   end
 end
