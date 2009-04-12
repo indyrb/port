@@ -51,21 +51,7 @@ class Path < Sprite
   def draw
     previous_x = previous_y = nil
     segment_size = 10.0
-    polygon.points.each do |point|
-      x, y = point.to_a
-      if previous_x
-        iters = (Gosu.distance(previous_x, previous_y, x, y) / segment_size).ceil
-        lpx, lpy = previous_x, previous_y
-        1.upto(iters) do |seg|
-          if (seg % 2) != 0
-            lx, ly = lerp(previous_x, x, iters, seg), lerp(previous_y, y, iters, seg)
-            window.line(Vector[lpx, lpy], Vector[lx, ly], color, z_order, :thickness => 1)
-            lpx, lpy = lx, ly
-          end
-        end
-      end
-      previous_x, previous_y = x, y
-    end
+    window.draw_polygon(polygon, color, z_order)
   end
 
   def move_along(start, distance)
