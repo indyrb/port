@@ -48,7 +48,7 @@ class Vehicle < Scorable
     if path && path.active
       game.draw_circle(x, y, 1.1 * width / 2.0, Game::Colors::Selection, 50)
     end
-    sprite.draw_rot(x-10, y-10, z_order, angle, 0.5, 0.5, 0.7, 0.7, 0x88000000) #, 0.5, 0.5, 1, 1, 0xffffff)
+    sprite.draw_rot(x-scale*10, y-scale*10, z_order, angle, 0.5, 0.5, scale * 0.7, scale * 0.7, 0x88000000) #, 0.5, 0.5, 1, 1, 0xffffff)
     super
   end
 
@@ -89,6 +89,10 @@ class Vehicle < Scorable
     end
   end
 
+  def scale
+    0.5
+  end
+  
   private
 
   def update_physics(ts, ms)

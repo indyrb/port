@@ -2,7 +2,7 @@ class Submarine < Vehicle
   sprite_options :file => 'white'
   
   def self.terminal_velocity
-    120
+    55
   end
   
 end

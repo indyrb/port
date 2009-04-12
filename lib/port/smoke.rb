@@ -1,6 +1,6 @@
 class Smoke < Sprite
   attr_accessor :velocity, :life
-  MaxLife = 400
+  MaxLife = 150
   z_order 9
   sprite_options :file => 'cloud'
   
@@ -17,8 +17,8 @@ class Smoke < Sprite
     destroy if life < 0
     
     self.angle += 0.4 + rand / 10
-    self.x += velocity.x * life_percent
-    self.y += velocity.y * life_percent
+    self.x += velocity.x * (life_percent + 0.5)
+    self.y += velocity.y * (life_percent + 0.5)
   end
   
   def life_percent
@@ -26,7 +26,7 @@ class Smoke < Sprite
   end
   
   def scale
-    1 / (life_percent * 2.5 + 0.6)
+    1 / (life_percent * 2.5 + 0.7)
   end
   
   def color

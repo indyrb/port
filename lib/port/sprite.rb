@@ -66,11 +66,11 @@ class Sprite
   end
   
   def width
-    @width ||= sprite.width
+    (@width ||= sprite.width) * scale
   end
   
   def height
-    @height ||= sprite.height
+    (@height ||= sprite.height) * scale
   end
   
   def contains?(check_x, check_y)
