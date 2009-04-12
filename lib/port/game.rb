@@ -10,6 +10,9 @@ class Game
     Selection = 0xffffffff # white
     Score = 0xffffffff     # white
     FPS = 0xffffff00       # yellow
+    module Debug
+      Sprite = 0xff00ff00
+    end
   end
 
   attr_accessor :score, :objects, :level, :logger, :window, :active_path, :fps_counter, :debugging

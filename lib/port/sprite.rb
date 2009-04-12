@@ -46,6 +46,10 @@ class Sprite
   end
   
   def draw
+    if game.debugging
+      c = Game::Colors::Debug::Sprite
+      window.draw_rect(x - width / 2 , y - height / 2, x + width / 2, y + width / 2, c, 100)
+    end
     sprite.draw_rot(x, y, z_order, angle, 0.5, 0.5, scale, scale, color)
   end
   
