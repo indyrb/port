@@ -1,4 +1,4 @@
-class Jet < Vehicle
+class Bomber < Vehicle
   score 1
   sprite_options :file => 'black'
 
