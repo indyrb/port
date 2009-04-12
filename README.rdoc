@@ -4,7 +4,7 @@ A game loosely based off of Flight Control for the iPhone.
 
 Screenshot after day 1.
 
-!http://github.com/indyrb/port/raw/master/screenshots/day_1.png!
+http://github.com/indyrb/port/raw/master/screenshots/day_1.png
 
 
 == Running
