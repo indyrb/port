@@ -171,7 +171,7 @@ class Game
       end
     end
     
-    window.field.update
+    window.field.update(diff, diff_fractional)
   end
 
   def in_landing_zone?(position)

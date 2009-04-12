@@ -1,5 +1,5 @@
-class Smoke < Sprite
-  attr_accessor :velocity, :life
+class Smoke < MovingSprite
+  attr_accessor :life
   MaxLife = 150
   z_order 9
   sprite_options :file => 'cloud'
@@ -15,10 +15,11 @@ class Smoke < Sprite
   def update(ts, ts_frac)
     self.life -= 1
     destroy if life < 0
-    
-    self.angle += 0.4 + rand / 10
-    position.x += velocity.x * (life_percent + 0.5)
-    position.y += velocity.y * (life_percent + 0.5)
+
+    self.velocity = velocity * 0.95
+    self.angular_velocity = 0.4 + rand / 10
+
+    super(ts, ts_frac)
   end
   
   def life_percent

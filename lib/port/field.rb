@@ -12,10 +12,10 @@ class Field
     end
   end
   
-  def update
+  def update(ts, ts_frac)
     if game.clouds
       clouds.each do |cloud|
-        cloud.update
+        cloud.update(ts, ts_frac)
       end
     end
   end

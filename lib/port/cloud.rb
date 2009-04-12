@@ -1,4 +1,4 @@
-class Cloud < Sprite
+class Cloud < MovingSprite
   z_order 100
   sprite_options :file => 'cloud'
   
@@ -6,7 +6,6 @@ class Cloud < Sprite
     super
     start
   end
-
 
   def start
     restart
@@ -18,20 +17,19 @@ class Cloud < Sprite
 
     linear_max = 0.1
     linear_min = 0.003
-    @xv = rand(linear_max - linear_min) + linear_min
+    self.velocity = Vector[-rand(linear_max - linear_min) + linear_min, 0]
 
     angle_max = 0.1
-    @av = rand * angle_max - angle_max / 2
-    @av = @av/@av.abs * angle_max
+    av = rand * angle_max - angle_max / 2
+    self.angular_velocity = av/av.abs * angle_max
 
     self.angle = rand(360)
     position.x = window.width + width * scale
     self.color = Gosu::Color.new(255 / scale, 255, 255, 255)
   end
   
-  def update
-    position.x -= @xv
-    self.angle += @av
+  def update(ts, ts_frac)
+    super(ts, ts_frac)
     if position.x + width < 0
       restart
     end
