@@ -62,6 +62,11 @@ class Window < Gosu::Window
     draw_line(x2, y2, c, x1, y2, c, z)
     draw_line(x1, y2, c, x1, y1, c, z)
   end
+
+  def draw_crosshairs(x, y, c, z)
+    draw_line(x, 0, c, x, height, c, z)
+    draw_line(0, y, c, width, y, c, z)
+  end
   
   protected
 
