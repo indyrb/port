@@ -65,7 +65,7 @@ class Vehicle < Scorable
     if entered
       if x > window.width || x < 0
         self.heading = Vector[x, y] + Vector[-velocity.x, velocity.y] * 5
-      elsif y > window.width || y < 0
+      elsif y > window.height || y < 0
         self.heading = Vector[x, y] + Vector[velocity.x, -velocity.y] * 5
       end
     else
