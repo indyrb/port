@@ -15,6 +15,7 @@ require 'port/sprite'
 require 'port/scorable'
 require 'port/path'
 require 'port/vehicle'
+require 'port/smoke'
 require 'port/landing_strip'
 require 'port/field'
 require 'port/cloud'
@@ -31,8 +32,8 @@ class Application
   end
   
   def initialize
-    options = { :width => 1024, :height => 768, :fullscreen => true } unless ENV['DEBUG']
-    self.window = Window.new(self, options)
+    # options = { :width => 1024, :height => 768, :fullscreen => true } unless ENV['DEBUG']
+    self.window = Window.new(self)
   end
 
   def run
