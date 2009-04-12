@@ -8,6 +8,7 @@ class Game
   
   module Colors
     Selection = 0xffffffff # white
+    Proximity = 0xffff0000 # red
     Score = 0xffffffff     # white
     FPS = 0xffffff00       # yellow
     module Debug
@@ -158,7 +159,7 @@ class Game
         
         (objects[(i + 1)..-1] || []).each do |o|
           if o != e && o.collided?(e)
-            window.play_sound('death')
+            window.play_sound(:crash)
             o.destroy
             e.destroy
             logger.debug("Destroyed #{o.center_x},#{o.center_y} and #{e.center_x},#{e.center_y}")
@@ -176,8 +177,7 @@ class Game
   end
 
   def land(obj)
-    @score += obj.score if obj.respond_to?(:score)
-    obj.destroy
+    obj.land if obj.respond_to?(:land)
   end
 
   def draw

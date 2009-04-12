@@ -83,7 +83,11 @@ class Sprite
   end
 
   def collided?(sprite)
-    Gosu.distance(center_x, center_y, sprite.center_x, sprite.center_y) <= (width/2) + (sprite.width/2)
+    distance_to(sprite) <= (width/2) + (sprite.width/2)
+  end
+  
+  def distance_to(sprite)
+    Gosu.distance(center_x, center_y, sprite.center_x, sprite.center_y)
   end
 
 end

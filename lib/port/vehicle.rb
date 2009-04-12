@@ -1,5 +1,5 @@
 class Vehicle < Scorable
-  attr_accessor :path, :entered
+  attr_accessor :path, :entered, :proximity_alert
 
   score 1
   z_order 10
@@ -45,6 +45,13 @@ class Vehicle < Scorable
   end
 
   def draw
+    if proximity_alert
+      game.draw_circle(x, y, 1.1 * width / 2.0, Game::Colors::Proximity, 50)
+      game.draw_circle(x - 1, y, 1.1 * width / 2.0, Game::Colors::Proximity, 50)
+      game.draw_circle(x, y - 1, 1.1 * width / 2.0, Game::Colors::Proximity, 50)
+      game.draw_circle(x - 1, y - 1, 1.1 * width / 2.0, Game::Colors::Proximity, 50)
+    end
+    
     if path && path.active
       game.draw_circle(x, y, 1.1 * width / 2.0, Game::Colors::Selection, 50)
     end
@@ -53,6 +60,7 @@ class Vehicle < Scorable
   end
 
   def update(ts, ms)
+    proximity_check
     add_exhaust(x, y) if rand(10) > 6
     if entered
       if x > window.width || x < 0
@@ -88,11 +96,28 @@ class Vehicle < Scorable
       super
     end
   end
+  
+  def proximity_check
+    initial_value = proximity_alert
+    self.proximity_alert = false
+    game.objects.each do |object|
+      if object != self && object.is_a?(Vehicle) && distance_to(object) < 80
+        self.proximity_alert = true
+        object.proximity_alert = true
+      end
+    end
+    window.play_sound(:proximity) if !initial_value && proximity_alert
+  end
 
   def scale
     0.5
   end
   
+  def land
+    window.play_sound(:landing)
+    score_and_destroy
+  end
+    
   private
 
   def update_physics(ts, ms)
