@@ -68,6 +68,15 @@ class Window < Gosu::Window
     draw_line(0, y, c, width, y, c, z)
   end
   
+  def draw_path(points, color, z_order, close = false)
+    last_point = points.first
+    points[1..-1].each do |point|
+      draw_line(last_point.x, last_point.y, color, point.x, point.y, color, z_order)
+      last_point = point
+    end
+    draw_line(last_point.x, last_point.y, color, points.first.x, points.first.y, color, z_order)
+  end
+
   protected
 
   def handle_raw_button_down(id)

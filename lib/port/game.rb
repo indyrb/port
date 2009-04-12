@@ -13,6 +13,13 @@ class Game
     FPS = 0xffffff00       # yellow
     module Debug
       Sprite = 0xff00ff00
+      Proximity = 0xffff00ff
+    end
+  end
+  
+  module ZOrder
+    module Debug
+      Proximity = 300
     end
   end
 
@@ -216,7 +223,7 @@ class Game
     # connect the end to the beginning
     window.draw_line(lx, ly, color, zx, zy, color, z)
   end
-
+  
   def exhaust
     extras
   end
