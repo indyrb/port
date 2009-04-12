@@ -13,38 +13,14 @@ class Path < Sprite
   
   def update(diff, diff_fractional)
     if active && window.button_down?(Gosu::Button::MsLeft)
-      polygon.points << constrained_position
-      if game.in_landing_zone?(constrained_position)
+      polygon.points << window.mouse_position
+      if game.in_landing_zone?(window.mouse_position)
         self.active = false
         self.highlighted = true
       end
     elsif active
       self.active = false
       game.active_path = nil
-    end
-  end
-  
-  def constrained_position
-    Vector[constrained_x, constrained_y]
-  end
-  
-  def constrained_x
-    if window.mouse_x > window.width
-      window.width
-    elsif window.mouse_x < 1
-      1
-    else
-      window.mouse_x
-    end
-  end
-  
-  def constrained_y
-    if window.mouse_y > window.height
-      window.height
-    elsif window.mouse_y < 1
-      1
-    else
-      window.mouse_y
     end
   end
 
