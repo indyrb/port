@@ -16,7 +16,7 @@ class Game
     end
   end
 
-  attr_accessor :score, :objects, :level, :logger, :window, :active_path, :fps_counter, :debugging
+  attr_accessor :score, :objects, :level, :logger, :window, :active_path, :fps_counter, :debugging, :extras
 
   def initialize(window)
     @start_time = nil
@@ -26,6 +26,7 @@ class Game
     @landing_strips = Array.new
 
     self.debugging = ENV['DEBUG'] || false
+    self.extras = false
     self.window = window
     self.score = 0
     self.objects = []
@@ -217,6 +218,14 @@ class Game
     window.draw_line(lx, ly, color, zx, zy, color, z)
   end
 
+  def exhaust
+    extras
+  end
+  
+  def clouds
+    extras
+  end
+  
   protected
 
   def deg2rad(deg)

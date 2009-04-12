@@ -1,9 +1,10 @@
 class Field
   
-  attr_accessor :window, :background, :clouds
+  attr_accessor :window, :background, :clouds, :game
 
   def initialize(window)
     self.window = window
+    self.game = window.game
     self.background = window.assets.by_name('background')
     self.clouds = []
     (rand(10) + 3).times do
@@ -12,8 +13,10 @@ class Field
   end
   
   def update
-    clouds.each do |cloud|
-      cloud.update
+    if game.clouds
+      clouds.each do |cloud|
+        cloud.update
+      end
     end
   end
   
@@ -24,8 +27,10 @@ class Field
       end
     end
 
-    clouds.each do |cloud|
-      cloud.draw
+    if game.clouds
+      clouds.each do |cloud|
+        cloud.draw
+      end
     end
   end
 end

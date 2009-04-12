@@ -101,6 +101,8 @@ class Window < Gosu::Window
       game.add_vehicle(Vehicle.subclasses.rand.constantize)
     when 'p'
       game.pause
+    when 'e'
+      game.extras = !game.extras
     when 'l'
       game.reset_landing_strips
     when 'k'
