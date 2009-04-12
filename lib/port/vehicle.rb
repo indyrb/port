@@ -44,12 +44,12 @@ class Vehicle < Scorable
   end
 
   def draw
-    # if proximity_alert
-    #   game.draw_circle(x, y, 1.1 * width / 2.0, Game::Colors::Proximity, 50)
-    #   game.draw_circle(x - 1, y, 1.1 * width / 2.0, Game::Colors::Proximity, 50)
-    #   game.draw_circle(x, y - 1, 1.1 * width / 2.0, Game::Colors::Proximity, 50)
-    #   game.draw_circle(x - 1, y - 1, 1.1 * width / 2.0, Game::Colors::Proximity, 50)
-    # end
+    if proximity_alert
+      game.draw_circle(position.x, position.y, 1.1 * width / 2.0, Game::Colors::Proximity, 50)
+      game.draw_circle(position.x - 1, position.y, 1.1 * width / 2.0, Game::Colors::Proximity, 50)
+      game.draw_circle(position.x, position.y - 1, 1.1 * width / 2.0, Game::Colors::Proximity, 50)
+      game.draw_circle(position.x - 1, position.y - 1, 1.1 * width / 2.0, Game::Colors::Proximity, 50)
+    end
     
     if path && path.active
       game.draw_circle(position.x, position.y, 1.1 * width / 2.0, Game::Colors::Selection, 50)
