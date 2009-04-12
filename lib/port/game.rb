@@ -164,7 +164,7 @@ class Game
       else
         e.update(diff, diff_fractional)
         
-        (objects[(i + 1)..-1] || []).each do |o|
+        objects.tail.each do |o|
           if o != e && o.collided?(e)
             window.play_sound(:crash)
             o.destroy
