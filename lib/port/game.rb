@@ -164,7 +164,7 @@ class Game
             window.play_sound(:crash)
             o.destroy
             e.destroy
-            logger.debug("Destroyed #{o.center_x},#{o.center_y} and #{e.center_x},#{e.center_y}")
+            logger.debug("Crash #{o.position} and #{e.position}")
             # Game over, mother fucker.
           end
         end
