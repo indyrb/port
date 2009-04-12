@@ -81,7 +81,7 @@ class Sprite
   end
   
   def distance_to(sprite)
-    Gosu.distance(position.x, position.y, sprite.position.x, sprite.position.x)
+    Gosu.distance(position.x, position.y, sprite.position.x, sprite.position.y)
   end
 
 end
