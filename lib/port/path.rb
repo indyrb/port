@@ -116,17 +116,7 @@ class Path < Sprite
   private
 
   def lerp(a, b, p, t)
-    clamp(t, 0, p) * (b - a) / p + a
-  end
-
-  def clamp(v, low, high)
-    if v < low
-      low
-    elsif v > high
-      high
-    else
-      v
-    end
+    t.clamp(0, p) * (b - a) / p + a
   end
   
 end

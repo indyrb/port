@@ -6,6 +6,7 @@ require 'activesupport'
 $: << File.join(File.dirname(__FILE__))
 
 require 'port/ext/array'
+require 'port/ext/numeric'
 require 'port/gosu_extras'
 require 'port/vector'
 require 'port/polygon'

@@ -1,6 +1,9 @@
 class Vector
   attr_accessor :x, :y
-
+  def self.origin
+    Vector[0, 0]
+  end
+  
   def self.[](x,y)
     Vector.new(x,y)
   end
@@ -86,6 +89,24 @@ class Vector
   # degrees
   def rotate_degrees(angle)
     self.rotate_radians(Math::PI * angle / 180.0) # .gosu_to_radians)
+  end
+  
+  def <(other)
+    x < other.x && y < other.y
+  end
+  
+  def >(other)
+    x > other.x && y > other.y
+  end
+
+  def clamp(low, high)
+    if self < low
+      low.dup
+    elsif self > high
+      high.dup
+    else
+      self.dup
+    end
   end
 
   def to_a

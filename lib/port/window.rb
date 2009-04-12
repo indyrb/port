@@ -84,7 +84,11 @@ class Window < Gosu::Window
   end
   
   def mouse_position
-    Vector[mouse_x, mouse_y]
+    Vector[mouse_x, mouse_y].clamp(Vector.origin, dimensions)
+  end
+  
+  def dimensions
+    Vector[width, height]
   end
 
   protected
