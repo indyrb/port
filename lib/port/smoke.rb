@@ -12,14 +12,14 @@ class Smoke < MovingSprite
     self.life = MaxLife
   end
   
-  def update(ts, ts_frac)
+  def update(diff, diff_fractional)
     self.life -= 1
     destroy if life < 0
 
     self.velocity = velocity * 0.95
     self.angular_velocity = 0.4 + rand / 10
 
-    super(ts, ts_frac)
+    super
   end
   
   def life_percent

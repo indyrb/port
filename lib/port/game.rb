@@ -126,7 +126,7 @@ class Game
     return obj if obj.kind_of?(Vehicle)
   end
   
-  def update(ts=nil)
+  def update
     diff = diff_fractional = nil
 
     if @last.nil?

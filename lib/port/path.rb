@@ -11,7 +11,7 @@ class Path < Sprite
     super(game, x, y)
   end
   
-  def update(ts, ms)
+  def update(diff, diff_fractional)
     if active && window.button_down?(Gosu::Button::MsLeft)
       self.points << [constrained_x, constrained_y]
       if game.in_landing_zone?(constrained_position)

@@ -58,7 +58,7 @@ class Vehicle < Scorable
     super
   end
 
-  def update(ts, ms)
+  def update(diff, diff_fractional)
     proximity_check
     add_exhaust(Vector[position.x, position.y]) if rand(10) > 6
     if entered
@@ -75,8 +75,8 @@ class Vehicle < Scorable
       end
     end
     
-    update_physics(ts, ms)
-    if path && (new_location = path.move_along(position.x, position.y, ts * 0.3))
+    update_physics(diff, diff_fractional)
+    if path && (new_location = path.move_along(position.x, position.y, diff * 0.3))
       self.heading = Vector[*new_location]
     end
   end
@@ -121,8 +121,8 @@ class Vehicle < Scorable
     
   private
 
-  def update_physics(ts, ms)
-    v = self.velocity * ms
+  def update_physics(diff, diff_fractional)
+    v = self.velocity * diff_fractional
     position.x += v.x
     position.y += v.y
   end

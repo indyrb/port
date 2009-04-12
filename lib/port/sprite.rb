@@ -43,7 +43,7 @@ class Sprite
     self.class.z_order
   end
 
-  def update(time, ms)
+  def update(diff, diff_fractional)
   end
   
   def draw

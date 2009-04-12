@@ -28,8 +28,8 @@ class Cloud < MovingSprite
     self.color = Gosu::Color.new(255 / scale, 255, 255, 255)
   end
   
-  def update(ts, ts_frac)
-    super(ts, ts_frac)
+  def update(diff, diff_fractional)
+    super
     if position.x + width < 0
       restart
     end

@@ -8,7 +8,7 @@ class MovingSprite < Sprite
     self.angular_velocity = 0
   end
   
-  def update(ts, ts_frac)
+  def update(diff, diff_fractional)
     position.x += velocity.x
     position.x += velocity.x
     self.angle += angular_velocity
