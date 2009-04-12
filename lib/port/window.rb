@@ -64,14 +64,14 @@ class Window < Gosu::Window
   def draw_polygon(polygon, color, z_order)
     draw_path(polygon.points, color, z_order, polygon.closed)
   end
-  ``
+
   def draw_path(points, color, z_order, close = false, options = {})
     last_point = points.first
     points.tail.each do |point|
       line(last_point, point, color, z_order, options)
       last_point = point
     end
-    line(last_point, points.first, color, z_order, options)
+    line(last_point, points.first, color, z_order, options) if close
   end
   
   def line(one, two, color, z_order, options = {})
