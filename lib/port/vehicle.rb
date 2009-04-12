@@ -53,6 +53,7 @@ class Vehicle < Scorable
   end
 
   def update(ts, ms)
+    add_exhaust(x, y) if rand(10) > 6
     if entered
       if x > window.width || x < 0
         self.heading = Vector[x, y] + Vector[-velocity.x, velocity.y] * 5
@@ -71,6 +72,10 @@ class Vehicle < Scorable
     if path && (new_location = path.move_along(self.x, self.y, ts * 0.3))
       self.heading = Vector[*new_location]
     end
+  end
+  
+  def add_exhaust(x, y)
+    game.objects << Smoke.new(game, x, y, velocity * -1)
   end
     
   def destroy

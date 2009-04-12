@@ -3,7 +3,7 @@ class Jet < Vehicle
   sprite_options :file => 'black'
 
   def self.terminal_velocity
-    20
+    30
   end
- 
+  
 end
