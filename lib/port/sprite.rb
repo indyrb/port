@@ -49,7 +49,6 @@ class Sprite
   def draw
     if game.debugging
       c = Game::Colors::Debug::Sprite
-      # window.draw_rect(position.x - width / 2 , position.y - height / 2, position.x + width / 2, position.y + width / 2, c, 100)
       window.draw_polygon(edge_points, c, 100)
       window.draw_crosshairs(position.x, position.y, c, 100)
     end
@@ -62,7 +61,7 @@ class Sprite
       Vector[position.x + width / 2, position.y - height / 2],
       Vector[position.x + width / 2, position.y + height / 2],
       Vector[position.x - width / 2, position.y + height / 2],
-      ], :center => position, :closed => true).rotate_degrees(angle)
+      ], :center => position).rotate_degrees(angle)
   end
   
   def destroy

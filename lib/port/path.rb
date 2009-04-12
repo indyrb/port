@@ -1,11 +1,11 @@
 class Path < Sprite
   z_order 3
   
-  attr_accessor :points, :active, :vehicle, :highlighted
+  attr_accessor :polygon, :active, :vehicle, :highlighted
   
   def initialize(game, position, vehicle)
     self.active = true
-    self.points = [position]
+    self.polygon = Polygon.new([position], :closed => false)
     self.vehicle = vehicle
     vehicle.path = self
     super(game, position)
@@ -13,7 +13,7 @@ class Path < Sprite
   
   def update(diff, diff_fractional)
     if active && window.button_down?(Gosu::Button::MsLeft)
-      self.points << constrained_position
+      polygon.points << constrained_position
       if game.in_landing_zone?(constrained_position)
         self.active = false
         self.highlighted = true
@@ -51,7 +51,7 @@ class Path < Sprite
   def draw
     previous_x = previous_y = nil
     segment_size = 10.0
-    points.each do |point|
+    polygon.points.each do |point|
       x, y = point.to_a
       if previous_x
         iters = (Gosu::distance(previous_x, previous_y, x, y) / segment_size).ceil
@@ -70,13 +70,12 @@ class Path < Sprite
     end
   end
 
-  
   def move_along(sx, sy, distance)
-    if !points.empty?
+    if !polygon.points.empty?
       # logger.debug "Moving along path #{distance}, #{points.size} points."
       current_x, current_y = sx, sy #points.shift
       loop do
-        x, y = points.first.to_a
+        x, y = polygon.points.first.to_a
         if !x && !active
           destroy
         end
@@ -88,9 +87,9 @@ class Path < Sprite
           current_y += Gosu::offset_y(angle, distance)
 
           #points.unshift [current_x, current_y]
-          return points.first
+          return polygon.points.first
         end
-        points.shift
+        polygon.points.shift
         # logger.debug "  stepped #{distance - new_distance}, #{points.size} points."
         distance = new_distance
         current_x = x
