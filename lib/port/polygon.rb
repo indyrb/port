@@ -14,5 +14,18 @@ class Polygon
     
     self.class.new(new_points, :center => center, :closed => closed)
   end
+  
+  def length
+    last_point = points.first
+    points.tail.inject(0) do |memo, point|
+      memo += (last_point - point).magnitude
+      last_point = point
+      memo
+    end
+  end
+  
+  def perimeter
+    length + (points.last - points.first).magnitude
+  end
 
 end
