@@ -15,9 +15,9 @@ class Vehicle < Scorable
     super
   end
   
-  def new_path(start_x, start_y)
+  def new_path(mouse_position)
     path.destroy if path
-    self.path = Path.new(game, start_x, start_y, self)
+    self.path = Path.new(game, mouse_position, self)
   end
   
   def heading

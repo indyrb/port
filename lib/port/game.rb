@@ -83,7 +83,7 @@ class Game
   end
   
   def add_path(target)
-    self.active_path = target.new_path(window.mouse_x, window.mouse_y)
+    self.active_path = target.new_path(window.mouse_position)
     objects << active_path
   end
 

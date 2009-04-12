@@ -88,6 +88,10 @@ class Vector
     self.rotate_radians(Math::PI * angle / 180.0) # .gosu_to_radians)
   end
 
+  def to_a
+    [x, y]
+  end
+  
   def to_s
     "(#{self.x}, #{self.y})"
   end

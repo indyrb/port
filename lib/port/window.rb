@@ -76,6 +76,10 @@ class Window < Gosu::Window
     end
     draw_line(last_point.x, last_point.y, color, points.first.x, points.first.y, color, z_order)
   end
+  
+  def mouse_position
+    Vector[mouse_x, mouse_y]
+  end
 
   protected
 

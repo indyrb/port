@@ -3,17 +3,17 @@ class Path < Sprite
   
   attr_accessor :points, :active, :vehicle, :highlighted
   
-  def initialize(game, x, y, vehicle)
+  def initialize(game, position, vehicle)
     self.active = true
-    self.points = [[x, y]]
+    self.points = [position]
     self.vehicle = vehicle
     vehicle.path = self
-    super(game, x, y)
+    super(game, position)
   end
   
   def update(diff, diff_fractional)
     if active && window.button_down?(Gosu::Button::MsLeft)
-      self.points << [constrained_x, constrained_y]
+      self.points << constrained_position
       if game.in_landing_zone?(constrained_position)
         self.active = false
         self.highlighted = true
@@ -39,7 +39,6 @@ class Path < Sprite
   end
   
   def constrained_y
-    # puts window.mouse_y
     if window.mouse_y > window.height
       window.height
     elsif window.mouse_y < 1
@@ -52,7 +51,8 @@ class Path < Sprite
   def draw
     previous_x = previous_y = nil
     segment_size = 10.0
-    points.each do |x, y|
+    points.each do |point|
+      x, y = point.to_a
       if previous_x
         iters = (Gosu::distance(previous_x, previous_y, x, y) / segment_size).ceil
         lpx, lpy = previous_x, previous_y
@@ -76,7 +76,7 @@ class Path < Sprite
       # logger.debug "Moving along path #{distance}, #{points.size} points."
       current_x, current_y = sx, sy #points.shift
       loop do
-        x, y = points.first
+        x, y = points.first.to_a
         if !x && !active
           destroy
         end
