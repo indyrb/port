@@ -36,9 +36,4 @@ class Smoke < Sprite
   def collided?(other)
     false
   end
-  
-  def destroy
-    super
-    logger.debug "Smoke died"
-  end
 end
