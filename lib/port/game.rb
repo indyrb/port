@@ -19,6 +19,8 @@ class Game
     @end_time = nil
     @score_text = Gosu::Font.new(window, Gosu::default_font_name, 20)
     @fps_text = Gosu::Font.new(window, Gosu::default_font_name, 15)
+    @landing_strips = Array.new
+
     self.debugging = ENV['DEBUG'] || false
     self.window = window
     self.score = 0
@@ -28,7 +30,7 @@ class Game
 
     @angle = 0.0
 
-    add_landing_strip
+    reset_landing_strips
     add_vehicle
   end
   
@@ -36,12 +38,13 @@ class Game
     obj = LandingStrip.new(self, rand * window.width, rand * window.height,
                            rand * 360)
     # obj = LandingStrip.new(self, window.width / 2, window.height / 2, rand(360))
-    @landing_strip = obj
+    @landing_strips << obj
   end
 
-  def reset_landing_strip
+  def reset_landing_strips
     logger.info("Resetting landing strip")
-    @landing_strip = nil
+    @landing_strips = Array.new
+    add_landing_strip
     add_landing_strip
   end
 
@@ -91,7 +94,6 @@ class Game
   end
 
   def mouse_down(button, x, y)
-    @landing_strip.contains?(x, y) if debugging
     object = find_vehicle(x, y)
 
     if object
@@ -146,7 +148,7 @@ class Game
 
   def update_objects(diff, diff_fractional)
     objects.each_with_index do |e, i|
-      if @landing_strip.contains?(e.x, e.y)
+      if in_landing_zone?(e.x, e.y)
         land(e)
       else
         e.update(diff, diff_fractional)
@@ -167,7 +169,7 @@ class Game
   end
 
   def in_landing_zone?(x, y)
-    @landing_strip.contains?(x, y)
+    @landing_strips.any? { |ls| ls.contains?(x, y) }
   end
 
   def land(obj)
@@ -176,7 +178,7 @@ class Game
   end
 
   def draw
-    @landing_strip.draw
+    @landing_strips.each(&:draw)
 
     objects.each do |e|
       e.draw
@@ -224,7 +226,7 @@ class Game
       x = xi / Steps * window.width
       Steps.to_i.times do |yi|
         y = yi / Steps * window.height
-        color = @landing_strip.contains?(x, y) ? 0x40ff0000 : 0x400000ff
+        color = in_landing_zone?(x, y) ? 0x40ff0000 : 0x400000ff
         window.draw_quad(x, y, color,
                          x + Steps, y, color,
                          x, y + Steps, color,

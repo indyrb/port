@@ -28,14 +28,4 @@ class Field
       cloud.draw
     end
   end
-  
-  def landing_zones
-    [[[208, 271], [218, 512]]]
-  end
-  
-  def in_landing_zone?(x, y)
-    landing_zones.any? do |landing_zone|
-      Range.new(*landing_zone.first).include?(x) && Range.new(*landing_zone.last).include?(y)
-    end
-  end
 end

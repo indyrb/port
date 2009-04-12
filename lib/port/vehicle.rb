@@ -82,8 +82,8 @@ class Vehicle < Scorable
     if path
       px, py = path.points.last
       allowed_dist = 10
-      window.field.in_landing_zone?(x, y) &&
-        window.field.in_landing_zone?(px, py) &&
+      game.in_landing_zone?(x, y) &&
+        game.in_landing_zone?(px, py) &&
         Gosu::distance(self.x, self.y, px, py).abs < allowed_dist
     else
       false
