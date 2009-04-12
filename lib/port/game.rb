@@ -206,24 +206,6 @@ class Game
     end
   end
 
-  def draw_circle(cx, cy, radius, color, z = 0, steps = 20)
-    zx = lx = cx + radius * Math.sin(0)
-    zy = ly = cy + radius * Math.cos(0)
-
-    steps.times do |step|
-      angle = step * 2.0 * Math::PI / steps
-      x = cx + radius * Math.sin(angle)
-      y = cy + radius * Math.cos(angle)
-
-      window.draw_line(lx, ly, color, x, y, color, z)
-
-      lx, ly = x, y
-    end
-
-    # connect the end to the beginning
-    window.draw_line(lx, ly, color, zx, zy, color, z)
-  end
-  
   def exhaust
     extras
   end

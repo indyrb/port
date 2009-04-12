@@ -45,14 +45,11 @@ class Vehicle < Scorable
 
   def draw
     if proximity_alert
-      game.draw_circle(position.x, position.y, 1.1 * width / 2.0, Game::Colors::Proximity, 50)
-      game.draw_circle(position.x - 1, position.y, 1.1 * width / 2.0, Game::Colors::Proximity, 50)
-      game.draw_circle(position.x, position.y - 1, 1.1 * width / 2.0, Game::Colors::Proximity, 50)
-      game.draw_circle(position.x - 1, position.y - 1, 1.1 * width / 2.0, Game::Colors::Proximity, 50)
+      window.circle(position, 1.1 * width / 2.0, Game::Colors::Proximity, 50, :thickness => 2)
     end
     
     if path && path.active
-      game.draw_circle(position.x, position.y, 1.1 * width / 2.0, Game::Colors::Selection, 50)
+      window.circle(position, 1.1 * width / 2.0, Game::Colors::Selection, 50, :thickness => 1)
     end
     sprite.draw_rot(position.x-scale*10, position.y-scale*10, z_order, angle, 0.5, 0.5, scale * 0.7, scale * 0.7, 0x88000000) #, 0.5, 0.5, 1, 1, 0xffffff)
     proximity_draw if game.debugging

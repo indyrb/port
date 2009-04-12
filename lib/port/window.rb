@@ -83,6 +83,26 @@ class Window < Gosu::Window
     end
   end
   
+  def circle(center, radius, color, z_order, options = {})
+    steps = options[:steps] || 20
+    
+    zx = lx = center.x + radius * Math.sin(0)
+    zy = ly = center.y + radius * Math.cos(0)
+
+    steps.times do |step|
+      angle = step * 2.0 * Math::PI / steps
+      x = center.x + radius * Math.sin(angle)
+      y = center.y + radius * Math.cos(angle)
+
+      line(Vector[lx, ly], Vector[x, y], color, z_order, options)
+
+      lx, ly = x, y
+    end
+
+    # connect the end to the beginning
+    line(Vector[lx, ly], Vector[zx, zy], color, z_order, options)
+  end
+  
   def mouse_position
     Vector[mouse_x, mouse_y].clamp(Vector.origin, dimensions)
   end
