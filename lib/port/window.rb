@@ -67,7 +67,7 @@ class Window < Gosu::Window
   ``
   def draw_path(points, color, z_order, close = false, options = {})
     last_point = points.first
-    points[1..-1].each do |point|
+    points.tail.each do |point|
       line(last_point, point, color, z_order, options)
       last_point = point
     end

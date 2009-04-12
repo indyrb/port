@@ -135,10 +135,10 @@ class Game
     diff = diff_fractional = nil
 
     if @last.nil?
-      @last = Gosu::milliseconds
+      @last = Gosu.milliseconds
       return
     else
-      ts ||= Gosu::milliseconds
+      ts ||= Gosu.milliseconds
       if in_play?
         diff = ts - @last
         @last = ts

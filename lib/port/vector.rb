@@ -14,7 +14,7 @@ class Vector
   end
 
   def distance_to(other_vector)
-    Gosu::distance(self.x, self.y, other_vector.x, other_vector.y)
+    Gosu.distance(self.x, self.y, other_vector.x, other_vector.y)
   end
 
   def angle_between(other_vector)
@@ -33,11 +33,11 @@ class Vector
   end
 
   def angle_between_gosu(other_vector)
-    Gosu::angle(self.x, self.y, other_vector.x, other_vector.y)    
+    Gosu.angle(self.x, self.y, other_vector.x, other_vector.y)    
   end
 
   def magnitude
-    Gosu::distance(0, 0, x, y)
+    Gosu.distance(0, 0, x, y)
   end
 
   def dot(other_vector)

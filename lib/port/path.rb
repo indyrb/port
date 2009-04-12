@@ -54,7 +54,7 @@ class Path < Sprite
     polygon.points.each do |point|
       x, y = point.to_a
       if previous_x
-        iters = (Gosu::distance(previous_x, previous_y, x, y) / segment_size).ceil
+        iters = (Gosu.distance(previous_x, previous_y, x, y) / segment_size).ceil
         lpx, lpy = previous_x, previous_y
         1.upto(iters) do |seg|
           if (seg % 2) != 0
@@ -77,12 +77,12 @@ class Path < Sprite
         if !x && !active
           destroy
         end
-        new_distance = distance - Gosu::distance(current_x.to_i, current_y.to_i, x.to_i, y.to_i)
+        new_distance = distance - Gosu.distance(current_x.to_i, current_y.to_i, x.to_i, y.to_i)
         if new_distance <= 0
           # logger.debug "  reached endpoint, last step was #{distance}"
           angle = Gosu::angle(current_x.to_i, current_y.to_i, x.to_i, y.to_i)
-          current_x += Gosu::offset_x(angle, distance)
-          current_y += Gosu::offset_y(angle, distance)
+          current_x += Gosu.offset_x(angle, distance)
+          current_y += Gosu.offset_y(angle, distance)
 
           #points.unshift [current_x, current_y]
           return polygon.points.first
