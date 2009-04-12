@@ -7,7 +7,7 @@ class Cloud < MovingSprite
     restart(rand(window.width))
   end
 
-  def restart(x)
+  def restart(x = nil)
     self.scale = rand(4) + 2
 
     linear_max = 0.1
