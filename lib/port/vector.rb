@@ -37,8 +37,7 @@ class Vector
   end
 
   def magnitude
-    arg = (self.x * self.x) + (self.y * self.y)
-    (arg.nan?) ? 0 : Math.sqrt(arg) 
+    Gosu::distance(0, 0, x, y)
   end
 
   def dot(other_vector)
