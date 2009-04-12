@@ -2,7 +2,7 @@ class Cloud < Sprite
   z_order 100
   sprite_options :file => 'cloud'
   
-  def initialize(game, x, y)
+  def initialize(game, position)
     super
     start
   end
@@ -10,7 +10,7 @@ class Cloud < Sprite
 
   def start
     restart
-    self.x = rand(window.width)
+    position.x = rand(window.width)
   end
   
   def restart
@@ -25,14 +25,14 @@ class Cloud < Sprite
     @av = @av/@av.abs * angle_max
 
     self.angle = rand(360)
-    self.x = window.width + width * scale
+    position.x = window.width + width * scale
     self.color = Gosu::Color.new(255 / scale, 255, 255, 255)
   end
   
   def update
-    self.x -= @xv
+    position.x -= @xv
     self.angle += @av
-    if x + width < 0
+    if position.x + width < 0
       restart
     end
   end

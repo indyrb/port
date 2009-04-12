@@ -6,7 +6,7 @@ class LandingStrip
 
   def initialize(game, cx, cy, angle)
     @game = game
-    @sprite = Sprite.new(game, cx, cy, angle)
+    @sprite = Sprite.new(game, Vector[cx, cy], angle)
     off_x = Gosu.offset_x(angle, height / 2)
     off_y = Gosu.offset_y(angle, height / 2)
     @starting = Vector[cx - off_x, cy - off_y]
@@ -38,10 +38,10 @@ class LandingStrip
   def update(ts, millis)
   end
 
-  def contains?(x, y)
+  def contains?(position)
     hw = width / 2
 
-    v = @starting - Vector[x, y]
+    v = @starting - position
     # v.y *= -1
     # v.x *= -1
     # ov = v.dup

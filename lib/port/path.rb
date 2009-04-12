@@ -14,7 +14,7 @@ class Path < Sprite
   def update(ts, ms)
     if active && window.button_down?(Gosu::Button::MsLeft)
       self.points << [constrained_x, constrained_y]
-      if game.in_landing_zone?(constrained_x, constrained_y)
+      if game.in_landing_zone?(constrained_position)
         self.active = false
         self.highlighted = true
       end
@@ -22,6 +22,10 @@ class Path < Sprite
       self.active = false
       game.active_path = nil
     end
+  end
+  
+  def constrained_position
+    Vector[constrained_x, constrained_y]
   end
   
   def constrained_x

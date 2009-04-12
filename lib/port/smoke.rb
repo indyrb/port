@@ -4,8 +4,8 @@ class Smoke < Sprite
   z_order 9
   sprite_options :file => 'cloud'
   
-  def initialize(game, x, y, velocity)
-    super(game, x, y)
+  def initialize(game, position, velocity)
+    super(game, position)
     self.velocity = velocity / 2000
     self.velocity.x += rand * 0.03
     self.velocity.y += rand * 0.03
@@ -17,8 +17,8 @@ class Smoke < Sprite
     destroy if life < 0
     
     self.angle += 0.4 + rand / 10
-    self.x += velocity.x * (life_percent + 0.5)
-    self.y += velocity.y * (life_percent + 0.5)
+    position.x += velocity.x * (life_percent + 0.5)
+    position.y += velocity.y * (life_percent + 0.5)
   end
   
   def life_percent

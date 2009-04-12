@@ -1,5 +1,6 @@
 class Sprite
-  attr_accessor :x, :y, :image, :game, :window, :angle, :logger, :scale, :color
+  attr_accessor :window, :game, :logger
+  attr_accessor :position, :angle, :scale, :color
 
   class << self
     def z_order(value = nil)
@@ -26,16 +27,16 @@ class Sprite
     end
   end
   
-  def initialize(game, x, y, angle = 0)
+  def initialize(game, position, angle = 0)
     self.game = game
     self.window = game.window
-    self.x = x
-    self.y = y
+    self.logger = game.logger
+    
+    self.position = position
     self.angle = angle
     self.scale = 1
     self.color = 0xffffffff
-    self.logger = game.logger
-    logger.debug "Added #{self.class} at #{x}, #{y}"
+    logger.debug "Added #{self.class} at #{position}"
   end
   
   def z_order
@@ -48,10 +49,10 @@ class Sprite
   def draw
     if game.debugging
       c = Game::Colors::Debug::Sprite
-      window.draw_rect(x - width / 2 , y - height / 2, x + width / 2, y + width / 2, c, 100)
-      window.draw_crosshairs(x, y, c, 100)
+      window.draw_rect(position.x - width / 2 , position.y - height / 2, position.x + width / 2, position.y + width / 2, c, 100)
+      window.draw_crosshairs(position.x, position.y, c, 100)
     end
-    sprite.draw_rot(x, y, z_order, angle, 0.5, 0.5, scale, scale, color)
+    sprite.draw_rot(position.x, position.y, z_order, angle, 0.5, 0.5, scale, scale, color)
   end
   
   def destroy
@@ -62,14 +63,6 @@ class Sprite
     self.class.sprite(window)
   end
 
-  def center_x
-    x + width.to_f / 2
-  end
-  
-  def center_y
-    y + height.to_f / 2
-  end
-  
   def width
     (@width ||= sprite.width) * scale
   end
@@ -78,8 +71,8 @@ class Sprite
     (@height ||= sprite.height) * scale
   end
   
-  def contains?(check_x, check_y)
-    dist = Gosu.distance(x, y, check_x, check_y)
+  def contains?(check_position)
+    dist = Gosu.distance(position.x, position.y, check_position.x, check_position.y)
     (dist <= width)
   end
 
@@ -88,7 +81,7 @@ class Sprite
   end
   
   def distance_to(sprite)
-    Gosu.distance(center_x, center_y, sprite.center_x, sprite.center_y)
+    Gosu.distance(position.x, position.y, sprite.position.x, sprite.position.x)
   end
 
 end

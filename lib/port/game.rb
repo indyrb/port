@@ -56,23 +56,24 @@ class Game
   def add_vehicle(type = nil)
     type ||= Vehicle.subclasses.rand.constantize
 
-    obj = type.new(self, rand(window.width - 100) + 50, rand(window.height - 100) + 50)
+    position = Vector[rand(window.width - 100) + 50, rand(window.height - 100) + 50]
+    obj = type.new(self, position)
     case(rand(4).to_i)
     when 0
-      vector = Direction::South * type.terminal_velocity
-      obj.y = -20
+      velocity = Direction::South * type.terminal_velocity
+      position.y = -20
     when 1
-      vector = Direction::West * type.terminal_velocity
-      obj.x = window.width + 20
+      velocity = Direction::West * type.terminal_velocity
+      position.x = window.width + 20
     when 2
-      vector = Direction::North * type.terminal_velocity
-      obj.y = window.height + 20
+      velocity = Direction::North * type.terminal_velocity
+      position.y = window.height + 20
     when 3
-      vector = Direction::East * type.terminal_velocity
-      obj.x = -20
+      velocity = Direction::East * type.terminal_velocity
+      position.x = -20
     end
-    obj.velocity = vector
-    obj.angle = vector.angle_between_gosu(Vector[-vector.x, -vector.y]) - 180
+    obj.velocity = velocity
+    obj.angle = velocity.angle_between_gosu(Vector[-velocity.x, -velocity.y]) - 180
     objects << obj
   end
   
@@ -98,8 +99,8 @@ class Game
     @paused
   end
 
-  def mouse_down(button, x, y)
-    object = find_vehicle(x, y)
+  def mouse_down(button, position)
+    object = find_vehicle(position)
 
     if object
       logger.debug("Selected #{object.object_id}")
@@ -107,21 +108,21 @@ class Game
     end
   end
 
-  def mouse_up(button, x, y)
+  def mouse_up(button, position)
   end
 
   def in_play?
     !(@paused || @end_time)
   end
 
-  def find_object(x, y)
+  def find_object(position)
     objects.detect do |object|
-      object.is_a?(Vehicle) && object.contains?(x, y)
+      object.is_a?(Vehicle) && object.contains?(position)
     end
   end
 
-  def find_vehicle(x, y)
-    obj = find_object(x, y)
+  def find_vehicle(position)
+    obj = find_object(position)
     return obj if obj.kind_of?(Vehicle)
   end
   
@@ -153,7 +154,7 @@ class Game
 
   def update_objects(diff, diff_fractional)
     objects.each_with_index do |e, i|
-      if in_landing_zone?(e.x, e.y)
+      if in_landing_zone?(e.position)
         land(e)
       else
         e.update(diff, diff_fractional)
@@ -173,8 +174,8 @@ class Game
     window.field.update
   end
 
-  def in_landing_zone?(x, y)
-    @landing_strips.any? { |ls| ls.contains?(x, y) }
+  def in_landing_zone?(position)
+    @landing_strips.any? { |ls| ls.contains?(position) }
   end
 
   def land(obj)
@@ -238,7 +239,7 @@ class Game
       x = xi / Steps * window.width
       Steps.to_i.times do |yi|
         y = yi / Steps * window.height
-        color = in_landing_zone?(x, y) ? 0x40ff0000 : 0x400000ff
+        color = in_landing_zone?(Vector[x, y]) ? 0x40ff0000 : 0x400000ff
         window.draw_quad(x, y, color,
                          x + Steps, y, color,
                          x, y + Steps, color,

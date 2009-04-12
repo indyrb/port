@@ -76,7 +76,7 @@ class Window < Gosu::Window
     when Gosu::Button::KbEscape
       close
     when Gosu::MsLeft, Gosu::MsMiddle, Gosu::MsRight
-      game.mouse_down(id, self.mouse_x, self.mouse_y)
+      game.mouse_down(id, Vector[self.mouse_x, self.mouse_y])
     else
       return false
     end
@@ -87,7 +87,7 @@ class Window < Gosu::Window
   def handle_raw_button_up(id)
     case id
     when Gosu::MsLeft, Gosu::MsMiddle, Gosu::MsRight
-      game.mouse_up(id, self.mouse_x, self.mouse_y)
+      game.mouse_up(id, Vector[self.mouse_x, self.mouse_y])
     end
   end
 

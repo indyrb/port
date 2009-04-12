@@ -26,7 +26,6 @@ class Vehicle < Scorable
 
   def heading=(v)
     @heading = v
-    position = Vector[self.x, self.y]
     self.angle = position.angle_between_gosu(v)
     result = v - position
     self.velocity = result.unit * self.velocity.magnitude
@@ -45,46 +44,46 @@ class Vehicle < Scorable
   end
 
   def draw
-    if proximity_alert
-      game.draw_circle(x, y, 1.1 * width / 2.0, Game::Colors::Proximity, 50)
-      game.draw_circle(x - 1, y, 1.1 * width / 2.0, Game::Colors::Proximity, 50)
-      game.draw_circle(x, y - 1, 1.1 * width / 2.0, Game::Colors::Proximity, 50)
-      game.draw_circle(x - 1, y - 1, 1.1 * width / 2.0, Game::Colors::Proximity, 50)
-    end
+    # if proximity_alert
+    #   game.draw_circle(x, y, 1.1 * width / 2.0, Game::Colors::Proximity, 50)
+    #   game.draw_circle(x - 1, y, 1.1 * width / 2.0, Game::Colors::Proximity, 50)
+    #   game.draw_circle(x, y - 1, 1.1 * width / 2.0, Game::Colors::Proximity, 50)
+    #   game.draw_circle(x - 1, y - 1, 1.1 * width / 2.0, Game::Colors::Proximity, 50)
+    # end
     
     if path && path.active
-      game.draw_circle(x, y, 1.1 * width / 2.0, Game::Colors::Selection, 50)
+      game.draw_circle(position.x, position.y, 1.1 * width / 2.0, Game::Colors::Selection, 50)
     end
-    sprite.draw_rot(x-scale*10, y-scale*10, z_order, angle, 0.5, 0.5, scale * 0.7, scale * 0.7, 0x88000000) #, 0.5, 0.5, 1, 1, 0xffffff)
+    sprite.draw_rot(position.x-scale*10, position.y-scale*10, z_order, angle, 0.5, 0.5, scale * 0.7, scale * 0.7, 0x88000000) #, 0.5, 0.5, 1, 1, 0xffffff)
     super
   end
 
   def update(ts, ms)
     proximity_check
-    add_exhaust(x, y) if rand(10) > 6
+    add_exhaust(Vector[position.x, position.y]) if rand(10) > 6
     if entered
-      if x > window.width || x < 0
-        self.heading = Vector[x, y] + Vector[-velocity.x, velocity.y] * 5
-      elsif y > window.height || y < 0
-        self.heading = Vector[x, y] + Vector[velocity.x, -velocity.y] * 5
+      if position.x > window.width || position.x < 0
+        self.heading = Vector[position.x, position.y] + Vector[-velocity.x, velocity.y] * 5
+      elsif position.y > window.height || position.y < 0
+        self.heading = Vector[position.x, position.y] + Vector[velocity.x, -velocity.y] * 5
       end
     else
-      if x > width / 2 && x < window.width - height / 2 &&
-          y > width / 2 && y < window.height - height / 2
+      if position.x > width / 2 && position.x < window.width - height / 2 &&
+          position.y > width / 2 && position.y < window.height - height / 2
         
         self.entered = true
       end
     end
     
     update_physics(ts, ms)
-    if path && (new_location = path.move_along(self.x, self.y, ts * 0.3))
+    if path && (new_location = path.move_along(position.x, position.y, ts * 0.3))
       self.heading = Vector[*new_location]
     end
   end
   
-  def add_exhaust(x, y)
+  def add_exhaust(position)
     if game.exhaust
-      game.objects << Smoke.new(game, x, y, velocity * -1)
+      game.objects << Smoke.new(game, position, velocity * -1)
     end
   end
     
@@ -124,8 +123,8 @@ class Vehicle < Scorable
 
   def update_physics(ts, ms)
     v = self.velocity * ms
-    self.x += v.x
-    self.y += v.y
+    position.x += v.x
+    position.y += v.y
   end
 
   # I removed the interpolation code
