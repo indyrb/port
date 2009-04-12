@@ -1,5 +1,6 @@
 class Smoke < MovingSprite
   attr_accessor :life
+  
   MaxLife = 150
   z_order 9
   sprite_options :file => 'cloud'

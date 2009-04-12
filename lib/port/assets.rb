@@ -1,7 +1,8 @@
 class Assets
-
+  attr_accessor :window
+  
   def initialize(window)
-    @window = window
+    self.window = window
     preload
   end
   
@@ -14,12 +15,11 @@ class Assets
     @asset_directories << dir
   end
 
-
   def preload
     @assets ||= {}
     Dir.glob(File.join(self.class.asset_dirs, '*.png')).each do |file|
       if !File.directory?(file)
-        @assets[File.basename(file).gsub(File.extname(file), '')] = Gosu::Image.new(@window, file)
+        @assets[File.basename(file).gsub(File.extname(file), '')] = Gosu::Image.new(window, file)
       end
     end
   end

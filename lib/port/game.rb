@@ -33,8 +33,6 @@ class Game
     self.logger = Application.logger
     self.fps_counter = FpsCounter.new
 
-    @angle = 0.0
-
     reset_landing_strips
     add_vehicle
   end

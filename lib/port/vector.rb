@@ -1,5 +1,4 @@
 class Vector
-  
   attr_accessor :x, :y
 
   def self.[](x,y)

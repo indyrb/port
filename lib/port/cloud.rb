@@ -4,15 +4,10 @@ class Cloud < MovingSprite
   
   def initialize(game, position)
     super
-    start
+    restart(rand(window.width))
   end
 
-  def start
-    restart
-    position.x = rand(window.width)
-  end
-  
-  def restart
+  def restart(x)
     self.scale = rand(4) + 2
 
     linear_max = 0.1
@@ -24,7 +19,7 @@ class Cloud < MovingSprite
     self.angular_velocity = av/av.abs * angle_max
 
     self.angle = rand(360)
-    position.x = window.width + width * scale
+    position.x = x || window.width + width * scale
     self.color = Gosu::Color.new(255 / scale, 255, 255, 255)
   end
   

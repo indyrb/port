@@ -1,5 +1,4 @@
 class Field
-  
   attr_accessor :window, :background, :clouds, :game
 
   def initialize(window)
