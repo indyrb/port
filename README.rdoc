@@ -21,7 +21,17 @@ You can also run the game with an IRB console.
 
   bin/port --console
 
+In game keys:
+  S   Sound
+  V   Send a vehicle
+  P   Pause (yeah right!)
+  E   Turns on extras, clouds and smoke
+
+  D   Debug
+
+  L   Resets landing strips
+  K   Adds a landing strip
+
 == Development
 
-Ruby Gosu docs:
-  http://code.google.com/p/gosu/wiki/RubyReference
+{Ruby Gosu docs}[http://code.google.com/p/gosu/wiki/RubyReference]
