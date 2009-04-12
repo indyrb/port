@@ -111,7 +111,7 @@ class Game
 
   def find_object(x, y)
     objects.detect do |object|
-      object.contains?(x, y)
+      object.is_a?(Vehicle) && object.contains?(x, y)
     end
   end
 
