@@ -112,8 +112,16 @@ class Vector
     [x, y]
   end
   
+  def inspect
+    "<Vector #{to_s}>"
+  end
+  
   def to_s
     "(%.2f, %.2f)" % [x, y]
+  end
+  
+  def distnace_to(point)
+    (self - point).magnitude
   end
   
 end

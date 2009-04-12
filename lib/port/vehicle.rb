@@ -74,8 +74,8 @@ class Vehicle < Scorable
     end
     
     update_physics(diff, diff_fractional)
-    if path && (new_location = path.move_along(position.x, position.y, diff * 0.3))
-      self.heading = Vector[*new_location]
+    if path && (new_position = path.move_along(position, diff * 0.3))
+      self.heading = new_position
     end
   end
   
