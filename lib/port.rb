@@ -34,9 +34,8 @@ class Application
     @logger ||= Logger.new(STDOUT)
   end
   
-  def initialize
-    # options = { :width => 1024, :height => 768, :fullscreen => true } unless ENV['DEBUG']
-    self.window = Window.new(self)
+  def initialize(options = {})
+    self.window = Window.new(self, options)
   end
 
   def run

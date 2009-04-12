@@ -2,17 +2,43 @@
 
 APP_ROOT = File.join(File.dirname(__FILE__), "..")
 
+options = {}
+console = false
+ARGV.each do |arg|
+  case(arg)
+  when '--help'
+    puts "Usage: port [OPTIONS]"
+    puts
+    puts "      --console     Starts an IRB console"
+    puts
+    puts "      --1024        Fullscreen at 1024x768"
+    puts "      --1440        Fullscreen at 1440x900"
+    puts "      --1920        Fullscreen at 1920x1200"
+    exit(0)
+  when '--1024'
+    options.merge!(:width => 1024, :height => 768, :fullscreen => true)
+  when '--1440'
+    options.merge!(:width => 1440, :height => 900, :fullscreen => true)
+  when '--1920'
+    options.merge!(:width => 1920, :height => 1200, :fullscreen => true)
+  when '--console'
+    console = true
+  else
+    puts "Unregonized command line option: #{arg}"
+    exit(1)
+  end
+end
+
 $: << File.join(APP_ROOT, "lib")
 require "port"
 
-unless ARGV[0] == "console"
-  Application.new.run
-else
+@app = Application.new(options)
+@window = @app.window
+@game = @window.game
+
+if console
   require 'irb'
 
-  @app = Application.new
-  @window = @app.window
-  @game = @window.game
   Thread.new do
     puts "Instantiated variables: "
     puts "  @port = Application"
@@ -20,6 +46,6 @@ else
     puts "  @game = Game"
     ARGV.shift; IRB.start
   end
-
-  @app.run
 end
+
+@app.run

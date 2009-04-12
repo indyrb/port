@@ -19,7 +19,7 @@ Run the executable.
 
 You can also run the game with an IRB console.
 
-  bin/port console
+  bin/port --console
 
 == Development
 
