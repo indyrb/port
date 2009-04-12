@@ -55,7 +55,14 @@ class Window < Gosu::Window
   def logger
     game.logger
   end
-
+  
+  def draw_rect(x1, y1, x2, y2, c, z)
+    draw_line(x1, y1, c, x2, y1, c, z)
+    draw_line(x2, y1, c, x2, y2, c, z)
+    draw_line(x2, y2, c, x1, y2, c, z)
+    draw_line(x1, y2, c, x1, y1, c, z)
+  end
+  
   protected
 
   def handle_raw_button_down(id)
