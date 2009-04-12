@@ -56,29 +56,31 @@ class Window < Gosu::Window
     game.logger
   end
   
-  def draw_rect(x1, y1, x2, y2, c, z)
-    draw_line(x1, y1, c, x2, y1, c, z)
-    draw_line(x2, y1, c, x2, y2, c, z)
-    draw_line(x2, y2, c, x1, y2, c, z)
-    draw_line(x1, y2, c, x1, y1, c, z)
-  end
-
-  def draw_crosshairs(x, y, c, z)
-    draw_line(x, 0, c, x, height, c, z)
-    draw_line(0, y, c, width, y, c, z)
+  def draw_crosshairs(point, c, z)
+    line(Vector[point.x, 0], Vector[point.x, height], c, z)
+    line(Vector[0, point.y], Vector[width, point.y], c, z)
   end
 
   def draw_polygon(polygon, color, z_order)
     draw_path(polygon.points, color, z_order, polygon.closed)
   end
-  
-  def draw_path(points, color, z_order, close = false)
+  ``
+  def draw_path(points, color, z_order, close = false, options = {})
     last_point = points.first
     points[1..-1].each do |point|
-      draw_line(last_point.x, last_point.y, color, point.x, point.y, color, z_order)
+      line(last_point, point, color, z_order, options)
       last_point = point
     end
-    draw_line(last_point.x, last_point.y, color, points.first.x, points.first.y, color, z_order)
+    line(last_point, points.first, color, z_order, options)
+  end
+  
+  def line(one, two, color, z_order, options = {})
+    draw_line(one.x, one.y, color, two.x, two.y, color, z_order)
+    (options[:thickness] || 0).times do |i|
+      offset = i + 1
+      draw_line(one.x - offset, one.y         , color, two.x - offset, two.y         , color, z_order)
+      draw_line(one.x         , one.y + offset, color, two.x         , two.y + offset, color, z_order)
+    end
   end
   
   def mouse_position

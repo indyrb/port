@@ -59,9 +59,7 @@ class Path < Sprite
         1.upto(iters) do |seg|
           if (seg % 2) != 0
             lx, ly = lerp(previous_x, x, iters, seg), lerp(previous_y, y, iters, seg)
-            window.draw_line(lpx - 1, lpy, color, lx - 1, ly, color, z_order) 
-            window.draw_line(lpx, lpy, color, lx, ly, color, z_order) 
-            window.draw_line(lpx, lpy - 1, color, lx , ly - 1, color, z_order)
+            window.line(Vector[lpx, lpy], Vector[lx, ly], color, z_order, :thickness => 1)
             lpx, lpy = lx, ly
           end
         end
