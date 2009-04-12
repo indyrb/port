@@ -49,10 +49,20 @@ class Sprite
   def draw
     if game.debugging
       c = Game::Colors::Debug::Sprite
-      window.draw_rect(position.x - width / 2 , position.y - height / 2, position.x + width / 2, position.y + width / 2, c, 100)
+      # window.draw_rect(position.x - width / 2 , position.y - height / 2, position.x + width / 2, position.y + width / 2, c, 100)
+      window.draw_polygon(edge_points, c, 100)
       window.draw_crosshairs(position.x, position.y, c, 100)
     end
     sprite.draw_rot(position.x, position.y, z_order, angle, 0.5, 0.5, scale, scale, color)
+  end
+  
+  def edge_points
+    Polygon.new([
+      Vector[position.x - width / 2, position.y - height / 2],
+      Vector[position.x + width / 2, position.y - height / 2],
+      Vector[position.x + width / 2, position.y + height / 2],
+      Vector[position.x - width / 2, position.y + height / 2],
+      ], :center => position, :closed => true).rotate_degrees(angle)
   end
   
   def destroy

@@ -67,6 +67,10 @@ class Window < Gosu::Window
     draw_line(x, 0, c, x, height, c, z)
     draw_line(0, y, c, width, y, c, z)
   end
+
+  def draw_polygon(polygon, color, z_order)
+    draw_path(polygon.points, color, z_order, polygon.closed)
+  end
   
   def draw_path(points, color, z_order, close = false)
     last_point = points.first
