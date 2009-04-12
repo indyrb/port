@@ -51,20 +51,20 @@ class Game
   def add_vehicle(type = nil)
     type ||= Vehicle.subclasses.rand.constantize
 
-    obj = type.new(self, rand(window.width), rand(window.height))
+    obj = type.new(self, rand(window.width - 100) + 50, rand(window.height - 100) + 50)
     case(rand(4).to_i)
     when 0
       vector = Direction::South * type.terminal_velocity
-      obj.y = -30
+      obj.y = -20
     when 1
       vector = Direction::West * type.terminal_velocity
-      obj.x = window.width + 30
+      obj.x = window.width + 20
     when 2
       vector = Direction::North * type.terminal_velocity
-      obj.y = window.height + 30
+      obj.y = window.height + 20
     when 3
-      vector = Direction::North * type.terminal_velocity
-      obj.x = -30
+      vector = Direction::East * type.terminal_velocity
+      obj.x = -20
     end
     obj.velocity = vector
     obj.angle = vector.angle_between_gosu(Vector[-vector.x, -vector.y]) - 180
