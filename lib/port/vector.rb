@@ -93,7 +93,7 @@ class Vector
   end
   
   def to_s
-    "(#{self.x}, #{self.y})"
+    "(%.2f, %.2f)" % [x, y]
   end
   
 end
