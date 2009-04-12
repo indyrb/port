@@ -8,7 +8,6 @@ class Vehicle < Scorable
     def terminal_velocity 
       Vector[20, 20]
     end
-    
   end
 
   def initialize(*args)
@@ -54,41 +53,24 @@ class Vehicle < Scorable
   end
 
   def update(ts, ms)
-    if landed? 
-      score_and_destroy
+    if entered
+      if x > window.width || x < 0
+        self.heading = Vector[x, y] + Vector[-velocity.x, velocity.y] * 5
+      elsif y > window.width || y < 0
+        self.heading = Vector[x, y] + Vector[velocity.x, -velocity.y] * 5
+      end
     else
-      if entered
-        if x > window.width || x < 0
-          self.heading = Vector[x, y] + Vector[-velocity.x, velocity.y] * 5
-        elsif y > window.width || y < 0
-          self.heading = Vector[x, y] + Vector[velocity.x, -velocity.y] * 5
-        end
-      else
-        if x > width / 2 && x < window.width - height / 2 &&
+      if x > width / 2 && x < window.width - height / 2 &&
           y > width / 2 && y < window.height - height / 2
-          
-          self.entered = true
-        end
-      end
-      
-      update_physics(ts, ms)
-      if path && (new_location = path.move_along(self.x, self.y, ts * 0.3))
-        self.heading = Vector[*new_location]
+        
+        self.entered = true
       end
     end
-  end
-
-  def landed?
-    if path
-      px, py = path.points.last
-      allowed_dist = 10
-      game.in_landing_zone?(x, y) &&
-        game.in_landing_zone?(px, py) &&
-        Gosu::distance(self.x, self.y, px, py).abs < allowed_dist
-    else
-      false
+    
+    update_physics(ts, ms)
+    if path && (new_location = path.move_along(self.x, self.y, ts * 0.3))
+      self.heading = Vector[*new_location]
     end
-
   end
     
   def destroy
