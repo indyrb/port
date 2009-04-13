@@ -63,12 +63,12 @@ class Vehicle < Scorable
       destroy if landing_life <= 0
     end
     proximity_check
-    add_exhaust(Vector[position.x, position.y]) if rand(10) > 6
+    add_exhaust(position) if rand(10) > 6
     if entered
       if position.x > window.width || position.x < 0
-        self.heading = Vector[position.x, position.y] + Vector[-velocity.x, velocity.y] * 5
+        self.heading = position + Vector[-velocity.x, velocity.y] * 5
       elsif position.y > window.height || position.y < 0
-        self.heading = Vector[position.x, position.y] + Vector[velocity.x, -velocity.y] * 5
+        self.heading = position + Vector[velocity.x, -velocity.y] * 5
       end
     else
       if position.x > width  && position.x < window.width - height &&
