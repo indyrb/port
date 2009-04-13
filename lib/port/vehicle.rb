@@ -71,8 +71,8 @@ class Vehicle < Scorable
         self.heading = Vector[position.x, position.y] + Vector[velocity.x, -velocity.y] * 5
       end
     else
-      if position.x > width / 2 && position.x < window.width - height / 2 &&
-          position.y > width / 2 && position.y < window.height - height / 2
+      if position.x > width  && position.x < window.width - height &&
+          position.y > width  && position.y < window.height - height
         
         self.entered = true
       end
