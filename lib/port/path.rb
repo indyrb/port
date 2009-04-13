@@ -1,7 +1,7 @@
 class Path < Sprite
   z_order 3
   
-  attr_accessor :polygon, :active, :vehicle, :highlighted
+  attr_accessor :polygon, :active, :vehicle, :highlighted, :landing_strip
   
   def initialize(game, position, vehicle)
     self.active = true
@@ -15,6 +15,7 @@ class Path < Sprite
     if active && window.button_down?(Gosu::Button::MsLeft)
       polygon.points << window.mouse_position
       if landing_strip = game.in_landing_zone?(window.mouse_position)
+        self.landing_strip = landing_strip
         polygon.points << polygon.points.last + Vector.angle(landing_strip.angle + 90) * 30
         self.active = false
         self.highlighted = true
