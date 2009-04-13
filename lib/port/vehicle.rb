@@ -136,7 +136,11 @@ class Vehicle < Scorable
       self.landing_life = 100.0
     end
   end
-    
+
+  def on_landing_approach?
+    path && path.landing_strip
+  end
+  
   private
 
   def update_physics(diff, diff_fractional)
