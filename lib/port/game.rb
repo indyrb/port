@@ -45,7 +45,7 @@ class Game
   end
   
   def add_landing_strip
-    obj = LandingStrip.new(self, rand * window.width, rand * window.height,
+    obj = LandingStrip.new(self, rand(window.width - 100) + 50, rand(window.height - 100) + 50,
                            rand * 360)
     # obj = LandingStrip.new(self, window.width / 2, window.height / 2, rand(360))
     @landing_strips << obj
@@ -65,16 +65,16 @@ class Game
     obj = type.new(self, position)
     case(rand(4).to_i)
     when 0
-      velocity = Direction::South * type.terminal_velocity
+      velocity = Vector.angle(90 + rand(90) - 45) * type.terminal_velocity
       position.y = -20
     when 1
-      velocity = Direction::West * type.terminal_velocity
+      velocity = Vector.angle(180 + rand(90) - 45) * type.terminal_velocity
       position.x = window.width + 20
     when 2
-      velocity = Direction::North * type.terminal_velocity
+      velocity = Vector.angle(270 + rand(90) - 45) * type.terminal_velocity
       position.y = window.height + 20
     when 3
-      velocity = Direction::East * type.terminal_velocity
+      velocity = Vector.angle(0 + rand(90) - 45) * type.terminal_velocity
       position.x = -20
     end
     obj.velocity = velocity
@@ -93,6 +93,7 @@ class Game
   end
 
   def pause
+    @last = nil
     @paused = !@paused
   end
 
@@ -105,11 +106,13 @@ class Game
   end
 
   def mouse_down(button, position)
-    object = find_vehicle(position)
+    if in_play?
+      object = find_vehicle(position)
 
-    if object
-      logger.debug("Selected #{object.object_id}")
-      add_path(object)
+      if object
+        logger.debug("Selected #{object.object_id}")
+        add_path(object)
+      end
     end
   end
 
