@@ -61,25 +61,41 @@ class Window < Gosu::Window
     line(Vector[0, point.y], Vector[width, point.y], c, z)
   end
 
-  def draw_polygon(polygon, color, z_order)
-    draw_path(polygon.points, color, z_order, polygon.closed)
+  def draw_polygon(polygon, color, z_order, options = {})
+    draw_path(polygon.points, color, z_order, polygon.closed, options)
   end
 
   def draw_path(points, color, z_order, close = false, options = {})
+    index = options[:index] || 0
+    offset = options[:offset]
     last_point = points.first
     points.tail.each do |point|
-      line(last_point, point, color, z_order, options)
+      offset, index = line(last_point, point, color, z_order, options.merge(:offset => offset, :index => index))
       last_point = point
     end
-    line(last_point, points.first, color, z_order, options) if close
+    line(last_point, points.first, color, z_order, options.merge(:offset => offset, :index => index)) if close
   end
   
   def line(one, two, color, z_order, options = {})
-    draw_line(one.x, one.y, color, two.x, two.y, color, z_order)
-    (options[:thickness] || 0).times do |i|
-      offset = i + 1
-      draw_line(one.x - offset, one.y         , color, two.x - offset, two.y         , color, z_order)
-      draw_line(one.x         , one.y + offset, color, two.x         , two.y + offset, color, z_order)
+    if options[:dashed]
+      last = nil
+      points, offset = one.distance_steps_to(two, 10, options[:offset] || 0)
+      index = options[:index] || 0
+      points.each do |position|
+        if (index += 1) % 2 == 0 && last 
+          line(last, position, color, z_order, options.except(:dashed))
+        end
+        
+        last = position
+      end
+      [offset, index]
+    else
+      draw_line(one.x, one.y, color, two.x, two.y, color, z_order)
+      (options[:thickness] || 0).times do |i|
+        offset = i + 1
+        draw_line(one.x - offset, one.y         , color, two.x - offset, two.y         , color, z_order)
+        draw_line(one.x         , one.y + offset, color, two.x         , two.y + offset, color, z_order)
+      end
     end
   end
   

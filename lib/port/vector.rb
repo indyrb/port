@@ -124,4 +124,16 @@ class Vector
     (self - point).magnitude
   end
   
+  def distance_steps_to(point, step_distance, offset = 0)
+    points = []
+    base = (point - self).unit
+    distance = distance_to(point) + offset
+    points << self
+    (distance / step_distance - 1).ceil.times do |step|
+      points << (base * ((step + 1) * step_distance - offset)) + self
+    end
+    points << point
+    [points, distance % step_distance]
+  end
+  
 end
