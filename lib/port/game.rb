@@ -65,16 +65,16 @@ class Game
     obj = type.new(self, position)
     case(rand(4).to_i)
     when 0
-      velocity = Direction::South * type.terminal_velocity
+      velocity = Vector.angle(90 + rand(90) - 45) * type.terminal_velocity
       position.y = -20
     when 1
-      velocity = Direction::West * type.terminal_velocity
+      velocity = Vector.angle(180 + rand(90) - 45) * type.terminal_velocity
       position.x = window.width + 20
     when 2
-      velocity = Direction::North * type.terminal_velocity
+      velocity = Vector.angle(270 + rand(90) - 45) * type.terminal_velocity
       position.y = window.height + 20
     when 3
-      velocity = Direction::East * type.terminal_velocity
+      velocity = Vector.angle(0 + rand(90) - 45) * type.terminal_velocity
       position.x = -20
     end
     obj.velocity = velocity
