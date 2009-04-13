@@ -83,20 +83,25 @@ class Sprite
   end
   
   def contains?(check_position)
-    dist = Gosu.distance(position.x, position.y, check_position.x, check_position.y)
-    (dist <= width)
+    position.distance_to(check_position) <= width
   end
 
   def collided?(sprite)
-    distance_to(sprite) <= (width/2) + (sprite.width/2)
-  end
-  
-  def distance_to(sprite)
-    Gosu.distance(position.x, position.y, sprite.position.x, sprite.position.y)
+    if can_collide_with?(sprite)
+      position.distance_to(sprite.position) <= (width/2) + (sprite.width/2)
+    end
   end
   
   def clickable?
     false
+  end
+  
+  def collidable?
+    false
+  end
+  
+  def can_collide_with?(sprite)
+    self != sprite && collidable? && sprite.collidable?
   end
 
 end

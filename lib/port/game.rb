@@ -147,8 +147,8 @@ class Game
       end
       e.update(diff, diff_fractional)
       
-      objects.tail.each do |o|
-        if o != e && o.collided?(e)
+      objects.each do |o|
+        if o.collided?(e)
           window.play_sound("crash#{1 + rand(3)}")
           o.destroy
           e.destroy

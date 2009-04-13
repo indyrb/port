@@ -103,17 +103,11 @@ class Vehicle < Scorable
     super
   end
 
-  def collided?(sprite)
-    if sprite.is_a?(Vehicle)
-      super
-    end
-  end
-  
   def proximity_check
     initial_value = proximity_alert
     self.proximity_alert = false
     game.objects.each do |object|
-      if object != self && object.is_a?(Vehicle) && distance_to(object) < 80
+      if within_collision_proximity_of?(object)
         self.proximity_alert = true
         object.proximity_alert = true
       end
@@ -123,10 +117,14 @@ class Vehicle < Scorable
 
   def proximity_draw
     game.objects.each do |object|
-      if object != self && object.is_a?(Vehicle) && distance_to(object) < 80
+      if within_collision_proximity_of?(object)
         window.draw_path([position, object.position], Game::Colors::Debug::Proximity, Game::ZOrder::Debug::Proximity)
       end
     end
+  end
+  
+  def within_collision_proximity_of?(sprite)
+    can_collide_with?(sprite) && position.distance_to(sprite.position) < 80
   end
 
   def land
@@ -142,6 +140,10 @@ class Vehicle < Scorable
   end
   
   def clickable?
+    true
+  end
+  
+  def collidable?
     true
   end
   
