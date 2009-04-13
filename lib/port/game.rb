@@ -92,7 +92,7 @@ class Game
 
   def mouse_down(button, position)
     if in_play?
-      object = find_vehicle(position)
+      object = find_object(position, :clickable?)
 
       if object
         logger.debug("Selected #{object.object_id}")
@@ -108,15 +108,10 @@ class Game
     !(@paused || @end_time)
   end
 
-  def find_object(position)
+  def find_object(position, selection_method)
     objects.detect do |object|
-      object.is_a?(Vehicle) && object.contains?(position)
+      object.send(selection_method) && object.contains?(position)
     end
-  end
-
-  def find_vehicle(position)
-    obj = find_object(position)
-    return obj if obj.kind_of?(Vehicle)
   end
   
   def update

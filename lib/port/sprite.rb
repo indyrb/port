@@ -94,5 +94,9 @@ class Sprite
   def distance_to(sprite)
     Gosu.distance(position.x, position.y, sprite.position.x, sprite.position.y)
   end
+  
+  def clickable?
+    false
+  end
 
 end

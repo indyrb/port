@@ -141,6 +141,10 @@ class Vehicle < Scorable
     path && path.landing_strip
   end
   
+  def clickable?
+    true
+  end
+  
   private
 
   def update_physics(diff, diff_fractional)
