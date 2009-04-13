@@ -17,6 +17,8 @@ Run the executable.
 
   bin/port
 
+Now just click and drag a plane to draw a path to a safe landing.
+
 You can also run the game with an IRB console.
 
   bin/port --console
