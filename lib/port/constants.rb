@@ -5,7 +5,8 @@ class Game
       Proximity = 0xffff0000 # red
       Score = 0xffffffff     # white
       FPS = 0xffffff00       # yellow
-      IncomingVehicle = 0xffff0000
+      IncomingVehicle = 0xffff0000 #red
+      NewVehicle = 0xff00ff00 #green
       module Debug
         module Sprite
           Outline = 0xff00ff00

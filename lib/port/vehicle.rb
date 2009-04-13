@@ -74,7 +74,7 @@ class Vehicle < Scorable
     proximity_draw if game.debugging
     
     if (d = distance_to_edge) > 0
-      window.circle(position, d ** 2 * 0.3, Game::Colors::IncomingVehicle, Game::ZOrder::IncomingVehicle, :thickness => 3)
+      window.circle(position, d ** 2 * 0.3, Game::Colors::NewVehicle, Game::ZOrder::IncomingVehicle, :thickness => 3)
     end
     super
   end
