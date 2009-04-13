@@ -172,8 +172,6 @@ class Game
       e.draw
     end
 
-    draw_debuggings if debugging
-
     @score_text.draw("Score: #{self.score}", (window.width - 75), 10, ZOrder::Score, 1.0, 1.0, Colors::Score)
     @fps_text.draw("FPS: #{self.fps_counter.fps}", (window.width - 60), (window.height - 20), ZOrder::FPS, 1.0, 1.0, Colors::FPS)
   end
@@ -197,23 +195,6 @@ class Game
   def deg2rad(deg)
     deg * Math::PI / 180.0
   end
-
-  Steps = 20.0
-  def draw_debuggings
-    Steps.to_i.times do |xi|
-      x = xi / Steps * window.width
-      Steps.to_i.times do |yi|
-        y = yi / Steps * window.height
-        color = in_landing_zone?(Vector[x, y]) ? 0x40ff0000 : 0x400000ff
-        window.draw_quad(x, y, color,
-                         x + Steps, y, color,
-                         x, y + Steps, color,
-                         x+Steps, y+Steps, color,
-                         ZOrder::Debug::LandingTest)
-      end
-    end
-  end
-
 
 end
 

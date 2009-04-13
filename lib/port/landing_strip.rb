@@ -1,6 +1,8 @@
 class LandingStrip
   include Game::Constants
 
+  attr_accessor :landing_point
+
   class Sprite < ::Sprite
     z_order 1
     sprite_options :file => 'landing_strip'
@@ -13,6 +15,8 @@ class LandingStrip
     off_y = Gosu.offset_y(angle, height / 2)
     @starting = Vector[cx - off_x, cy - off_y]
     @ending = Vector[cx + off_x, cy + off_y]
+
+    self.landing_point = Vector.angle(angle - 90) * (height / 2 - width / 2) + @sprite.position
   end
 
   def angle
@@ -28,6 +32,9 @@ class LandingStrip
   end
 
   def draw
+    if @game.debugging
+      @sprite.window.circle(landing_point, width / 2, Colors::Debug::LandingStrip, ZOrder::Debug::LandingStrip, :thickness => 1)
+    end
     @sprite.draw
   end
 
@@ -35,23 +42,6 @@ class LandingStrip
   end
 
   def contains?(position)
-    hw = width / 2
-
-    v = @starting - position
-    # v.y *= -1
-    # v.x *= -1
-    # ov = v.dup
-    v = v.rotate_degrees(-angle)
-    # ret = (-hw..hw).include?(v.x) && (0..height).include?(v.y)
-    ret = Range.new(-hw, hw).include?(v.x) && Range.new(0.0, height).include?(v.y)
-
-#     @game.logger.debug("Rotated #{ov} by #{angle} to #{v}")
-#     @game.logger.debug("\tStarting: #{@starting}")
-#     @game.logger.debug("\tTranslated: #{@starting - Vector[x, y]}")
-#     @game.logger.debug("\tPoint: #{x}, #{y}")
-#     @game.logger.debug("\tBounds: #{-hw}..#{hw}, #{0}..#{height}")
-#     @game.logger.debug("#{x}, #{y} is landing") if ret
-
-    ret
+    landing_point.distance_to(position) < width / 2
   end
 end

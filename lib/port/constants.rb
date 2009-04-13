@@ -10,6 +10,7 @@ class Game
           Outline = 0xff00ff00
           Center = 0xff008800
         end
+        LandingStrip = 0xffffffff
         Proximity = 0xffff00ff
       end
     end
@@ -23,7 +24,7 @@ class Game
           Outline = 10
           Center = 10
         end
-        LandingTest = 100
+        LandingStrip = 100
         Proximity = 300
       end
     end
