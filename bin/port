@@ -11,10 +11,13 @@ ARGV.each do |arg|
     puts
     puts "      --console     Starts an IRB console"
     puts
+    puts "      --nosound     Disables sound"
     puts "      --1024        Fullscreen at 1024x768"
     puts "      --1440        Fullscreen at 1440x900"
     puts "      --1920        Fullscreen at 1920x1200"
     exit(0)
+  when '--nosound'
+    options.merge!(:sound => false)
   when '--1024'
     options.merge!(:width => 1024, :height => 768, :fullscreen => true)
   when '--1440'

@@ -24,9 +24,9 @@ class Window < Gosu::Window
     @sounds
   end
 
-  def play_sound(sound)
-    if sound && sounds[sound.to_s]
-      sounds[sound.to_s].play
+  def play_sound(sample_name)
+    if sound && sounds[sample_name.to_s]
+      sounds[sample_name.to_s].play
     end
   end
   
