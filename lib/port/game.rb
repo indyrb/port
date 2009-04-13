@@ -169,7 +169,7 @@ class Game
       
       objects.tail.each do |o|
         if o != e && o.collided?(e)
-          window.play_sound(:crash)
+          window.play_sound("crash#{1 + rand(3)}")
           o.destroy
           e.destroy
           logger.debug("Crash #{o.position} and #{e.position}")
