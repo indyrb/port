@@ -1,4 +1,6 @@
 class Game
+  include Game::Constants
+  
   module Direction
     North = Vector[ 0, -1]
     East =  Vector[ 1,  0]
@@ -6,23 +8,6 @@ class Game
     West =  Vector[-1,  0]
   end
   
-  module Colors
-    Selection = 0xffffffff # white
-    Proximity = 0xffff0000 # red
-    Score = 0xffffffff     # white
-    FPS = 0xffffff00       # yellow
-    module Debug
-      Sprite = 0xff00ff00
-      Proximity = 0xffff00ff
-    end
-  end
-  
-  module ZOrder
-    module Debug
-      Proximity = 300
-    end
-  end
-
   attr_accessor :score, :objects, :level, :logger, :window, :active_path, :fps_counter, :debugging, :extras
 
   def initialize(window)
@@ -194,8 +179,8 @@ class Game
 
     draw_debuggings if debugging
 
-    @score_text.draw("Score: #{self.score}", (window.width - 75), 10, 1, 1.0, 1.0, Colors::Score)
-    @fps_text.draw("FPS: #{self.fps_counter.fps}", (window.width - 60), (window.height - 20), 1, 1.0, 1.0, Colors::FPS)
+    @score_text.draw("Score: #{self.score}", (window.width - 75), 10, ZOrder::Score, 1.0, 1.0, Colors::Score)
+    @fps_text.draw("FPS: #{self.fps_counter.fps}", (window.width - 60), (window.height - 20), ZOrder::FPS, 1.0, 1.0, Colors::FPS)
   end
   
   def remove(*objs)
@@ -229,7 +214,7 @@ class Game
                          x + Steps, y, color,
                          x, y + Steps, color,
                          x+Steps, y+Steps, color,
-                         100)
+                         ZOrder::Debug::LandingTest)
       end
     end
   end

@@ -1,4 +1,6 @@
 class Sprite
+  include Game::Constants
+  
   attr_accessor :window, :game, :logger
   attr_accessor :position, :angle, :scale, :color
 
@@ -49,8 +51,8 @@ class Sprite
   def draw
     if game.debugging
       c = Game::Colors::Debug::Sprite
-      window.draw_polygon(edge_points, c, 100)
-      window.draw_crosshairs(position, c, 100)
+      window.draw_polygon(edge_points, Colors::Debug::Sprite::Outline, ZOrder::Debug::Sprite::Outline)
+      window.draw_crosshairs(position, Colors::Debug::Sprite::Center, ZOrder::Debug::Sprite::Center)
     end
     sprite.draw_rot(position.x, position.y, z_order, angle, 0.5, 0.5, scale, scale, color)
   end

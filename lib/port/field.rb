@@ -1,4 +1,6 @@
 class Field
+  include Game::Constants
+
   attr_accessor :window, :background, :clouds, :game
 
   def initialize(window)
@@ -22,7 +24,7 @@ class Field
   def draw
     (window.width.to_f / background.width).ceil.times do |xc|
       (window.height.to_f / background.height).ceil.times do |yc|
-        background.draw(xc * background.width, yc * background.height, 0)
+        background.draw(xc * background.width, yc * background.height, ZOrder::Field)
       end
     end
 

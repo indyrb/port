@@ -1,4 +1,6 @@
 class LandingStrip
+  include Game::Constants
+
   class Sprite < ::Sprite
     z_order 1
     sprite_options :file => 'landing_strip'
@@ -27,12 +29,6 @@ class LandingStrip
 
   def draw
     @sprite.draw
-
-    if @game.debugging
-      @game.window.draw_line(@starting.x, @starting.y, 0xffff0000,
-                             @ending.x, @ending.y, 0xff0000ff,
-                             100)
-    end
   end
 
   def update(ts, millis)
