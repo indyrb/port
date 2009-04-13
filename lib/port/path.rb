@@ -27,8 +27,6 @@ class Path < Sprite
   end
 
   def draw
-    previous_x = previous_y = nil
-    segment_size = 10.0
     window.draw_polygon(polygon, color, z_order, :dashed => true, :thickness => 2)
   end
 
