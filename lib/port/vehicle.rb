@@ -1,5 +1,5 @@
 class Vehicle < Scorable
-  attr_accessor :path, :entered, :proximity_alert
+  attr_accessor :path, :entered, :proximity_alert, :landing_life
 
   score 1
   z_order 10
@@ -11,8 +11,9 @@ class Vehicle < Scorable
   end
 
   def initialize(*args)
-    self.entered = false
     super
+    self.entered = false
+    self.scale = 0.5
   end
   
   def new_path(mouse_position)
@@ -57,6 +58,10 @@ class Vehicle < Scorable
   end
 
   def update(diff, diff_fractional)
+    if landing_life
+      self.landing_life -= 1
+      destroy if landing_life <= 0
+    end
     proximity_check
     add_exhaust(Vector[position.x, position.y]) if rand(10) > 6
     if entered
@@ -85,6 +90,14 @@ class Vehicle < Scorable
     end
   end
     
+  def scale
+    if landing_life
+      @scale * ((landing_life / 100) * 0.3 + 0.7)
+    else
+      @scale
+    end
+  end
+  
   def destroy
     path.destroy if path
     super
@@ -116,13 +129,12 @@ class Vehicle < Scorable
     end
   end
 
-  def scale
-    0.5
-  end
-  
   def land
-    window.play_sound(:landing)
-    score_and_destroy
+    unless landing_life
+      window.play_sound(:landing)
+      add_score
+      self.landing_life = 100.0
+    end
   end
     
   private

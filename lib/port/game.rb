@@ -161,17 +161,16 @@ class Game
     objects.each_with_index do |e, i|
       if in_landing_zone?(e.position)
         land(e)
-      else
-        e.update(diff, diff_fractional)
-        
-        objects.tail.each do |o|
-          if o != e && o.collided?(e)
-            window.play_sound(:crash)
-            o.destroy
-            e.destroy
-            logger.debug("Crash #{o.position} and #{e.position}")
-            # Game over, mother fucker.
-          end
+      end
+      e.update(diff, diff_fractional)
+      
+      objects.tail.each do |o|
+        if o != e && o.collided?(e)
+          window.play_sound(:crash)
+          o.destroy
+          e.destroy
+          logger.debug("Crash #{o.position} and #{e.position}")
+          # Game over, mother fucker.
         end
       end
     end

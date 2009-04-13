@@ -12,8 +12,7 @@ class Scorable < Sprite
     self.class.score
   end
 
-  def score_and_destroy
+  def add_score
     game.score += score
-    destroy
   end
 end
