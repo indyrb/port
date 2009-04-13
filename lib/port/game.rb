@@ -93,6 +93,7 @@ class Game
   end
 
   def pause
+    @last = nil
     @paused = !@paused
   end
 
@@ -105,11 +106,13 @@ class Game
   end
 
   def mouse_down(button, position)
-    object = find_vehicle(position)
+    if in_play?
+      object = find_vehicle(position)
 
-    if object
-      logger.debug("Selected #{object.object_id}")
-      add_path(object)
+      if object
+        logger.debug("Selected #{object.object_id}")
+        add_path(object)
+      end
     end
   end
 

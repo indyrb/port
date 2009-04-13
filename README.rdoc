@@ -26,7 +26,7 @@ You can also run the game with an IRB console.
 In game keys:
   S   Sound
   V   Send a vehicle
-  P   Pause (yeah right!)
+  P   Pause
   E   Turns on extras, clouds and smoke
 
   D   Debug
