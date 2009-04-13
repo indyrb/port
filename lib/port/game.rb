@@ -45,7 +45,7 @@ class Game
   end
   
   def add_landing_strip
-    obj = LandingStrip.new(self, rand * window.width, rand * window.height,
+    obj = LandingStrip.new(self, rand(window.width - 100) + 50, rand(window.height - 100) + 50,
                            rand * 360)
     # obj = LandingStrip.new(self, window.width / 2, window.height / 2, rand(360))
     @landing_strips << obj
