@@ -179,7 +179,7 @@ class Game
   end
 
   def in_landing_zone?(position)
-    @landing_strips.any? { |ls| ls.contains?(position) }
+    @landing_strips.detect { |ls| ls.contains?(position) }
   end
 
   def land(obj)

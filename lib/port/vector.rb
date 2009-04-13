@@ -7,6 +7,10 @@ class Vector
   def self.[](x,y)
     Vector.new(x,y)
   end
+  
+  def self.angle(angle)
+    Vector[1,0].rotate_degrees(angle)
+  end
 
   def initialize(x,y)
     self.x = x.to_f
