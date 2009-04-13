@@ -43,6 +43,24 @@ class Vehicle < Scorable
   def velocity
     @velocity || Vector[0,0]
   end
+  
+  def distance_to_edge
+    x_distance = 
+      if position.x < window.width / 2
+        - position.x
+      else
+        position.x - window.width
+      end
+
+    y_distance = 
+      if position.y < window.height / 2
+        - position.y
+      else
+        position.y - window.height
+      end
+
+    [x_distance, y_distance].max
+  end
 
   def draw
     if proximity_alert
@@ -54,6 +72,10 @@ class Vehicle < Scorable
     end
     sprite.draw_rot(position.x-scale*10, position.y-scale*10, z_order, angle, 0.5, 0.5, scale * 0.7, scale * 0.7, 0x88000000) #, 0.5, 0.5, 1, 1, 0xffffff)
     proximity_draw if game.debugging
+    
+    if (d = distance_to_edge) > 0
+      window.circle(position, d ** 2 * 0.3, Game::Colors::IncomingVehicle, Game::ZOrder::IncomingVehicle, :thickness => 3)
+    end
     super
   end
 
