@@ -6,7 +6,7 @@ class Field
   def initialize(window)
     self.window = window
     self.game = window.game
-    self.background = window.assets.by_name('background')
+    self.background = window.assets.by_name("background#{1 + rand(3)}")
     self.clouds = []
     (rand(10) + 3).times do
       clouds << Cloud.new(window.game, Vector[rand(window.width), rand(window.height)])
