@@ -34,8 +34,4 @@ class Smoke < MovingSprite
   def color
     Gosu::Color.new((50 * life_percent).to_i, 255, 255, 255)
   end
-  
-  def collided?(other)
-    false
-  end
 end
