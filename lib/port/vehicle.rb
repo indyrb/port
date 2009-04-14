@@ -123,8 +123,8 @@ class Vehicle < Scorable
   end
     
   def scale
-    if landing_life
-      @scale * ((landing_life / 100) * 0.3 + 0.7)
+    if landing_percent
+      @scale * ((landing_percent) * 0.3 + 0.7)
     else
       @scale
     end
@@ -166,6 +166,12 @@ class Vehicle < Scorable
       self.landing_life = 100.0
     end
   end
+  
+  def landing_percent
+    if landing_life
+      landing_life / 100.0
+    end
+  end
 
   def on_landing_approach?
     path && path.landing_strip
@@ -182,7 +188,13 @@ class Vehicle < Scorable
   private
 
   def update_physics(diff, diff_fractional)
-    v = self.velocity * diff_fractional
+    v = 
+      if landing_life
+        self.velocity * diff_fractional * landing_percent
+      else
+        self.velocity * diff_fractional
+      end
+      
     position.x += v.x
     position.y += v.y
   end

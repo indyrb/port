@@ -138,9 +138,6 @@ class Game
 
   def update_objects(diff, diff_fractional)
     objects.each_with_index do |e, i|
-      if e.is_a?(Vehicle) && e.on_landing_approach? && in_landing_zone?(e.position)
-        e.land
-      end
       e.update(diff, diff_fractional)
       
       objects.each do |o|

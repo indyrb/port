@@ -27,7 +27,7 @@ class Path < Sprite
   
   def add_landing
     polygon.points << landing_strip.landing_point
-    polygon.points << landing_strip.landing_point + Vector.angle(landing_strip.angle + 90) * 30
+    polygon.points << landing_strip.landing_point + Vector.angle(landing_strip.angle + 90) * 20
   end
   
   def finish
@@ -48,7 +48,11 @@ class Path < Sprite
   def move_along(start, distance)
     new_position = polygon.follow_and_remove(start, distance)
     if !active && polygon.empty?
-      destroy
+      if landing_strip
+        vehicle.land
+      else
+        destroy
+      end
     end
     new_position
   end
