@@ -36,6 +36,58 @@ class Polygon
     points.empty?
   end
   
+  def average
+    unless empty?
+      average_x = points.collect(&:x).sum.to_f / points.size
+      average_y = points.collect(&:y).sum.to_f / points.size
+      Vector[average_x, average_y]
+    end
+  end
+  
+  def split(count)
+    segment_legnth = length.to_f / count
+    polygons = []
+    count.times do |i|
+      polygons << Polygon.new([
+        follow(segment_legnth * i),
+        follow(segment_legnth * (i + 1))
+      ], :closed => false)
+    end
+    polygons
+  end
+  
+  def interpolate(count, width)
+    segment_legnth = length.to_f / count
+    averages = []
+    count.times do |i|
+      averages << Polygon.new([
+        follow(segment_legnth * i - width / 2),
+        follow(segment_legnth * i + width / 2)
+      ]).average
+    end
+    self.class.new([points.first] + averages + [points.last], options)
+  end
+  
+  def follow(distance)
+    unless empty?
+      if distance < 0
+        return points.first
+      end
+      current, *tail = points
+      tail.each do |point|
+        new_distance = distance - current.distance_to(point)
+        if new_distance <= 0
+          # hit reverse!
+          current += ((current - point) * -1).unit * distance
+          return current
+        end
+        distance = new_distance
+        current = point
+      end
+    end
+    current || points.last
+  end
+  
   def follow_and_remove(start, distance)
     unless empty?
       current = start

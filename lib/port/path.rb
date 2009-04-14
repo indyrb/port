@@ -17,13 +17,23 @@ class Path < Sprite
       if landing_strip = game.in_landing_zone?(window.mouse_position)
         self.landing_strip = landing_strip
         polygon.points << polygon.points.last + Vector.angle(landing_strip.angle + 90) * 30
-        self.active = false
         self.highlighted = true
+        finish
       end
     elsif active
-      self.active = false
-      game.active_path = nil
+      finish
     end
+  end
+  
+  def finish
+    self.active = false
+    game.active_path = nil
+    smooth
+  end
+  
+  def smooth
+    steps = (polygon.length / 5).to_f.ceil
+    self.polygon = polygon.interpolate(steps, 10).interpolate(steps, 20)
   end
 
   def draw
