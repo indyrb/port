@@ -124,7 +124,7 @@ class Vehicle < Scorable
     
   def scale
     if landing_percent
-      @scale * ((landing_percent) * 0.3 + 0.7)
+      @scale * ((landing_percent.clamp(0.5, 100)) * 1.3 - 0.2)
     else
       @scale
     end
