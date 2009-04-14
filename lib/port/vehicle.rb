@@ -118,7 +118,7 @@ class Vehicle < Scorable
   
   def add_exhaust(position)
     if game.exhaust
-      game.objects << Smoke.new(game, position, velocity * -1)
+      game.objects << Smoke.new(game, position.dup, velocity * -1)
     end
   end
     
