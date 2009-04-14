@@ -2,16 +2,14 @@
 
 A game loosely based off of Flight Control for the iPhone.
 
-Screenshot after day 1.
-
-http://github.com/indyrb/port/raw/master/screenshots/day_1.png
+http://github.com/indyrb/port/raw/master/screenshots/2009-04-14.png
 
 
 == Running
 
 Install the Gosu gem.
 
-  gem install gosu
+  sudo gem install gosu
 
 Run the executable. Add --help to see the command line options
 
