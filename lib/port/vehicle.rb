@@ -176,7 +176,7 @@ class Vehicle < Scorable
   end
   
   def collidable?
-    true
+    !landing_life
   end
   
   private
