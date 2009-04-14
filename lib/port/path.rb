@@ -16,13 +16,18 @@ class Path < Sprite
       polygon.points << window.mouse_position
       if landing_strip = game.in_landing_zone?(window.mouse_position)
         self.landing_strip = landing_strip
-        polygon.points << polygon.points.last + Vector.angle(landing_strip.angle + 90) * 30
+        add_landing
         self.highlighted = true
         finish
       end
     elsif active
       finish
     end
+  end
+  
+  def add_landing
+    polygon.points << landing_strip.landing_point
+    polygon.points << landing_strip.landing_point + Vector.angle(landing_strip.angle + 90) * 30
   end
   
   def finish
