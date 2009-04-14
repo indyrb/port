@@ -27,7 +27,7 @@ class Path < Sprite
   end
 
   def draw
-    window.draw_polygon(polygon, color, z_order, :dashed => true, :thickness => 2)
+    window.draw_polygon(polygon, color, z_order, :dashed => true, :thickness => 3)
   end
 
   def move_along(start, distance)

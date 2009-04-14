@@ -90,13 +90,27 @@ class Window < Gosu::Window
       end
       [offset, index]
     else
-      draw_line(one.x, one.y, color, two.x, two.y, color, z_order)
-      (options[:thickness] || 0).times do |i|
-        offset = i + 1
-        draw_line(one.x - offset, one.y         , color, two.x - offset, two.y         , color, z_order)
-        draw_line(one.x         , one.y + offset, color, two.x         , two.y + offset, color, z_order)
+      thickness = options[:thickness] || 1
+      if thickness == 1
+        draw_line(one.x, one.y, color, two.x, two.y, color, z_order)
+      else
+        right_angle = Vector.angle(one.angle_between_gosu(two)) * (thickness / 2)
+        polygon = Polygon.new([one + right_angle, two + right_angle, two - right_angle, one - right_angle], :closed => true)
+        quad(polygon, color, z_order, options.except(:thickness))
       end
+
     end
+  end
+  
+  def quad(polygon, color, z_order, options = {})
+    a, b, c, d = polygon.points
+    draw_quad(
+      a.x, a.y, color,
+      b.x, b.y, color,
+      d.x, d.y, color,  # reordered for solid drawing
+      c.x, c.y, color,  # reordered for solid drawing
+      z_order
+    )
   end
   
   def circle(center, radius, color, z_order, options = {})

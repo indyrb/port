@@ -2,10 +2,6 @@ class Game
   include Game::Constants
   
   module Direction
-    North = Vector[ 0, -1]
-    East =  Vector[ 1,  0]
-    South = Vector[ 0,  1]
-    West =  Vector[-1,  0]
   end
   
   attr_accessor :score, :objects, :level, :logger, :window, :active_path, :fps_counter, :debugging, :extras

@@ -12,7 +12,11 @@ class Polygon
       (point - center).rotate_degrees(angle) + center
     end
     
-    self.class.new(new_points, :center => center, :closed => closed)
+    self.class.new(new_points, options)
+  end
+  
+  def options
+    { :center => center, :closed => closed }
   end
   
   def length
@@ -53,6 +57,11 @@ class Polygon
         end
       end
     end
+  end
+  
+  def +(vector)
+    new_points = points.collect { |p| p + vector }
+    Polygon.new(new_points, options)
   end
   
 end
