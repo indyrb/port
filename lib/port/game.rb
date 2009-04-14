@@ -44,7 +44,7 @@ class Game
   end
 
   def add_vehicle(type = nil)
-    type ||= Vehicle.subclasses.rand.constantize
+    type ||= Vehicle.weighted_options.choose_weighted.to_s.classify.constantize
 
     position = Vector[rand(window.width - 100) + 50, rand(window.height - 100) + 50]
     obj = type.new(self, position)

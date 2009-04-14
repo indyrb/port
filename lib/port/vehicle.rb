@@ -8,6 +8,16 @@ class Vehicle < Scorable
     def terminal_velocity 
       Vector[20, 20]
     end
+    
+    def weighted_options
+      {
+        :bomber => 1,
+        :fighter => 0.6,
+        :old_fighter => 0.9,
+        :space_shuttle => 0.2,
+        :stealth_bomber => 0.3
+      }
+    end
   end
 
   def initialize(*args)

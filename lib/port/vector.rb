@@ -124,7 +124,7 @@ class Vector
     "(%.2f, %.2f)" % [x, y]
   end
   
-  def distnace_to(point)
+  def distance_to(point)
     (self - point).magnitude
   end
   
