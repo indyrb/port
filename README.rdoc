@@ -13,15 +13,11 @@ Install the Gosu gem.
 
   gem install gosu
 
-Run the executable.
+Run the executable. Add --help to see the command line options
 
   bin/port
 
 Now just click and drag a plane to draw a path to a safe landing.
-
-You can also run the game with an IRB console.
-
-  bin/port --console
 
 In game keys:
   S   Sound
