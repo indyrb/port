@@ -3,6 +3,22 @@ class Vector
   def self.origin
     Vector[0, 0]
   end
+
+  def self.north
+    Vector[0, -1]
+  end
+  
+  def self.east
+    Vector[1,0]
+  end
+  
+  def self.south
+    Vector[ 0,  1]
+  end
+  
+  def self.west
+    Vector[-1,  0]
+  end
   
   def self.[](x,y)
     Vector.new(x,y)
