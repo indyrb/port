@@ -98,6 +98,10 @@ class Window < Gosu::Window
         polygon = Polygon.new([one + right_angle, two + right_angle, two - right_angle, one - right_angle], :closed => true)
         quad(polygon, color, z_order, options.except(:thickness))
       end
+      if options[:highlight_points]
+        circle(one, thickness * 2, 0xff00ffff, z_order) 
+        circle(two, thickness * 2, 0xff00ffff, z_order) 
+      end
 
     end
   end
