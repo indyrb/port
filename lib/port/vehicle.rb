@@ -97,14 +97,20 @@ class Vehicle < Scorable
     proximity_check
     add_exhaust(position) if rand(10) > 6
     if entered
-      if position.x > window.width || position.x < 0
-        self.heading = position + Vector[-velocity.x, velocity.y] * 5
-      elsif position.y > window.height || position.y < 0
-        self.heading = position + Vector[velocity.x, -velocity.y] * 5
+      if position.x > window.width
+        self.heading = position + Vector[-velocity.x.abs, velocity.y]
+      elsif position.x < 0
+        self.heading = position + Vector[velocity.x.abs, velocity.y]
+      end
+
+      if position.y > window.height 
+        self.heading = position + Vector[velocity.x, -velocity.y.abs]
+      elsif position.y < 0
+        self.heading = position + Vector[velocity.x, velocity.y.abs]
       end
     else
-      if position.x > width  && position.x < window.width - height &&
-          position.y > width  && position.y < window.height - height
+      if position.x > 0  && position.x < window.width &&
+          position.y > 0 && position.y < window.height
         
         self.entered = true
       end
@@ -178,7 +184,7 @@ class Vehicle < Scorable
   end
   
   def clickable?
-    !landing_life
+    entered && !landing_life
   end
   
   def collidable?
