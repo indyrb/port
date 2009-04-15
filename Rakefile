@@ -3,7 +3,7 @@ task :pkg => 'pkg:mac'
 
 namespace :pkg do
   desc "Package the application for OS X"
-  task :mac do
+  task :mac => :compress_audio do
     `rm -rf tmp/`
     `rm -rf pkg/`
 
@@ -27,5 +27,15 @@ namespace :pkg do
   
   task :mac_test => :mac do
     `open pkg/Port.app`
+  end
+  
+  task :compress_audio do
+    Dir.glob(File.join(File.dirname(__FILE__), 'loops', '*.wav')) do |wav_file|
+      mp3_file = wav_file.gsub(/\.wav$/, '.mp3')
+      system('lame', wav_file, mp3_file)
+      if $?.exitstatus == 0
+        File.unlink(wav_file)
+      end
+    end
   end
 end
