@@ -1,44 +1,22 @@
-class LandingStrip
+class LandingStrip < Sprite
   include Game::Constants
+
+  z_order 1
+  sprite_options :file => 'landing_strip'
 
   attr_accessor :landing_point
 
-  class Sprite < ::Sprite
-    z_order 1
-    sprite_options :file => 'landing_strip'
-  end
+  def initialize(game, position, angle)
+    super
 
-  def initialize(game, cx, cy, angle)
-    @game = game
-    @sprite = Sprite.new(game, Vector[cx, cy], angle)
-    off_x = Gosu.offset_x(angle, height / 2)
-    off_y = Gosu.offset_y(angle, height / 2)
-    @starting = Vector[cx - off_x, cy - off_y]
-    @ending = Vector[cx + off_x, cy + off_y]
-
-    self.landing_point = @sprite.position - Vector.angle(angle) * (height / 2 - width / 2)
-  end
-
-  def angle
-    @sprite.angle
-  end
-
-  def width
-    @sprite.width
-  end
-
-  def height
-    @sprite.height
+    self.landing_point = position - Vector.angle(angle) * (height / 2 - width / 2)
   end
 
   def draw
-    if @game.debugging
-      @sprite.window.circle(landing_point, width / 2, Colors::Debug::LandingStrip, ZOrder::Debug::LandingStrip, :thickness => 1)
+    if game.debugging
+      window.circle(landing_point, width / 2, Colors::Debug::LandingStrip, ZOrder::Debug::LandingStrip, :thickness => 1)
     end
-    @sprite.draw
-  end
-
-  def update(ts, millis)
+    super
   end
 
   def contains?(position)

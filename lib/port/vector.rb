@@ -142,4 +142,8 @@ class Vector
     [points, distance % step_distance]
   end
   
+  def random
+    Vector[rand * x, rand * y]
+  end
+  
 end
