@@ -34,7 +34,7 @@ class Window < Gosu::Window
     unless @loops
       self.loops = {}
       Dir.glob(File.join(APP_ROOT, 'loops', '*')).each do |file|
-        self.loops[File.basename(file, '.wav')] = Gosu::Song.new(self, file)
+        self.loops[File.basename(file, File.extname(file))] = Gosu::Song.new(self, file)
       end
     end
     @loops
