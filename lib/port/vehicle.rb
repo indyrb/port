@@ -178,7 +178,7 @@ class Vehicle < Scorable
   end
   
   def clickable?
-    true
+    !landing_life
   end
   
   def collidable?
