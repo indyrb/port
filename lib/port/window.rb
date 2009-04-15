@@ -1,5 +1,5 @@
 class Window < Gosu::Window
-  attr_accessor :images, :sound, :sounds, :game, :application, :cursor, :assets, :field, :loops
+  attr_accessor :images, :sound, :sounds, :game, :application, :cursor, :assets, :field, :loops, :messages, :message_font
 
   def initialize(application, options = {})
     options.reverse_merge!(:width => 550, :height => 400, :sound => true)
@@ -12,6 +12,9 @@ class Window < Gosu::Window
     self.cursor = assets.by_name('cursor')
     self.game = Game.new(self)
     self.field = Field.new(self)
+
+    self.messages = []
+    self.message_font = Gosu::Font.new(self, Gosu::default_font_name, 20)
   end
   
   def sounds
@@ -52,6 +55,14 @@ class Window < Gosu::Window
     game.draw
     cursor.draw(mouse_x - 13, mouse_y - 4, 10)
     field.draw
+    self.messages = messages.collect do |message, time|
+      [message, time - 1]
+    end
+    messages.reject! { |m, t| t < 0 }
+    messages.reverse.each_with_index do |message_and_time, index|
+      message, time = message_and_time
+      message_font.draw_rel( message, width / 2, height - 20 * (index + 1), 100, 0.5, 0.5, 1, 1, Gosu::Color.new((time * 2.55).to_i, 255, 255, 255))
+    end
   end
   
   def button_down(id)
@@ -162,6 +173,10 @@ class Window < Gosu::Window
   def center
     Vector[width / 2, height / 2]
   end
+  
+  def alert(message, time = 100)
+    messages << [message, time]
+  end
 
   protected
 
@@ -191,19 +206,25 @@ class Window < Gosu::Window
     when 'm' # mute all
       self.sound = !sound unless game.sfx_muted?
       game.mute
+      alert("mute #{game.muted? ? 'on' : 'off'}")
     when 'b' # background music
       game.mute_music
+      alert("music #{game.music_muted? ? 'off' : 'on'}")
     when 's' # sound effects
       self.sound = !sound unless game.muted?
       game.mute_sfx
+      alert("sound #{game.sfx_muted? ? 'on' : 'off'}")
     when 'd'
       game.debugging = !game.debugging
+      alert("debug mode #{game.extras ? 'on' : 'off'}")
     when 'v'
       game.add_vehicle
     when 'p'
       game.pause
+      alert("#{game.paused? ? 'paused' : 'unpaused'}")
     when 'e'
       game.extras = !game.extras
+      alert("extras #{game.extras ? 'on' : 'off'}")
     else
       return false
     end
