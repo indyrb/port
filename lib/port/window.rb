@@ -188,15 +188,18 @@ class Window < Gosu::Window
 
   def handle_char_button_down(c)
     case c
-    when 's'
-      self.sound = !sound
-      game.sound
-    when 'm'
-      game.explicit_loop_pause
+    when 'm' # mute all
+      self.sound = !sound unless game.sfx_muted?
+      game.mute
+    when 'b' # background music
+      game.mute_music
+    when 's' # sound effects
+      self.sound = !sound unless game.muted?
+      game.mute_sfx
     when 'd'
       game.debugging = !game.debugging
     when 'v'
-      game.add_vehicle(Vehicle.subclasses.rand.constantize)
+      game.add_vehicle
     when 'p'
       game.pause
     when 'e'

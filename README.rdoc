@@ -33,8 +33,9 @@ application with --help to see the full list.
 Now just click and drag a plane to draw a path to a safe landing.
 
 In game keys:
-  S   Sound (also toggles Music unless Music turned off via "M" key)
-  M   Music
+  M   Mute
+  B   Background Music
+  S   Sound Effects
   V   Send a vehicle
   P   Pause
   E   Turns on extras, clouds and smoke

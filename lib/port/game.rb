@@ -20,9 +20,9 @@ class Game
     self.logger = Application.logger
     self.fps_counter = FpsCounter.new
 
-    @loop = window.choose_random_loop
-    @loop.volume = 0.3
-    @loop.play(true)
+    @music = window.choose_random_loop
+    @music.volume = 0.3
+    @music.play(true)
     
     self.landing_strips = []
     add_landing_strip
@@ -73,7 +73,7 @@ class Game
   def pause
     @last = nil
     @paused = !@paused
-    pause_loop
+    toggle_music
   end
 
   def stop
@@ -84,21 +84,34 @@ class Game
     @paused
   end
   
-  def pause_loop
-    @loop.paused? ? @loop.play : @loop.pause
+  def mute
+    @muted = !@muted
+    toggle_music
   end
   
-  def sound
-    pause_loop unless explicit_loop_paused?
+  def muted?
+    @muted
   end
   
-  def explicit_loop_pause
-    pause_loop
-    @explicit_loop_paused = !@explicit_loop_paused
+  def mute_music
+    @music_muted = !@music_muted
+    toggle_music
   end
   
-  def explicit_loop_paused?
-    @explicit_loop_paused
+  def music_muted?
+    @music_muted
+  end
+  
+  def toggle_music
+    (paused? || muted? || music_muted?) ? @music.pause : @music.play
+  end
+  
+  def mute_sfx
+    @sfx_muted = !@sfx_muted
+  end
+  
+  def sfx_muted?
+    @sfx_muted
   end
 
   def mouse_down(button, position)
