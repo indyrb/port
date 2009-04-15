@@ -96,22 +96,10 @@ class Vector
     ]
   end
   
-  def <(other)
-    x < other.x && y < other.y
-  end
-  
-  def >(other)
-    x > other.x && y > other.y
-  end
-
   def clamp(low, high)
-    if self < low
-      low.dup
-    elsif self > high
-      high.dup
-    else
-      self.dup
-    end
+    clamped_x = x.clamp(low.x, high.x)
+    clamped_y = y.clamp(low.y, high.y)
+    Vector[clamped_x, clamped_y]
   end
 
   def to_a
