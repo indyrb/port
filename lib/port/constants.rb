@@ -3,7 +3,7 @@ class Game
     module Colors
       Selection = 0xffffffff # white
       Proximity = 0xffff0000 # red
-      Score = 0xffffffff     # white
+      Score = 0xffffff00     # yellow
       FPS = 0xffffff00       # yellow
       IncomingVehicle = 0xffff0000 #red
       NewVehicle = 0xff00ff00 #green

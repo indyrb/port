@@ -24,6 +24,7 @@ require 'port/smoke'
 require 'port/landing_strip'
 require 'port/field'
 require 'port/cloud'
+require 'port/score'
 require 'port/fps_counter'
 Dir.glob(File.join(APP_ROOT, 'lib', 'port', 'vehicles', '*.rb')) do |file|
   require file

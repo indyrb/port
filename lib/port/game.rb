@@ -1,15 +1,14 @@
 class Game
   include Game::Constants
-  
+
   module Direction
   end
-  
+
   attr_accessor :score, :objects, :level, :logger, :window, :active_path, :fps_counter, :debugging, :extras, :landing_strips
 
   def initialize(window)
     @start_time = nil
     @end_time = nil
-    @score_text = Gosu::Font.new(window, Gosu::default_font_name, 20)
     @fps_text = Gosu::Font.new(window, Gosu::default_font_name, 15)
     @landing_strips = Array.new
 
@@ -24,12 +23,12 @@ class Game
     self.landing_strips = []
     add_landing_strip
     add_landing_strip
-
+    @score_display = Score.new(self)
     add_vehicle
   end
-  
+
   def add_landing_strip
-    self.landing_strips << LandingStrip.new(self, 
+    self.landing_strips << LandingStrip.new(self,
       window.dimensions / 4 + (window.dimensions / 2).random, rand * 360)
   end
 
@@ -56,7 +55,7 @@ class Game
     obj.angle = velocity.angle
     objects << obj
   end
-  
+
   def add_path(target)
     self.active_path = target.new_path(window.mouse_position)
     objects << active_path
@@ -103,7 +102,7 @@ class Game
       object.send(selection_method) && object.contains?(position)
     end
   end
-  
+
   def update
     diff = diff_fractional = nil
 
@@ -133,7 +132,7 @@ class Game
   def update_objects(diff, diff_fractional)
     objects.each_with_index do |e, i|
       e.update(diff, diff_fractional)
-      
+
       objects.each do |o|
         if o.collided?(e)
           window.play_sound("crash#{1 + rand(3)}")
@@ -144,7 +143,7 @@ class Game
         end
       end
     end
-    
+
     window.field.update(diff, diff_fractional)
   end
 
@@ -166,10 +165,11 @@ class Game
       e.draw
     end
 
-    @score_text.draw("Score: #{self.score}", (window.width - 75), 10, ZOrder::Score, 1.0, 1.0, Colors::Score)
+    @score_display.score = self.score
+    @score_display.draw
     @fps_text.draw("FPS: #{self.fps_counter.fps}", (window.width - 60), (window.height - 20), ZOrder::FPS, 1.0, 1.0, Colors::FPS)
   end
-  
+
   def remove(*objs)
     objs.flatten.each do |o|
       self.objects.delete(o)
@@ -179,11 +179,11 @@ class Game
   def exhaust
     extras
   end
-  
+
   def clouds
     extras
   end
-  
+
   protected
 
   def deg2rad(deg)
