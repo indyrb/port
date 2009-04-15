@@ -37,7 +37,7 @@ class Vehicle < Scorable
 
   def heading=(v)
     @heading = v
-    self.angle = position.angle_between_gosu(v)
+    self.angle = position.angle_between(v)
     result = v - position
     self.velocity = result.unit * self.velocity.magnitude
   end

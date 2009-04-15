@@ -59,7 +59,7 @@ class Game
       position.x = -20
     end
     obj.velocity = velocity
-    obj.angle = velocity.angle_between_gosu(Vector[-velocity.x, -velocity.y]) - 180
+    obj.angle = velocity.angle_between(Vector[-velocity.x, -velocity.y]) - 180
     objects << obj
   end
   
@@ -157,7 +157,7 @@ class Game
   def in_landing_zone?(points)
     if points.size == 2
       @landing_strips.detect do |ls|
-        Gosu.angle_diff(ls.angle - 180, points.first.angle_between_gosu(points.last)).abs < 30 &&
+        Gosu.angle_diff(ls.angle - 180, points.first.angle_between(points.last)).abs < 30 &&
         points.all? do |point|
           ls.contains?(point)
         end
