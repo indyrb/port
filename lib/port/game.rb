@@ -21,6 +21,10 @@ class Game
     self.logger = Application.logger
     self.fps_counter = FpsCounter.new
 
+    @loop = window.choose_random_loop
+    @loop.volume = 0.3
+    @loop.play(true)
+    
     reset_landing_strips
     add_vehicle
   end
@@ -76,6 +80,7 @@ class Game
   def pause
     @last = nil
     @paused = !@paused
+    pause_loop
   end
 
   def stop
@@ -84,6 +89,23 @@ class Game
 
   def paused?
     @paused
+  end
+  
+  def pause_loop
+    @loop.paused? ? @loop.play : @loop.pause
+  end
+  
+  def sound
+    pause_loop unless explicit_loop_paused?
+  end
+  
+  def explicit_loop_pause
+    pause_loop
+    @explicit_loop_paused = !@explicit_loop_paused
+  end
+  
+  def explicit_loop_paused?
+    @explicit_loop_paused
   end
 
   def mouse_down(button, position)

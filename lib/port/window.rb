@@ -1,5 +1,5 @@
 class Window < Gosu::Window
-  attr_accessor :images, :sound, :sounds, :game, :application, :cursor, :assets, :field
+  attr_accessor :images, :sound, :sounds, :game, :application, :cursor, :assets, :field, :loops
 
   def initialize(application, options = {})
     options.reverse_merge!(:width => 550, :height => 400, :sound => true)
@@ -28,6 +28,20 @@ class Window < Gosu::Window
     if sound && sounds[sample_name.to_s]
       sounds[sample_name.to_s].play
     end
+  end
+  
+  def loops
+    unless @loops
+      self.loops = {}
+      Dir.glob(File.join(APP_ROOT, 'loops', '*')).each do |file|
+        self.loops[File.basename(file, '.wav')] = Gosu::Song.new(self, file)
+      end
+    end
+    @loops
+  end
+  
+  def choose_random_loop
+    loops.values[rand(loops.count)]
   end
   
   def update
@@ -172,6 +186,9 @@ class Window < Gosu::Window
     case c
     when 's'
       self.sound = !sound
+      game.sound
+    when 'm'
+      game.explicit_loop_pause
     when 'd'
       game.debugging = !game.debugging
     when 'v'
