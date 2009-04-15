@@ -1,7 +1,7 @@
 class Path < Sprite
   z_order 3
   
-  attr_accessor :polygon, :active, :vehicle, :highlighted, :landing_strip
+  attr_accessor :polygon, :active, :vehicle, :landing_strip
   
   def initialize(game, position, vehicle)
     self.active = true
@@ -17,7 +17,6 @@ class Path < Sprite
       if landing_strip = game.in_landing_zone?(polygon.points.last(2))
         self.landing_strip = landing_strip
         add_landing
-        self.highlighted = true
         finish
       end
     elsif active
@@ -58,7 +57,7 @@ class Path < Sprite
   end
   
   def color
-    highlighted ? 0x8800ff00 : 0x88000000 
+    landing_strip ? 0x8800ff00 : 0x88000000 
   end
   
   def contains?(check_x, check_y)
