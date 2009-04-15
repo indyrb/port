@@ -18,6 +18,10 @@ class Vehicle < Scorable
         :stealth_bomber => 0.3
       }
     end
+    
+    def landing_messages
+      ['OMG', 'KTHXBYE', 'Badass', 'Wicked', 'woohoo']
+    end
   end
 
   def initialize(*args)
@@ -170,6 +174,7 @@ class Vehicle < Scorable
       window.play_sound(:landing)
       add_score
       self.landing_life = 100.0
+      window.alert(self.class.landing_messages.rand)
     end
   end
   
