@@ -9,7 +9,7 @@ class Field
     self.background = window.assets.by_name("background#{1 + rand(3)}")
     self.clouds = []
     (rand(10) + 3).times do
-      clouds << Cloud.new(window.game, Vector[rand(window.width), rand(window.height)])
+      clouds << Cloud.new(window.game, window.dimensions.random)
     end
   end
   

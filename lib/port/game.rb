@@ -4,7 +4,7 @@ class Game
   module Direction
   end
   
-  attr_accessor :score, :objects, :level, :logger, :window, :active_path, :fps_counter, :debugging, :extras
+  attr_accessor :score, :objects, :level, :logger, :window, :active_path, :fps_counter, :debugging, :extras, :landing_strips
 
   def initialize(window)
     @start_time = nil
@@ -21,20 +21,16 @@ class Game
     self.logger = Application.logger
     self.fps_counter = FpsCounter.new
 
-    reset_landing_strips
+    self.landing_strips = []
+    add_landing_strip
+    add_landing_strip
+
     add_vehicle
   end
   
   def add_landing_strip
-    @landing_strips << LandingStrip.new(self, 
+    self.landing_strips << LandingStrip.new(self, 
       window.dimensions / 4 + (window.dimensions / 2).random, rand * 360)
-  end
-
-  def reset_landing_strips
-    logger.info("Resetting landing strip")
-    @landing_strips = Array.new
-    add_landing_strip
-    add_landing_strip
   end
 
   def add_vehicle(type = nil)

@@ -184,10 +184,6 @@ class Window < Gosu::Window
       game.pause
     when 'e'
       game.extras = !game.extras
-    when 'l'
-      game.reset_landing_strips
-    when 'k'
-      game.add_landing_strip
     else
       return false
     end
