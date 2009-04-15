@@ -14,7 +14,7 @@ class Path < Sprite
   def update(diff, diff_fractional)
     if active && window.button_down?(Gosu::Button::MsLeft)
       polygon.points << window.mouse_position
-      if landing_strip = game.in_landing_zone?(window.mouse_position)
+      if landing_strip = game.in_landing_zone?(polygon.points.last(2))
         self.landing_strip = landing_strip
         add_landing
         self.highlighted = true

@@ -144,6 +144,10 @@ class Window < Gosu::Window
   def dimensions
     Vector[width, height]
   end
+  
+  def center
+    Vector[width / 2, height / 2]
+  end
 
   protected
 

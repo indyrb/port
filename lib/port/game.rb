@@ -154,8 +154,15 @@ class Game
     window.field.update(diff, diff_fractional)
   end
 
-  def in_landing_zone?(position)
-    @landing_strips.detect { |ls| ls.contains?(position) }
+  def in_landing_zone?(points)
+    if points.size == 2
+      @landing_strips.detect do |ls|
+        Gosu.angle_diff(ls.angle - 180, points.first.angle_between_gosu(points.last)).abs < 30 &&
+        points.all? do |point|
+          ls.contains?(point)
+        end
+      end
+    end
   end
 
   def draw
