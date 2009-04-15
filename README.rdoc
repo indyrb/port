@@ -26,9 +26,6 @@ In game keys:
 
   D   Debug
 
-  L   Resets landing strips
-  K   Adds a landing strip
-
 == Development
 
 {Ruby Gosu docs}[http://code.google.com/p/gosu/wiki/RubyReference]

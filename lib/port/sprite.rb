@@ -63,7 +63,7 @@ class Sprite
       Vector[position.x + width / 2, position.y - height / 2],
       Vector[position.x + width / 2, position.y + height / 2],
       Vector[position.x - width / 2, position.y + height / 2],
-      ], :center => position, :closed => true).rotate_degrees(angle)
+      ], :center => position, :closed => true).rotate(angle)
   end
   
   def destroy

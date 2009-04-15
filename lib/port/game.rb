@@ -1,15 +1,14 @@
 class Game
   include Game::Constants
-  
+
   module Direction
   end
-  
-  attr_accessor :score, :objects, :level, :logger, :window, :active_path, :fps_counter, :debugging, :extras
+
+  attr_accessor :score, :objects, :level, :logger, :window, :active_path, :fps_counter, :debugging, :extras, :landing_strips
 
   def initialize(window)
     @start_time = nil
     @end_time = nil
-    @score_text = Gosu::Font.new(window, Gosu::default_font_name, 20)
     @fps_text = Gosu::Font.new(window, Gosu::default_font_name, 15)
     @landing_strips = Array.new
 
@@ -25,22 +24,16 @@ class Game
     @loop.volume = 0.3
     @loop.play(true)
     
-    reset_landing_strips
+    self.landing_strips = []
+    add_landing_strip
+    add_landing_strip
+    @score_display = Score.new(self)
     add_vehicle
   end
-  
-  def add_landing_strip
-    obj = LandingStrip.new(self, rand(window.width - 100) + 50, rand(window.height - 100) + 50,
-                           rand * 360)
-    # obj = LandingStrip.new(self, window.width / 2, window.height / 2, rand(360))
-    @landing_strips << obj
-  end
 
-  def reset_landing_strips
-    logger.info("Resetting landing strip")
-    @landing_strips = Array.new
-    add_landing_strip
-    add_landing_strip
+  def add_landing_strip
+    self.landing_strips << LandingStrip.new(self,
+      window.dimensions / 4 + (window.dimensions / 2).random, rand * 360)
   end
 
   def add_vehicle(type = nil)
@@ -50,23 +43,23 @@ class Game
     obj = type.new(self, position)
     case(rand(4).to_i)
     when 0
-      velocity = Vector.angle(90 + rand(90) - 45) * type.terminal_velocity
+      velocity = Vector.angle(rand(90) - 45) * type.terminal_velocity
       position.y = -20
     when 1
-      velocity = Vector.angle(180 + rand(90) - 45) * type.terminal_velocity
+      velocity = Vector.angle(90 + rand(90) - 45) * type.terminal_velocity
       position.x = window.width + 20
     when 2
-      velocity = Vector.angle(270 + rand(90) - 45) * type.terminal_velocity
+      velocity = Vector.angle(180 + rand(90) - 45) * type.terminal_velocity
       position.y = window.height + 20
     when 3
-      velocity = Vector.angle(0 + rand(90) - 45) * type.terminal_velocity
+      velocity = Vector.angle(270 + rand(90) - 45) * type.terminal_velocity
       position.x = -20
     end
     obj.velocity = velocity
-    obj.angle = velocity.angle_between_gosu(Vector[-velocity.x, -velocity.y]) - 180
+    obj.angle = velocity.angle
     objects << obj
   end
-  
+
   def add_path(target)
     self.active_path = target.new_path(window.mouse_position)
     objects << active_path
@@ -131,7 +124,7 @@ class Game
       object.send(selection_method) && object.contains?(position)
     end
   end
-  
+
   def update
     diff = diff_fractional = nil
 
@@ -161,7 +154,7 @@ class Game
   def update_objects(diff, diff_fractional)
     objects.each_with_index do |e, i|
       e.update(diff, diff_fractional)
-      
+
       objects.each do |o|
         if o.collided?(e)
           window.play_sound("crash#{1 + rand(3)}")
@@ -172,12 +165,19 @@ class Game
         end
       end
     end
-    
+
     window.field.update(diff, diff_fractional)
   end
 
-  def in_landing_zone?(position)
-    @landing_strips.detect { |ls| ls.contains?(position) }
+  def in_landing_zone?(points)
+    if points.size == 2
+      @landing_strips.detect do |ls|
+        Gosu.angle_diff(ls.angle - 180, points.first.angle_between(points.last)).abs < 30 &&
+        points.all? do |point|
+          ls.contains?(point)
+        end
+      end
+    end
   end
 
   def draw
@@ -187,10 +187,11 @@ class Game
       e.draw
     end
 
-    @score_text.draw("Score: #{self.score}", (window.width - 75), 10, ZOrder::Score, 1.0, 1.0, Colors::Score)
+    @score_display.score = self.score
+    @score_display.draw
     @fps_text.draw("FPS: #{self.fps_counter.fps}", (window.width - 60), (window.height - 20), ZOrder::FPS, 1.0, 1.0, Colors::FPS)
   end
-  
+
   def remove(*objs)
     objs.flatten.each do |o|
       self.objects.delete(o)
@@ -200,11 +201,11 @@ class Game
   def exhaust
     extras
   end
-  
+
   def clouds
     extras
   end
-  
+
   protected
 
   def deg2rad(deg)

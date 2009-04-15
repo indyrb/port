@@ -25,7 +25,7 @@ class Vector
   end
   
   def self.angle(angle)
-    Vector[1,0].rotate_degrees(angle)
+    Vector[0,1].rotate(angle)
   end
 
   def initialize(x,y)
@@ -38,26 +38,15 @@ class Vector
   end
 
   def angle_between(other_vector)
-    sm = self.magnitude; om = other_vector.magnitude
-    if (denom = sm*om) == 0
-      if sm == 0
-        tan = other_vector.y / other_vector.x
-      elsif om == 0
-        tan = self.y / self.x
-      end
-      Math.atan(tan)
-    else
-      cos = self.dot(other_vector) / denom
-      Math.acos(cos)            
-    end
-  end
-
-  def angle_between_gosu(other_vector)
     Gosu.angle(self.x, self.y, other_vector.x, other_vector.y)    
   end
 
   def magnitude
     Gosu.distance(0, 0, x, y)
+  end
+  
+  def angle
+    self.class.origin.angle_between(self)
   end
 
   def dot(other_vector)
@@ -98,34 +87,19 @@ class Vector
     Vector.new(self.x - xm, self.y - ym)
   end
 
-  # radians
-  def rotate_radians(angle)
-    sin = Math.sin(angle)
-    cos = Math.cos(angle)
-    Vector[x*cos - y*sin, x*sin + y*cos]
-  end
-
-  # degrees
-  def rotate_degrees(angle)
-    self.rotate_radians(Math::PI * angle / 180.0) # .gosu_to_radians)
+  def rotate(angle)
+    new_angle = Gosu.angle(0, 0, x, y) + angle
+    distance = magnitude
+    Vector[
+      Gosu.offset_x(new_angle, distance),
+      Gosu.offset_y(new_angle, distance)
+    ]
   end
   
-  def <(other)
-    x < other.x && y < other.y
-  end
-  
-  def >(other)
-    x > other.x && y > other.y
-  end
-
   def clamp(low, high)
-    if self < low
-      low.dup
-    elsif self > high
-      high.dup
-    else
-      self.dup
-    end
+    clamped_x = x.clamp(low.x, high.x)
+    clamped_y = y.clamp(low.y, high.y)
+    Vector[clamped_x, clamped_y]
   end
 
   def to_a
@@ -154,6 +128,10 @@ class Vector
     end
     points << point
     [points, distance % step_distance]
+  end
+  
+  def random
+    Vector[rand * x, rand * y]
   end
   
 end

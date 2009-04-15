@@ -7,9 +7,9 @@ class Polygon
     self.closed = options[:closed]
   end
   
-  def rotate_degrees(angle)
+  def rotate(angle)
     new_points = points.collect do |point|
-      (point - center).rotate_degrees(angle) + center
+      (point - center).rotate(angle) + center
     end
     
     self.class.new(new_points, options)
@@ -20,8 +20,8 @@ class Polygon
   end
   
   def length
-    last_point = points.first
-    points.tail.inject(0) do |memo, point|
+    last_point, *tail = points
+    tail.inject(0) do |memo, point|
       memo += last_point.distance_to(point)
       last_point = point
       memo
@@ -65,7 +65,7 @@ class Polygon
         follow(segment_legnth * i + width / 2)
       ]).average
     end
-    self.class.new([points.first] + averages + [points.last], options)
+    self.class.new(([points.first] + averages + [points.last]).compact, options)
   end
   
   def follow(distance)
