@@ -41,7 +41,7 @@ class Window < Gosu::Window
   end
   
   def choose_random_loop
-    loops.values[rand(loops.count)]
+    loops.values[rand(loops.size)]
   end
   
   def update
