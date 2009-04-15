@@ -7,9 +7,9 @@ class Polygon
     self.closed = options[:closed]
   end
   
-  def rotate_degrees(angle)
+  def rotate(angle)
     new_points = points.collect do |point|
-      (point - center).rotate_degrees(angle) + center
+      (point - center).rotate(angle) + center
     end
     
     self.class.new(new_points, options)

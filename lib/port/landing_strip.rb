@@ -16,7 +16,7 @@ class LandingStrip
     @starting = Vector[cx - off_x, cy - off_y]
     @ending = Vector[cx + off_x, cy + off_y]
 
-    self.landing_point = Vector.angle(angle - 90) * (height / 2 - width / 2) + @sprite.position
+    self.landing_point = @sprite.position - Vector.angle(angle) * (height / 2 - width / 2)
   end
 
   def angle

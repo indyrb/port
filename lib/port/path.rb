@@ -27,7 +27,7 @@ class Path < Sprite
   
   def add_landing
     polygon.points << landing_strip.landing_point
-    polygon.points << landing_strip.landing_point + Vector.angle(landing_strip.angle + 90) * 20
+    polygon.points << landing_strip.landing_point + Vector.angle(landing_strip.angle) * 20
   end
   
   def finish

@@ -25,7 +25,7 @@ class Vector
   end
   
   def self.angle(angle)
-    Vector[1,0].rotate_degrees(angle)
+    Vector[0,1].rotate(angle)
   end
 
   def initialize(x,y)
@@ -43,6 +43,10 @@ class Vector
 
   def magnitude
     Gosu.distance(0, 0, x, y)
+  end
+  
+  def angle
+    self.class.origin.angle_between(self)
   end
 
   def dot(other_vector)
@@ -83,16 +87,13 @@ class Vector
     Vector.new(self.x - xm, self.y - ym)
   end
 
-  # radians
-  def rotate_radians(angle)
-    sin = Math.sin(angle)
-    cos = Math.cos(angle)
-    Vector[x*cos - y*sin, x*sin + y*cos]
-  end
-
-  # degrees
-  def rotate_degrees(angle)
-    self.rotate_radians(Math::PI * angle / 180.0) # .gosu_to_radians)
+  def rotate(angle)
+    new_angle = Gosu.angle(0, 0, x, y) + angle
+    distance = magnitude
+    Vector[
+      Gosu.offset_x(new_angle, distance),
+      Gosu.offset_y(new_angle, distance)
+    ]
   end
   
   def <(other)

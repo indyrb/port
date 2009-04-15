@@ -94,7 +94,7 @@ class Window < Gosu::Window
       if thickness == 1
         draw_line(one.x, one.y, color, two.x, two.y, color, z_order)
       else
-        right_angle = Vector.angle(one.angle_between(two)) * (thickness / 2)
+        right_angle = Vector.angle(one.angle_between(two) + 90) * (thickness / 2)
         polygon = Polygon.new([one + right_angle, two + right_angle, two - right_angle, one - right_angle], :closed => true)
         quad(polygon, color, z_order, options.except(:thickness))
       end
