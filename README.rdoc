@@ -7,13 +7,28 @@ http://github.com/indyrb/port/raw/master/screenshots/2009-04-14.png
 
 == Running
 
-Install the Gosu gem.
+If you're on OS X you can download the stand-alone application from our
+{Downloads Page}[http://github.com/indyrb/port/downloads]. You may need to
+install the activesupport gem using the command below.
 
-  sudo gem install gosu
+Can't use the stand-alone app? No worries, you can paste the simple commands
+below into your Linux/Windows/Mac terminal and you should be up and running in
+under 2 minutes.
 
-Run the executable. Add --help to see the command line options
+First, install the Gosu gem and activesupport.
+
+  gem install gosu activesupport
+
+If you haven't already, download the source.
+  git clone git://github.com/indyrb/port.git
+  cd port
+
+Now you should be able to run the game!
 
   bin/port
+
+There are a few command line options for things like fullscreen mode, run the
+application with --help to see the full list.
 
 Now just click and drag a plane to draw a path to a safe landing.
 
