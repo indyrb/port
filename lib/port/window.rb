@@ -213,7 +213,7 @@ class Window < Gosu::Window
     when 's' # sound effects
       self.sound = !sound unless game.muted?
       game.mute_sfx
-      alert("sound #{game.sfx_muted? ? 'on' : 'off'}")
+      alert("sound effects #{game.sfx_muted? ? 'off' : 'on'}")
     when 'd'
       game.debugging = !game.debugging
       alert("debug mode #{game.extras ? 'on' : 'off'}")
