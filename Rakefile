@@ -15,7 +15,7 @@ namespace :pkg do
   
     `mv "tmp/RubyGosu Deployment Template.app" pkg/Port.app`
 
-    `cp -R bin images lib sounds README* "pkg/Port.app/Contents/Resources/"`
+    `cp -R bin images lib sounds loops README* "pkg/Port.app/Contents/Resources/"`
     `cd "pkg/Port.app/Contents/Resources/"; mv bin/port bin/port.rb`
     `echo "require File.dirname(__FILE__) + '/bin/port'" > "pkg/Port.app/Contents/Resources/Main.rb"`
     
