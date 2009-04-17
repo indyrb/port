@@ -21,7 +21,7 @@ class Window < Gosu::Window
     unless @sounds
       self.sounds = {}
       Dir.glob(File.join(APP_ROOT, 'sounds', '*')).each do |file|
-        self.sounds[File.basename(file, '.wav')] = Gosu::Sample.new(self, file)
+        self.sounds[File.basename(file, File.extname(file))] = Gosu::Sample.new(self, file)
       end
     end
     @sounds

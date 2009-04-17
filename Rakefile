@@ -30,7 +30,7 @@ namespace :pkg do
   end
   
   task :compress_audio do
-    Dir.glob(File.join(File.dirname(__FILE__), 'loops', '*.wav')) do |wav_file|
+    Dir.glob(File.join(File.dirname(__FILE__), '**', '*.wav')) do |wav_file|
       mp3_file = wav_file.gsub(/\.wav$/, '.mp3')
       system('lame', wav_file, mp3_file)
       if $?.exitstatus == 0
