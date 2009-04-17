@@ -14,7 +14,7 @@ class Window < Gosu::Window
     self.field = Field.new(self)
 
     self.messages = []
-    self.message_font = Gosu::Font.new(self, Gosu::default_font_name, 20)
+    self.message_font = Gosu::Font.new(self, Gosu::default_font_name, 30)
   end
   
   def sounds
@@ -61,7 +61,8 @@ class Window < Gosu::Window
     messages.reject! { |m, t| t < 0 }
     messages.reverse.each_with_index do |message_and_time, index|
       message, time = message_and_time
-      message_font.draw_rel( message, width / 2, height - 20 * (index + 1), 100, 0.5, 0.5, 1, 1, Gosu::Color.new((time * 2.55).to_i, 255, 255, 255))
+      scale = time.to_f / 100
+      message_font.draw_rel( message, width / 2, height - 20 * (index + 1), 100, 0.5, 0.5, scale, scale, Gosu::Color.new((time * 2.55).to_i, 255, 255, 255))
     end
   end
   
