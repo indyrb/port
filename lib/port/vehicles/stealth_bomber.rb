@@ -3,7 +3,7 @@ class StealthBomber < Vehicle
   sprite_options :file => 'stealth_bomber'
 
   def self.terminal_velocity
-    70
+    30
   end
   
 end

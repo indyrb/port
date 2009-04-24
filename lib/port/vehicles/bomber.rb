@@ -3,7 +3,7 @@ class Bomber < Vehicle
   sprite_options :file => 'black'
 
   def self.terminal_velocity
-    30
+    27
   end
   
 end

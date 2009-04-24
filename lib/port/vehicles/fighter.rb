@@ -3,7 +3,7 @@ class Fighter < Vehicle
   sprite_options :file => 'cyan'
   
   def self.terminal_velocity
-    55
+    45
   end
   
 end
