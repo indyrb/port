@@ -157,7 +157,7 @@ class Game
       update_objects(diff, diff_fractional)
     end
 
-    ((score / 2) - objects.size).times do
+    if rand((215 - score).clamp(50, 200) + (objects.size * 2) ** 2) == 0
       add_vehicle
     end
 
