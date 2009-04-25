@@ -223,11 +223,5 @@ class Game
     extras
   end
 
-  protected
-
-  def deg2rad(deg)
-    deg * Math::PI / 180.0
-  end
-
 end
 
