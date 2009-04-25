@@ -87,7 +87,7 @@ class Vehicle < Scorable
     sprite.draw_rot(position.x-scale*10, position.y-scale*10, z_order, angle, 0.5, 0.5, scale * 0.7, scale * 0.7, 0x88000000) #, 0.5, 0.5, 1, 1, 0xffffff)
     proximity_draw if game.debugging
     
-    if (d = distance_to_edge) > 0
+    if !entered && (d = distance_to_edge) > 0
       window.circle(position, d ** 2 * 0.3, Game::Colors::NewVehicle, Game::ZOrder::IncomingVehicle, :thickness => 3)
     end
     super
