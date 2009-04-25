@@ -156,11 +156,15 @@ class Game
       update_objects(diff, diff_fractional)
     end
 
-    if rand((215 - score).clamp(50, 200) + (objects.size * 2) ** 2) == 0
+    if rand((215 - score).clamp(50, 200) + (vehicle_count * 2) ** 2) == 0
       add_vehicle
     end
 
     self.fps_counter.register_tick
+  end
+  
+  def vehicle_count
+    objects.select { |o| o.is_a?(Vehicle) }.size
   end
 
   def update_objects(diff, diff_fractional)
