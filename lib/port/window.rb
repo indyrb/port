@@ -144,7 +144,7 @@ class Window < Gosu::Window
   end
   
   def circle(center, radius, color, z_order, options = {})
-    steps = options[:steps] || 20
+    steps = options[:steps] || radius.ceil
     
     zx = lx = center.x + radius * Math.sin(0)
     zy = ly = center.y + radius * Math.cos(0)
