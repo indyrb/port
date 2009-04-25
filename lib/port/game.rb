@@ -25,15 +25,16 @@ class Game
     @music.play(true)
     
     self.landing_strips = []
-    add_landing_strip
-    add_landing_strip
+    add_landing_strips
     @score_display = Score.new(self)
     add_vehicle
   end
 
-  def add_landing_strip
+  def add_landing_strips
     self.landing_strips << LandingStrip.new(self,
-      window.dimensions / 4 + (window.dimensions / 2).random, rand * 360)
+      window.center + Vector[-50, 0], -90)
+    self.landing_strips << LandingStrip.new(self,
+      window.center + Vector[30, 50], -135)
   end
 
   def add_vehicle(type = nil)
