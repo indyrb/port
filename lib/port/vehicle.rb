@@ -20,7 +20,7 @@ class Vehicle < Scorable
     end
     
     def landing_messages
-      ['OMG', 'KTHXBYE', 'Badass', 'Wicked', 'woohoo']
+      ['OMG', 'KTHX', '!!!!!!', 'Wicked', 'woohoo', 'Another one bites the dust', 'SCORE']
     end
   end
 
