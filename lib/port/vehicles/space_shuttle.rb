@@ -3,7 +3,7 @@ class SpaceShuttle < Vehicle
   sprite_options :file => 'space_shuttle'
 
   def self.terminal_velocity
-    40
+    200
   end
   
 end
