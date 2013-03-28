@@ -7,13 +7,9 @@ http://github.com/indyrb/port/raw/master/screenshots/2009-04-14.png
 
 == Running
 
-First, install the Gosu gem and activesupport.
+First, install the gem dependencies:
 
-  gem install gosu activesupport
-
-If you haven't already, download the source.
-  git clone git://github.com/indyrb/port.git
-  cd port
+  bundle install
 
 Now you should be able to run the game!
 

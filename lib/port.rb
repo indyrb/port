@@ -1,9 +1,6 @@
-require 'rubygems'
-require 'gosu'
 require 'logger'
-require 'activesupport'
 
-$: << File.join(File.dirname(__FILE__))
+$: << File.join(File.dirname(__FILE__), 'lib')
 
 require 'port/ext/array'
 require 'port/ext/hash'
@@ -26,9 +23,11 @@ require 'port/field'
 require 'port/cloud'
 require 'port/score'
 require 'port/fps_counter'
-Dir.glob(File.join(APP_ROOT, 'lib', 'port', 'vehicles', '*.rb')) do |file|
-  require file
-end
+require 'port/vehicles/bomber'
+require 'port/vehicles/fighter'
+require 'port/vehicles/old_fighter'
+require 'port/vehicles/space_shuttle'
+require 'port/vehicles/stealth_bomber'
 
 class Application
   attr_accessor :window
@@ -36,7 +35,7 @@ class Application
   def self.logger
     @logger ||= Logger.new(STDOUT)
   end
-  
+
   def initialize(options = {})
     self.window = Window.new(self, options)
   end
