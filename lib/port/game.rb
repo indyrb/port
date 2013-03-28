@@ -23,7 +23,7 @@ class Game
     @music = window.choose_random_loop
     @music.volume = 0.3
     @music.play(true)
-    
+
     self.landing_strips = []
     add_landing_strips
     @score_display = Score.new(self)
@@ -52,10 +52,10 @@ class Game
     when 3
       position.x = -20
     end
-    
+
     random_spread = 45.0
     obj.angle = position.angle_between(window.center) + rand(random_spread) - random_spread / 2
-    
+
     obj.velocity = Vector.angle(obj.angle) * -obj.class.terminal_velocity
     objects << obj
   end
@@ -83,33 +83,33 @@ class Game
   def paused?
     @paused
   end
-  
+
   def mute
     @muted = !@muted
     toggle_music
   end
-  
+
   def muted?
     @muted
   end
-  
+
   def mute_music
     @music_muted = !@music_muted
     toggle_music
   end
-  
+
   def music_muted?
     @music_muted
   end
-  
+
   def toggle_music
     (paused? || muted? || music_muted?) ? @music.pause : @music.play
   end
-  
+
   def mute_sfx
     @sfx_muted = !@sfx_muted
   end
-  
+
   def sfx_muted?
     @sfx_muted
   end
@@ -163,7 +163,7 @@ class Game
 
     self.fps_counter.register_tick
   end
-  
+
   def vehicle_count
     objects.select { |o| o.is_a?(Vehicle) }.size
   end
@@ -224,4 +224,3 @@ class Game
   end
 
 end
-

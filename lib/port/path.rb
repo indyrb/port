@@ -1,8 +1,8 @@
 class Path < Sprite
   z_order 3
-  
+
   attr_accessor :polygon, :active, :vehicle, :landing_strip
-  
+
   def initialize(game, position, vehicle)
     self.active = true
     self.polygon = Polygon.new([position], :closed => false)
@@ -10,7 +10,7 @@ class Path < Sprite
     vehicle.path = self
     super(game, position)
   end
-  
+
   def update(diff, diff_fractional)
     if active && window.button_down?(Gosu::Button::MsLeft)
       polygon.points << window.mouse_position
@@ -23,18 +23,18 @@ class Path < Sprite
       finish
     end
   end
-  
+
   def add_landing
     polygon.points << landing_strip.landing_point
     polygon.points << landing_strip.landing_point + Vector.angle(landing_strip.angle) * 25
   end
-  
+
   def finish
     self.active = false
     game.active_path = nil
     smooth
   end
-  
+
   def smooth
     steps = (polygon.length / 5).to_f.ceil
     self.polygon = polygon.interpolate(steps, 10).interpolate(steps, 20)
@@ -55,15 +55,15 @@ class Path < Sprite
     end
     new_position
   end
-  
+
   def color
-    landing_strip ? 0x8800ff00 : 0x88000000 
+    landing_strip ? 0x8800ff00 : 0x88000000
   end
-  
+
   def contains?(check_x, check_y)
     false
   end
-  
+
   def destroy
     vehicle.path = nil
     super
@@ -72,12 +72,11 @@ class Path < Sprite
   def collided?(sprite)
     false
   end
-  
+
   private
 
   def lerp(a, b, p, t)
     t.clamp(0, p) * (b - a) / p + a
   end
-  
-end
 
+end

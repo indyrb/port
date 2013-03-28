@@ -12,7 +12,7 @@ class Field
       clouds << Cloud.new(window.game, window.dimensions.random)
     end
   end
-  
+
   def update(diff, diff_fractional)
     if game.clouds
       clouds.each do |cloud|
@@ -20,7 +20,7 @@ class Field
       end
     end
   end
-  
+
   def draw
     (window.width.to_f / background.width).ceil.times do |xc|
       (window.height.to_f / background.height).ceil.times do |yc|

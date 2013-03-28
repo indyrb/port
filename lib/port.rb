@@ -45,4 +45,3 @@ class Application
   end
 
 end
-

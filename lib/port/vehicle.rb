@@ -5,10 +5,10 @@ class Vehicle < Scorable
   z_order 10
 
   class << self
-    def terminal_velocity 
+    def terminal_velocity
       Vector[20, 20]
     end
-    
+
     def weighted_options
       {
         :bomber => 1,
@@ -18,7 +18,7 @@ class Vehicle < Scorable
         :stealth_bomber => 0.3
       }
     end
-    
+
     def landing_messages
       ['OMG', 'KTHX', '!!!!!!', 'Wicked', 'woohoo', 'Another one bites the dust', 'SCORE']
     end
@@ -29,12 +29,12 @@ class Vehicle < Scorable
     self.entered = false
     self.scale = 0.5
   end
-  
+
   def new_path(mouse_position)
     path.destroy if path
     self.path = Path.new(game, mouse_position, self)
   end
-  
+
   def heading
     @heading || Vector[0, 0]
   end
@@ -57,16 +57,16 @@ class Vehicle < Scorable
   def velocity
     @velocity || Vector[0,0]
   end
-  
+
   def distance_to_edge
-    x_distance = 
+    x_distance =
       if position.x < window.width / 2
         - position.x
       else
         position.x - window.width
       end
 
-    y_distance = 
+    y_distance =
       if position.y < window.height / 2
         - position.y
       else
@@ -80,13 +80,13 @@ class Vehicle < Scorable
     if proximity_alert
       window.circle(position, 1.1 * width / 2.0, Game::Colors::Proximity, 50, :thickness => 2)
     end
-    
+
     if path && path.active
       window.circle(position, 1.1 * width / 2.0, Game::Colors::Selection, 50, :thickness => 1)
     end
     sprite.draw_rot(position.x-scale*10, position.y-scale*10, z_order, angle, 0.5, 0.5, scale * 0.7, scale * 0.7, 0x88000000) #, 0.5, 0.5, 1, 1, 0xffffff)
     proximity_draw if game.debugging
-    
+
     if !entered && (d = distance_to_edge) > 0
       window.circle(position, d ** 2 * 0.3, Game::Colors::NewVehicle, Game::ZOrder::IncomingVehicle, :thickness => 3)
     end
@@ -107,7 +107,7 @@ class Vehicle < Scorable
         self.heading = position + Vector[velocity.x.abs, velocity.y]
       end
 
-      if position.y > window.height 
+      if position.y > window.height
         self.heading = position + Vector[velocity.x, -velocity.y.abs]
       elsif position.y < 0
         self.heading = position + Vector[velocity.x, velocity.y.abs]
@@ -115,23 +115,23 @@ class Vehicle < Scorable
     else
       if position.x > 0  && position.x < window.width &&
           position.y > 0 && position.y < window.height
-        
+
         self.entered = true
       end
     end
-    
+
     update_physics(diff, diff_fractional)
     if path && (new_position = path.move_along(position, diff * 0.3))
       self.heading = new_position
     end
   end
-  
+
   def add_exhaust(position)
     if game.exhaust
       game.objects << Smoke.new(game, position.dup, velocity * -1)
     end
   end
-    
+
   def scale
     if landing_percent
       @scale * ((landing_percent.clamp(0.5, 100)) * 1.3 - 0.2)
@@ -139,7 +139,7 @@ class Vehicle < Scorable
       @scale
     end
   end
-  
+
   def destroy
     path.destroy if path
     super
@@ -164,7 +164,7 @@ class Vehicle < Scorable
       end
     end
   end
-  
+
   def within_collision_proximity_of?(sprite)
     can_collide_with?(sprite) && position.distance_to(sprite.position) < 80
   end
@@ -177,7 +177,7 @@ class Vehicle < Scorable
       window.alert(self.class.landing_messages.rand)
     end
   end
-  
+
   def landing_percent
     if landing_life
       landing_life / 100.0
@@ -187,25 +187,25 @@ class Vehicle < Scorable
   def on_landing_approach?
     path && path.landing_strip
   end
-  
+
   def clickable?
     entered && !landing_life
   end
-  
+
   def collidable?
     !landing_life
   end
-  
+
   private
 
   def update_physics(diff, diff_fractional)
-    v = 
+    v =
       if landing_life
         self.velocity * diff_fractional * landing_percent
       else
         self.velocity * diff_fractional
       end
-      
+
     position.x += v.x
     position.y += v.y
   end

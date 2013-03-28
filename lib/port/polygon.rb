@@ -1,24 +1,24 @@
 class Polygon
   attr_accessor :points, :center, :closed
-  
+
   def initialize(points, options = {})
     self.points = points
     self.center = options[:center]  || points.first
     self.closed = options[:closed]
   end
-  
+
   def rotate(angle)
     new_points = points.collect do |point|
       (point - center).rotate(angle) + center
     end
-    
+
     self.class.new(new_points, options)
   end
-  
+
   def options
     { :center => center, :closed => closed }
   end
-  
+
   def length
     last_point, *tail = points
     tail.inject(0) do |memo, point|
@@ -27,7 +27,7 @@ class Polygon
       memo
     end
   end
-  
+
   def perimeter
     length + points.last.distance_to(points.first)
   end
@@ -35,7 +35,7 @@ class Polygon
   def empty?
     points.empty?
   end
-  
+
   def average
     unless empty?
       average_x = points.collect(&:x).sum.to_f / points.size
@@ -43,7 +43,7 @@ class Polygon
       Vector[average_x, average_y]
     end
   end
-  
+
   def split(count)
     segment_legnth = length.to_f / count
     polygons = []
@@ -55,7 +55,7 @@ class Polygon
     end
     polygons
   end
-  
+
   def interpolate(count, width)
     segment_legnth = length.to_f / count
     averages = []
@@ -67,7 +67,7 @@ class Polygon
     end
     self.class.new(([points.first] + averages + [points.last]).compact, options)
   end
-  
+
   def follow(distance)
     unless empty?
       if distance < 0
@@ -87,7 +87,7 @@ class Polygon
     end
     current || points.last
   end
-  
+
   def follow_and_remove(start, distance)
     unless empty?
       current = start
@@ -110,10 +110,10 @@ class Polygon
       end
     end
   end
-  
+
   def +(vector)
     new_points = points.collect { |p| p + vector }
     Polygon.new(new_points, options)
   end
-  
+
 end

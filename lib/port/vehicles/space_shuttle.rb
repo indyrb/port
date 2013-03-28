@@ -5,5 +5,5 @@ class SpaceShuttle < Vehicle
   def self.terminal_velocity
     200
   end
-  
+
 end

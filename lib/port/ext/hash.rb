@@ -1,5 +1,5 @@
 class Hash
-  
+
   def choose_weighted
     target = rand
     self.normalize_weighted.each do |item, weight|
@@ -15,5 +15,5 @@ class Hash
     sum = sum.to_f
     self.each { |item, weight| self[item] = weight/sum }
   end
-  
+
 end

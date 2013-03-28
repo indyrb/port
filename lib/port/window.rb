@@ -5,7 +5,7 @@ class Window < Gosu::Window
     options.reverse_merge!(:width => 550, :height => 400, :sound => true)
     super(options[:width], options[:height], !!options[:fullscreen], 0)
     GosuExtras::setup_keyboard_constants(self)
-        
+
     self.sound = options[:sound]
     self.application = application
     self.assets = Assets.new(self)
@@ -16,7 +16,7 @@ class Window < Gosu::Window
     self.messages = []
     self.message_font = Gosu::Font.new(self, Gosu::default_font_name, 30)
   end
-  
+
   def sounds
     unless @sounds
       self.sounds = {}
@@ -32,7 +32,7 @@ class Window < Gosu::Window
       sounds[sample_name.to_s].play
     end
   end
-  
+
   def loops
     unless @loops
       self.loops = {}
@@ -42,11 +42,11 @@ class Window < Gosu::Window
     end
     @loops
   end
-  
+
   def choose_random_loop
     loops.values[rand(loops.size)]
   end
-  
+
   def update
     game.update
   end
@@ -65,7 +65,7 @@ class Window < Gosu::Window
       message_font.draw_rel( message, width / 2, height - 20 * (index + 1), 100, 0.5, 0.5, scale, scale, Gosu::Color.new((time * 2.55).to_i, 255, 255, 255))
     end
   end
-  
+
   def button_down(id)
     unless handle_raw_button_down(id)
       handle_char_button_down(button_id_to_char(id))
@@ -81,7 +81,7 @@ class Window < Gosu::Window
   def logger
     game.logger
   end
-  
+
   def draw_crosshairs(point, c, z)
     line(Vector[point.x, 0], Vector[point.x, height], c, z)
     line(Vector[0, point.y], Vector[width, point.y], c, z)
@@ -101,17 +101,17 @@ class Window < Gosu::Window
     end
     line(last_point, points.first, color, z_order, options.merge(:offset => offset, :index => index)) if close
   end
-  
+
   def line(one, two, color, z_order, options = {})
     if options[:dashed]
       last = nil
       points, offset = one.distance_steps_to(two, 10, options[:offset] || 0)
       index = options[:index] || 0
       points.each do |position|
-        if (index += 1) % 2 == 0 && last 
+        if (index += 1) % 2 == 0 && last
           line(last, position, color, z_order, options.except(:dashed))
         end
-        
+
         last = position
       end
       [offset, index]
@@ -125,13 +125,13 @@ class Window < Gosu::Window
         quad(polygon, color, z_order, options.except(:thickness))
       end
       if options[:highlight_points]
-        circle(one, thickness * 2, 0xff00ffff, z_order) 
-        circle(two, thickness * 2, 0xff00ffff, z_order) 
+        circle(one, thickness * 2, 0xff00ffff, z_order)
+        circle(two, thickness * 2, 0xff00ffff, z_order)
       end
 
     end
   end
-  
+
   def quad(polygon, color, z_order, options = {})
     a, b, c, d = polygon.points
     draw_quad(
@@ -142,10 +142,10 @@ class Window < Gosu::Window
       z_order
     )
   end
-  
+
   def circle(center, radius, color, z_order, options = {})
     steps = options[:steps] || radius.ceil
-    
+
     zx = lx = center.x + radius * Math.sin(0)
     zy = ly = center.y + radius * Math.cos(0)
 
@@ -162,19 +162,19 @@ class Window < Gosu::Window
     # connect the end to the beginning
     line(Vector[lx, ly], Vector[zx, zy], color, z_order, options)
   end
-  
+
   def mouse_position
     Vector[mouse_x, mouse_y].clamp(Vector.origin, dimensions)
   end
-  
+
   def dimensions
     Vector[width, height]
   end
-  
+
   def center
     Vector[width / 2, height / 2]
   end
-  
+
   def alert(message, time = 100)
     messages << [message, time]
   end

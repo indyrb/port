@@ -1,11 +1,11 @@
 class Assets
   attr_accessor :window
-  
+
   def initialize(window)
     self.window = window
     preload
   end
-  
+
   def self.asset_dirs
     @asset_directories ||= add_asset_dir(File.join(APP_ROOT, "images"))
   end

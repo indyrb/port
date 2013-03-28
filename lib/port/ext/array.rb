@@ -3,7 +3,7 @@ class Array
     index = (Kernel.rand * size).to_i
     self[index]
   end
-  
+
   def tail
     if size > 1
       self[1..-1]
@@ -11,6 +11,6 @@ class Array
       []
     end
   end
-  
+
   alias :head :first
 end

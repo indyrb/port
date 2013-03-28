@@ -1,7 +1,7 @@
 class Cloud < MovingSprite
   z_order 100
   sprite_options :file => 'cloud'
-  
+
   def initialize(game, position)
     super
     restart(rand(window.width))
@@ -22,7 +22,7 @@ class Cloud < MovingSprite
     position.x = x || window.width + width * scale
     self.color = Gosu::Color.new(255 / scale, 255, 255, 255)
   end
-  
+
   def update(diff, diff_fractional)
     super
     if position.x + width < 0
