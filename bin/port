@@ -55,3 +55,5 @@ if console
 end
 
 @app.run
+
+exit! # Not sure why this is required
