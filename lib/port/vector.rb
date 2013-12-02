@@ -1,5 +1,6 @@
 class Vector
   attr_accessor :x, :y
+
   def self.origin
     Vector[0, 0]
   end
