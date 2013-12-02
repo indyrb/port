@@ -217,7 +217,7 @@ class Window < Gosu::Window
       alert("sound effects #{game.sfx_muted? ? 'off' : 'on'}")
     when 'd'
       game.debugging = !game.debugging
-      alert("debug mode #{game.extras ? 'on' : 'off'}")
+      alert("debug mode #{game.debugging ? 'on' : 'off'}")
     when 'v'
       game.add_vehicle
     when 'p'
