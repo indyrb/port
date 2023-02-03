@@ -204,25 +204,20 @@ class Window < Gosu::Window
 
   def handle_char_button_down(c)
     case c
-    when "m" # mute all
-      self.sound = !sound unless game.sfx_muted?
-      game.mute
-      alert("mute #{game.muted? ? 'on' : 'off'}")
-    when "b" # background music
-      game.mute_music
-      alert("music #{game.music_muted? ? 'off' : 'on'}")
-    when "s" # sound effects
-      self.sound = !sound unless game.muted?
-      game.mute_sfx
-      alert("sound effects #{game.sfx_muted? ? 'off' : 'on'}")
+    when "s" # sound
+      game.sound = !game.sound
+      alert("sound #{game.sound ? 'on' : 'off'}")
+    when "m" # background music
+      game.music = !game.music
+      alert("music #{game.music ? 'on' : 'off'}")
     when "d"
       game.debugging = !game.debugging
       alert("debug mode #{game.debugging ? 'on' : 'off'}")
     when "v"
       game.add_vehicle
     when "p"
-      game.pause
-      alert("#{game.paused? ? 'paused' : 'unpaused'}")
+      game.paused = !game.paused
+      alert("#{game.paused ? 'paused' : 'unpaused'}")
     when "e"
       game.extras = !game.extras
       alert("extras #{game.extras ? 'on' : 'off'}")

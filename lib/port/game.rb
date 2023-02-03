@@ -3,14 +3,13 @@
 class Game
   include Game::Constants
 
-  attr_reader :debugging
+  attr_reader :debugging, :paused, :music
   attr_accessor :score, :objects, :level, :logger, :window, :active_path, :fps_counter, :extras, :landing_strips
 
   def initialize(window, options = {})
     self.logger = options[:logger]
     self.debugging = ENV["DEBUG"] || false
 
-    @start_time = nil
     @end_time = nil
     @fps_text = Gosu::Font.new(window, Gosu::default_font_name, 15)
     @landing_strips = []
@@ -21,14 +20,14 @@ class Game
     self.objects = []
     self.fps_counter = FpsCounter.new
 
-    @music = window.choose_random_loop
-    @music.volume = 0.3
-    @music.play(true)
-
     self.landing_strips = []
     add_landing_strips
     @score_display = Score.new(self)
     add_vehicle
+
+    @music_player = window.choose_random_loop
+    @music_player.volume = 0.3
+    self.music = true
   end
 
   def add_landing_strips
@@ -64,53 +63,36 @@ class Game
     objects << active_path
   end
 
-  def start
-    @start_time = Time.now.to_i
-    @pause = false
-  end
-
-  def pause
+  def paused=(value)
     @last = nil
-    @paused = !@paused
-    toggle_music
+    @paused = value
+    play_or_pause_music
   end
 
-  def stop
-    @end_time = Time.now
+  def sound
+    window.sound
   end
 
-  def paused?
-    @paused
+  def sound=(value)
+    @window.sound = value
+    play_or_pause_music
   end
 
-  def mute
-    @muted = !@muted
-    toggle_music
+  def music=(value)
+    @music = value
+    play_or_pause_music
+  end
+
+  def play_or_pause_music
+    if !paused && music && sound
+      @music_player.play
+    else
+      @music_player.pause
+    end
   end
 
   def muted?
     @muted
-  end
-
-  def mute_music
-    @music_muted = !@music_muted
-    toggle_music
-  end
-
-  def music_muted?
-    @music_muted
-  end
-
-  def toggle_music
-    (paused? || muted? || music_muted?) ? @music.pause : @music.play
-  end
-
-  def mute_sfx
-    @sfx_muted = !@sfx_muted
-  end
-
-  def sfx_muted?
-    @sfx_muted
   end
 
   def mouse_down(_button, position)

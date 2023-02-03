@@ -22,12 +22,12 @@ Now click and drag a plane to draw a path to a safe landing.
 
 In game keys:
 
-    M   Mute
-    B   Background Music
-    S   Sound Effects
-    V   Send a vehicle
     P   Pause
-    E   Turns on extras, clouds and smoke
+    V   Send a vehicle
+
+    E   Toggle extras(clouds and smoke)
+    S   Toggle sound
+    M   Toggle music
 
     D   Debug
 
