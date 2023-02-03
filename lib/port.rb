@@ -7,7 +7,6 @@ $: << File.join(File.dirname(__FILE__), "lib")
 require "port/ext/array"
 require "port/ext/hash"
 require "port/ext/numeric"
-require "port/gosu_extras"
 require "port/vector"
 require "port/polygon"
 require "port/constants"
