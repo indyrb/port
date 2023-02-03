@@ -7,6 +7,7 @@ class Window < Gosu::Window
   def initialize(application, options = {})
     options = { width: 550, height: 400, sound: true }.merge(options)
     super(options[:width], options[:height], !!options[:fullscreen], 0)
+    self.caption = "Port"
 
     self.sound = options[:sound]
     self.application = application
