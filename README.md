@@ -2,7 +2,7 @@
 
 A game loosely based off of Flight Control for the iPhone.
 
-http://github.com/indyrb/port/raw/master/screenshots/2009-04-14.png
+![Screenshot of planes being directed to landing strips.](screenshots/2009-04-14.png?raw=true)
 
 
 ## Running
