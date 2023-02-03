@@ -80,6 +80,13 @@ class Window < Gosu::Window
     end
   end
 
+  def lose_focus
+    if !game.paused
+      game.paused = true
+      alert("paused")
+    end
+  end
+
   def logger
     game.logger
   end
