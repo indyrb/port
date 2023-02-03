@@ -24,7 +24,7 @@ class Window < Gosu::Window
     unless @sounds
       self.sounds = {}
       Dir.glob(File.join(APP_ROOT, "sounds", "*")).each do |file|
-        self.sounds[File.basename(file, File.extname(file))] = Gosu::Sample.new(self, file)
+        self.sounds[File.basename(file, File.extname(file))] = Gosu::Sample.new(file)
       end
     end
     @sounds
@@ -40,7 +40,7 @@ class Window < Gosu::Window
     unless @loops
       self.loops = {}
       Dir.glob(File.join(APP_ROOT, "loops", "*")).each do |file|
-        self.loops[File.basename(file, File.extname(file))] = Gosu::Song.new(self, file)
+        self.loops[File.basename(file, File.extname(file))] = Gosu::Song.new(file)
       end
     end
     @loops
@@ -65,7 +65,7 @@ class Window < Gosu::Window
     messages.reverse.each_with_index do |message_and_time, index|
       message, time = message_and_time
       scale = time.to_f / 100
-      message_font.draw_rel( message, width / 2, height - 20 * (index + 1), 100, 0.5, 0.5, scale, scale, Gosu::Color.new((time * 2.55).to_i, 255, 255, 255))
+      message_font.draw_text_rel(message, width / 2, height - 20 * (index + 1), 100, 0.5, 0.5, scale, scale, Gosu::Color.new((time * 2.55).to_i, 255, 255, 255))
     end
   end
 

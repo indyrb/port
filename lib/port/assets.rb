@@ -21,7 +21,7 @@ class Assets
     @assets ||= {}
     Dir.glob(File.join(self.class.asset_dirs, "*.png")).each do |file|
       if !File.directory?(file)
-        @assets[File.basename(file).gsub(File.extname(file), "")] = Gosu::Image.new(window, file)
+        @assets[File.basename(file).gsub(File.extname(file), "")] = Gosu::Image.new(file)
       end
     end
   end

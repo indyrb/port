@@ -206,7 +206,7 @@ class Game
 
     @score_display.score = self.score
     @score_display.draw
-    @fps_text.draw("FPS: #{self.fps_counter.fps}", (window.width - 60), (window.height - 20), ZOrder::FPS, 1.0, 1.0, Colors::FPS)
+    @fps_text.draw_text("FPS: #{self.fps_counter.fps}", (window.width - 60), (window.height - 20), ZOrder::FPS, 1.0, 1.0, Colors::FPS)
   end
 
   def remove(*objs)
