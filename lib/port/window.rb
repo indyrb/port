@@ -5,7 +5,11 @@ class Window < Gosu::Window
   attr_writer :sounds, :loops
 
   def initialize(application, options = {})
-    options = { width: 550, height: 400, sound: true }.merge(options)
+    options = {
+      width:  options[:fullscreen] ? Gosu.screen_width  : (Gosu.screen_width  * 0.6).floor,
+      height: options[:fullscreen] ? Gosu.screen_height : (Gosu.screen_height * 0.6).floor,
+      sound:  true,
+    }.merge(options)
     super(options[:width], options[:height], !!options[:fullscreen], 0)
     self.caption = "Port"
 
