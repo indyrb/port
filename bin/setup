@@ -1,0 +1,38 @@
+#!/bin/bash
+set -e
+cd "$(dirname "$0")/.."
+
+echo "SDL2..."
+case "$(uname -sr)" in
+Darwin*)
+  if type brew &> /dev/null; then
+    brew list sdl2 &> /dev/null || brew install sdl2
+  else
+    echo "Unable to automatically install sdl2 libraries, install it and rerun $0"
+  fi
+  ;;
+# Linux*Microsoft*)
+#   ;;
+Linux*)
+  sudo apt-get install build-essential libsdl2-dev libgl1-mesa-dev libopenal-dev libgmp-dev libfontconfig1-dev
+  ;;
+# CYGWIN*|MINGW*|MINGW32*|MSYS*)
+#   ;;
+*)
+  echo "Unable to automatically install sdl2 libraries in this OS, install it and rerun $0"
+  ;;
+esac
+
+ruby_version=$(cat .ruby-version)
+echo "Ruby $ruby_version..."
+if ! ruby --version | grep "$ruby_version" &> /dev/null; then
+  if type rbenv &> /dev/null; then
+    rbenv install --skip-existing
+  else
+    echo "Unable to automatically install Ruby $ruby_version, install it and then rerun $0"
+    exit 1
+  fi
+fi
+
+echo "Gems..."
+bundle install

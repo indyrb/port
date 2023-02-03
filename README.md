@@ -7,10 +7,9 @@ http://github.com/indyrb/port/raw/master/screenshots/2009-04-14.png
 
 ## Running
 
-First, install the gem dependencies:
+Automatically set up as much as possible:
 
-    brew install sdl2
-    bundle install
+    bin/setup
 
 Now you should be able to run the game!
 
