@@ -11,11 +11,11 @@ class Vehicle < Scorable
 
     def weighted_options
       {
-        :bomber => 1,
-        :fighter => 0.6,
-        :old_fighter => 0.9,
-        :space_shuttle => 0.2,
-        :stealth_bomber => 0.3
+        Bomber => 1,
+        Fighter => 0.6,
+        OldFighter => 0.9,
+        SpaceShuttle => 0.2,
+        StealthBomber => 0.3
       }
     end
 

@@ -2,7 +2,7 @@ class Window < Gosu::Window
   attr_accessor :images, :sound, :sounds, :game, :application, :cursor, :assets, :field, :loops, :messages, :message_font
 
   def initialize(application, options = {})
-    options.reverse_merge!(:width => 550, :height => 400, :sound => true)
+    options = { :width => 550, :height => 400, :sound => true }.merge(options)
     super(options[:width], options[:height], !!options[:fullscreen], 0)
     GosuExtras::setup_keyboard_constants(self)
 
