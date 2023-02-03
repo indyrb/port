@@ -6,5 +6,4 @@ class OldFighter < Vehicle
   def self.terminal_velocity
     35
   end
-
 end

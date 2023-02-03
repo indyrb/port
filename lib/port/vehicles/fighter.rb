@@ -7,5 +7,4 @@ class Fighter < Vehicle
   def self.terminal_velocity
     45
   end
-
 end

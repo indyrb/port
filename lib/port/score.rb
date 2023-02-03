@@ -13,8 +13,7 @@ class Score
   end
 
   def draw
-    text.draw_text("Score: #{self.score}", (window.width - 100), 10, Game::ZOrder::Score, 1.0, 1.0, Game::Colors::Score)
+    text.draw_text("Score: #{score}", (window.width - 100), 10, Game::ZOrder::Score, 1.0, 1.0, Game::Colors::Score)
     background.draw(window.width-130, 5, Game::ZOrder::Score - 1, 1.0, 1.0)
   end
-
 end

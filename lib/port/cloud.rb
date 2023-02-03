@@ -31,5 +31,4 @@ class Cloud < MovingSprite
       restart
     end
   end
-
 end

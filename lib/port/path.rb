@@ -80,5 +80,4 @@ class Path < Sprite
   def lerp(a, b, p, t)
     t.clamp(0, p) * (b - a) / p + a
   end
-
 end

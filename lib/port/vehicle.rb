@@ -45,7 +45,7 @@ class Vehicle < Scorable
     @heading = v
     self.angle = position.angle_between(v)
     result = v - position
-    self.velocity = result.unit * self.velocity.magnitude
+    self.velocity = result.unit * velocity.magnitude
   end
 
   def angle=(a)
@@ -200,9 +200,9 @@ class Vehicle < Scorable
 
   def update_physics(_diff, diff_fractional)
     v = if landing_life
-      self.velocity * diff_fractional * landing_percent
+      velocity * diff_fractional * landing_percent
     else
-      self.velocity * diff_fractional
+      velocity * diff_fractional
     end
 
     position.x += v.x

@@ -108,5 +108,4 @@ class Sprite
   def can_collide_with?(sprite)
     self != sprite && collidable? && sprite.collidable?
   end
-
 end

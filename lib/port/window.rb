@@ -24,7 +24,7 @@ class Window < Gosu::Window
     unless @sounds
       self.sounds = {}
       Dir.glob(File.join(APP_ROOT, "sounds", "*")).each do |file|
-        self.sounds[File.basename(file, File.extname(file))] = Gosu::Sample.new(file)
+        sounds[File.basename(file, File.extname(file))] = Gosu::Sample.new(file)
       end
     end
     @sounds
@@ -40,7 +40,7 @@ class Window < Gosu::Window
     unless @loops
       self.loops = {}
       Dir.glob(File.join(APP_ROOT, "loops", "*")).each do |file|
-        self.loops[File.basename(file, File.extname(file))] = Gosu::Song.new(file)
+        loops[File.basename(file, File.extname(file))] = Gosu::Song.new(file)
       end
     end
     @loops
@@ -185,23 +185,21 @@ class Window < Gosu::Window
   protected
 
   def handle_raw_button_down(id)
-
     case id
     when Gosu::Button::KbEscape
       close
     when Gosu::MsLeft, Gosu::MsMiddle, Gosu::MsRight
-      game.mouse_down(id, Vector[self.mouse_x, self.mouse_y])
+      game.mouse_down(id, Vector[mouse_x, mouse_y])
     else
       return false
     end
-
-    return true
+    true
   end
 
   def handle_raw_button_up(id)
     case id
     when Gosu::MsLeft, Gosu::MsMiddle, Gosu::MsRight
-      game.mouse_up(id, Vector[self.mouse_x, self.mouse_y])
+      game.mouse_up(id, Vector[mouse_x, mouse_y])
     end
   end
 
@@ -232,12 +230,10 @@ class Window < Gosu::Window
     else
       return false
     end
-
-    return true
+    true
   end
 
   def handle_char_button_up(_c)
     false
   end
-
 end

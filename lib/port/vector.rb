@@ -37,11 +37,11 @@ class Vector
   end
 
   def distance_to(other_vector)
-    Gosu.distance(self.x, self.y, other_vector.x, other_vector.y)
+    Gosu.distance(x, y, other_vector.x, other_vector.y)
   end
 
   def angle_between(other_vector)
-    Gosu.angle(self.x, self.y, other_vector.x, other_vector.y)
+    Gosu.angle(x, y, other_vector.x, other_vector.y)
   end
 
   def magnitude
@@ -53,41 +53,41 @@ class Vector
   end
 
   def dot(other_vector)
-    (self.x * other_vector.x) + (self.y  * other_vector.y)
+    (x * other_vector.x) + (y  * other_vector.y)
   end
 
   def cross(other_vector)
-    (self.x * other_vector.y) - (self.y * other_vector.x)
+    (x * other_vector.y) - (y * other_vector.x)
   end
 
   def project(other_vector)
-    scalar = self.dot(other_vector) / (other_vector.magnitude**2)
+    scalar = dot(other_vector) / (other_vector.magnitude**2)
     other_vector.unit * scalar
   end
 
   def unit
-    mag = self.magnitude
-    Vector.new(self.x / mag, self.y / mag)
+    mag = magnitude
+    Vector.new(x / mag, y / mag)
   end
 
   def *(scalar)
-    Vector.new(self.x * scalar, self.y * scalar)
+    Vector.new(x * scalar, y * scalar)
   end
 
   def /(scalar)
-    Vector.new(self.x / scalar, self.y / scalar)
+    Vector.new(x / scalar, y / scalar)
   end
 
   def +(other_vector_or_scalar)
     xm = (other_vector_or_scalar.respond_to?(:x)) ? other_vector_or_scalar.x : other_vector_or_scalar
     ym = (other_vector_or_scalar.respond_to?(:y)) ? other_vector_or_scalar.y : other_vector_or_scalar
-    Vector.new(self.x + xm, self.y + ym)
+    Vector.new(x + xm, y + ym)
   end
 
   def -(other_vector_or_scalar)
     xm = (other_vector_or_scalar.respond_to?(:x)) ? other_vector_or_scalar.x : other_vector_or_scalar
     ym = (other_vector_or_scalar.respond_to?(:y)) ? other_vector_or_scalar.y : other_vector_or_scalar
-    Vector.new(self.x - xm, self.y - ym)
+    Vector.new(x - xm, y - ym)
   end
 
   def rotate(angle)
@@ -132,5 +132,4 @@ class Vector
   def random
     Vector[rand * x, rand * y]
   end
-
 end

@@ -3,9 +3,6 @@
 class Game
   include Game::Constants
 
-  module Direction
-  end
-
   attr_reader :debugging
   attr_accessor :score, :objects, :level, :logger, :window, :active_path, :fps_counter, :extras, :landing_strips
 
@@ -16,7 +13,7 @@ class Game
     @start_time = nil
     @end_time = nil
     @fps_text = Gosu::Font.new(window, Gosu::default_font_name, 15)
-    @landing_strips = Array.new
+    @landing_strips = []
 
     self.extras = true
     self.window = window
@@ -206,14 +203,14 @@ class Game
       e.draw
     end
 
-    @score_display.score = self.score
+    @score_display.score = score
     @score_display.draw
-    @fps_text.draw_text("FPS: #{self.fps_counter.fps}", (window.width - 60), (window.height - 20), ZOrder::FPS, 1.0, 1.0, Colors::FPS)
+    @fps_text.draw_text("FPS: #{fps_counter.fps}", (window.width - 60), (window.height - 20), ZOrder::FPS, 1.0, 1.0, Colors::FPS)
   end
 
   def remove(*objs)
     objs.flatten.each do |o|
-      self.objects.delete(o)
+      objects.delete(o)
     end
   end
 

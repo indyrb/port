@@ -120,5 +120,4 @@ class Polygon
     new_points = points.collect { |p| p + vector }
     Polygon.new(new_points, options)
   end
-
 end

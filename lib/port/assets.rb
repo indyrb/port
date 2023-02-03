@@ -33,5 +33,4 @@ class Assets
   def by_name(name)
     @assets[name] || raise("Could not find image #{name.inspect}")
   end
-
 end

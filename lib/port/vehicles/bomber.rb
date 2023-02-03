@@ -7,5 +7,4 @@ class Bomber < Vehicle
   def self.terminal_velocity
     27
   end
-
 end

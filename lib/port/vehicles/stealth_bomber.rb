@@ -7,5 +7,4 @@ class StealthBomber < Vehicle
   def self.terminal_velocity
     30
   end
-
 end

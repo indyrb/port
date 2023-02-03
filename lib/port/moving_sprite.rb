@@ -15,5 +15,4 @@ class MovingSprite < Sprite
     position.x += velocity.x
     self.angle += angular_velocity
   end
-
 end
