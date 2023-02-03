@@ -6,20 +6,22 @@ class Game
   module Direction
   end
 
-  attr_accessor :score, :objects, :level, :logger, :window, :active_path, :fps_counter, :debugging, :extras, :landing_strips
+  attr_reader :debugging
+  attr_accessor :score, :objects, :level, :logger, :window, :active_path, :fps_counter, :extras, :landing_strips
 
   def initialize(window, options = {})
+    self.logger = options[:logger]
+    self.debugging = ENV["DEBUG"] || false
+
     @start_time = nil
     @end_time = nil
     @fps_text = Gosu::Font.new(window, Gosu::default_font_name, 15)
     @landing_strips = Array.new
 
-    self.debugging = ENV["DEBUG"] || false
     self.extras = false
     self.window = window
     self.score = 0
     self.objects = []
-    self.logger = options[:logger]
     self.fps_counter = FpsCounter.new
 
     @music = window.choose_random_loop
@@ -223,4 +225,12 @@ class Game
     extras
   end
 
+  def debugging=(value)
+    if value
+      logger&.level = :debug
+    else
+      logger&.level = :error
+    end
+    @debugging = value
+  end
 end
