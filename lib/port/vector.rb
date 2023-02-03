@@ -117,10 +117,6 @@ class Vector
     "(%.2f, %.2f)" % [x, y]
   end
 
-  def distance_to(point)
-    (self - point).magnitude
-  end
-
   def distance_steps_to(point, step_distance, offset = 0)
     points = []
     base = (point - self).unit

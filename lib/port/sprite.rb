@@ -52,7 +52,6 @@ class Sprite
 
   def draw
     if game.debugging
-      c = Game::Colors::Debug::Sprite
       window.draw_polygon(edge_points, Colors::Debug::Sprite::Outline, ZOrder::Debug::Sprite::Outline)
       window.draw_crosshairs(position, Colors::Debug::Sprite::Center, ZOrder::Debug::Sprite::Center)
     end

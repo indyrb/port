@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class Window < Gosu::Window
-  attr_accessor :images, :sound, :sounds, :game, :application, :cursor, :assets, :field, :loops, :messages, :message_font
+  attr_accessor :images, :sound, :game, :application, :cursor, :assets, :field, :messages, :message_font
+  attr_writer :sounds, :loops
 
   def initialize(application, options = {})
     options = { :width => 550, :height => 400, :sound => true }.merge(options)
