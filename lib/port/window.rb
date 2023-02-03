@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class Window < Gosu::Window
-  attr_accessor :images, :sound, :game, :application, :cursor, :assets, :field, :messages, :message_font
+  attr_accessor :images, :sound, :game, :cursor, :assets, :field, :messages, :message_font
   attr_writer :sounds, :loops
 
-  def initialize(application, options = {})
+  def initialize(options = {})
     options = {
       width:  options[:fullscreen] ? Gosu.screen_width  : (Gosu.screen_width  * 0.6).floor,
       height: options[:fullscreen] ? Gosu.screen_height : (Gosu.screen_height * 0.6).floor,
@@ -14,7 +14,6 @@ class Window < Gosu::Window
     self.caption = "Port"
 
     self.sound = options[:sound]
-    self.application = application
     self.assets = Assets.new(self)
     self.cursor = assets.by_name("cursor")
     self.game = Game.new(self, options.slice(:logger))

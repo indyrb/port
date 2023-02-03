@@ -38,8 +38,7 @@ else
   options[:logger] = Logger.new(STDOUT)
 end
 
-@app = Application.new(options)
-@window = @app.window
+@window = Window.new(options)
 @game = @window.game
 
 if console
@@ -48,13 +47,12 @@ if console
 
   Thread.new do
     puts "Instantiated variables: "
-    puts "  @port = Application"
     puts "  @window = Window"
     puts "  @game = Game"
     ARGV.shift; IRB.start
   end
 end
 
-@app.run
+@window.show
 
 exit! # Not sure why this is required

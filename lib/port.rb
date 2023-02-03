@@ -29,15 +29,3 @@ require "port/vehicles/fighter"
 require "port/vehicles/old_fighter"
 require "port/vehicles/space_shuttle"
 require "port/vehicles/stealth_bomber"
-
-class Application
-  attr_accessor :window
-
-  def initialize(options = {})
-    self.window = Window.new(self, options)
-  end
-
-  def run
-    @window.show
-  end
-end
