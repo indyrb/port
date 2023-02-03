@@ -7,7 +7,7 @@ class Path < Sprite
 
   def initialize(game, position, vehicle)
     self.active = true
-    self.polygon = Polygon.new([position], :closed => false)
+    self.polygon = Polygon.new([position], closed: false)
     self.vehicle = vehicle
     vehicle.path = self
     super(game, position)
@@ -43,7 +43,7 @@ class Path < Sprite
   end
 
   def draw
-    window.draw_polygon(polygon, color, z_order, :dashed => active, :thickness => 3)
+    window.draw_polygon(polygon, color, z_order, dashed: active, thickness: 3)
   end
 
   def move_along(start, distance)

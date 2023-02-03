@@ -5,7 +5,7 @@ class Window < Gosu::Window
   attr_writer :sounds, :loops
 
   def initialize(application, options = {})
-    options = { :width => 550, :height => 400, :sound => true }.merge(options)
+    options = { width: 550, height: 400, sound: true }.merge(options)
     super(options[:width], options[:height], !!options[:fullscreen], 0)
     GosuExtras::setup_keyboard_constants(self)
 
@@ -99,10 +99,10 @@ class Window < Gosu::Window
     offset = options[:offset]
     last_point = points.first
     points.tail.each do |point|
-      offset, index = line(last_point, point, color, z_order, options.merge(:offset => offset, :index => index))
+      offset, index = line(last_point, point, color, z_order, options.merge(offset:, index:))
       last_point = point
     end
-    line(last_point, points.first, color, z_order, options.merge(:offset => offset, :index => index)) if close
+    line(last_point, points.first, color, z_order, options.merge(offset:, index:)) if close
   end
 
   def line(one, two, color, z_order, options = {})
@@ -124,7 +124,7 @@ class Window < Gosu::Window
         draw_line(one.x, one.y, color, two.x, two.y, color, z_order)
       else
         right_angle = Vector.angle(one.angle_between(two) + 90) * (thickness / 2)
-        polygon = Polygon.new([one + right_angle, two + right_angle, two - right_angle, one - right_angle], :closed => true)
+        polygon = Polygon.new([one + right_angle, two + right_angle, two - right_angle, one - right_angle], closed: true)
         quad(polygon, color, z_order, options.except(:thickness))
       end
       if options[:highlight_points]

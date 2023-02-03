@@ -5,7 +5,7 @@ class Smoke < MovingSprite
 
   MaxLife = 150
   z_order 9
-  sprite_options :file => "cloud"
+  sprite_options file: "cloud"
 
   def initialize(game, position, velocity)
     super(game, position)

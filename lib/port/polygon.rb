@@ -18,7 +18,7 @@ class Polygon
   end
 
   def options
-    { :center => center, :closed => closed }
+    { center:, closed: }
   end
 
   def length
@@ -55,7 +55,7 @@ class Polygon
           follow(segment_legnth * i),
           follow(segment_legnth * (i + 1)),
         ],
-        :closed => false,
+        closed: false,
       )
     end
     polygons
