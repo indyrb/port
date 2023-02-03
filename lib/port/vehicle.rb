@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Vehicle < Scorable
   attr_accessor :path, :entered, :proximity_alert, :landing_life
 
@@ -11,16 +13,16 @@ class Vehicle < Scorable
 
     def weighted_options
       {
-        Bomber => 1,
-        Fighter => 0.6,
-        OldFighter => 0.9,
-        SpaceShuttle => 0.2,
-        StealthBomber => 0.3
+        Bomber        => 1,
+        Fighter       => 0.6,
+        OldFighter    => 0.9,
+        SpaceShuttle  => 0.2,
+        StealthBomber => 0.3,
       }
     end
 
     def landing_messages
-      ['OMG', 'KTHX', '!!!!!!', 'Wicked', 'woohoo', 'Another one bites the dust', 'SCORE']
+      ["OMG", "KTHX", "!!!!!!", "Wicked", "woohoo", "Another one bites the dust", "SCORE"]
     end
   end
 
@@ -59,19 +61,17 @@ class Vehicle < Scorable
   end
 
   def distance_to_edge
-    x_distance =
-      if position.x < window.width / 2
-        - position.x
-      else
-        position.x - window.width
-      end
+    x_distance = if position.x < window.width / 2
+      - position.x
+    else
+      position.x - window.width
+    end
 
-    y_distance =
-      if position.y < window.height / 2
-        - position.y
-      else
-        position.y - window.height
-      end
+    y_distance = if position.y < window.height / 2
+      - position.y
+    else
+      position.y - window.height
+    end
 
     [x_distance, y_distance].max
   end
@@ -198,13 +198,12 @@ class Vehicle < Scorable
 
   private
 
-  def update_physics(diff, diff_fractional)
-    v =
-      if landing_life
-        self.velocity * diff_fractional * landing_percent
-      else
-        self.velocity * diff_fractional
-      end
+  def update_physics(_diff, diff_fractional)
+    v = if landing_life
+      self.velocity * diff_fractional * landing_percent
+    else
+      self.velocity * diff_fractional
+    end
 
     position.x += v.x
     position.y += v.y

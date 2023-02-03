@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Polygon
   attr_accessor :points, :center, :closed
 
@@ -48,10 +50,13 @@ class Polygon
     segment_legnth = length.to_f / count
     polygons = []
     count.times do |i|
-      polygons << Polygon.new([
-        follow(segment_legnth * i),
-        follow(segment_legnth * (i + 1))
-      ], :closed => false)
+      polygons << Polygon.new(
+        [
+          follow(segment_legnth * i),
+          follow(segment_legnth * (i + 1)),
+        ],
+        :closed => false,
+      )
     end
     polygons
   end
@@ -62,7 +67,7 @@ class Polygon
     count.times do |i|
       averages << Polygon.new([
         follow(segment_legnth * i - width / 2),
-        follow(segment_legnth * i + width / 2)
+        follow(segment_legnth * i + width / 2),
       ]).average
     end
     self.class.new(([points.first] + averages + [points.last]).compact, options)

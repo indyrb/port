@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Array
   def rand
     index = (Kernel.rand * size).to_i

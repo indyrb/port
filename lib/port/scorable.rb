@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Scorable < Sprite
   class << self
     def score(value = nil)

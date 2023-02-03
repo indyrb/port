@@ -1,5 +1,5 @@
-desc 'Package the application'
-task :pkg => 'pkg:mac'
+desc "Package the application"
+task :pkg => "pkg:mac"
 
 namespace :pkg do
   desc "Package the application for OS X"
@@ -30,9 +30,9 @@ namespace :pkg do
   end
 
   task :compress_audio do
-    Dir.glob(File.join(File.dirname(__FILE__), '**', '*.wav')) do |wav_file|
-      mp3_file = wav_file.gsub(/\.wav$/, '.mp3')
-      system('lame', wav_file, mp3_file)
+    Dir.glob(File.join(File.dirname(__FILE__), "**", "*.wav")) do |wav_file|
+      mp3_file = wav_file.gsub(/\.wav$/, ".mp3")
+      system("lame", wav_file, mp3_file)
       if $?.exitstatus == 0
         File.unlink(wav_file)
       end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Sprite
   include Game::Constants
 
@@ -13,7 +15,7 @@ class Sprite
     end
 
     def default_sprite_options
-      { :tiles => 1, :file => 'mushroom.png' }
+      { :tiles => 1, :file => "mushroom.png" }
     end
 
     def sprite_options(options = nil)
@@ -58,12 +60,16 @@ class Sprite
   end
 
   def edge_points
-    Polygon.new([
-      Vector[position.x - width / 2, position.y - height / 2],
-      Vector[position.x + width / 2, position.y - height / 2],
-      Vector[position.x + width / 2, position.y + height / 2],
-      Vector[position.x - width / 2, position.y + height / 2],
-      ], :center => position, :closed => true).rotate(angle)
+    Polygon.new(
+      [
+        Vector[position.x - width / 2, position.y - height / 2],
+        Vector[position.x + width / 2, position.y - height / 2],
+        Vector[position.x + width / 2, position.y + height / 2],
+        Vector[position.x - width / 2, position.y + height / 2],
+      ],
+      :center => position,
+      :closed => true,
+    ).rotate(angle)
   end
 
   def destroy

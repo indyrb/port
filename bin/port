@@ -9,7 +9,7 @@ options = {}
 console = false
 ARGV.each do |arg|
   case(arg)
-  when '--help'
+  when "--help"
     puts "Usage: port [OPTIONS]"
     puts
     puts "      --console     Starts an IRB console"
@@ -19,15 +19,15 @@ ARGV.each do |arg|
     puts "      --1440        Fullscreen at 1440x900"
     puts "      --1920        Fullscreen at 1920x1200"
     exit(0)
-  when '--nosound'
+  when "--nosound"
     options.merge!(:sound => false)
-  when '--1024'
+  when "--1024"
     options.merge!(:width => 1024, :height => 768, :fullscreen => true)
-  when '--1440'
+  when "--1440"
     options.merge!(:width => 1440, :height => 900, :fullscreen => true)
-  when '--1920'
+  when "--1920"
     options.merge!(:width => 1920, :height => 1200, :fullscreen => true)
-  when '--console'
+  when "--console"
     console = true
   else
     puts "Unregonized command line option: #{arg}, try --help"
@@ -43,7 +43,7 @@ require "port"
 @game = @window.game
 
 if console
-  require 'irb'
+  require "irb"
 
   Thread.new do
     puts "Instantiated variables: "

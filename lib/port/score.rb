@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Score
   attr_accessor :game, :window, :background, :score, :text
   def initialize(game)

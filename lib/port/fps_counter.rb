@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FpsCounter
   attr_reader :fps
 

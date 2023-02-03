@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Game
   include Game::Constants
 
@@ -12,7 +14,7 @@ class Game
     @fps_text = Gosu::Font.new(window, Gosu::default_font_name, 15)
     @landing_strips = Array.new
 
-    self.debugging = ENV['DEBUG'] || false
+    self.debugging = ENV["DEBUG"] || false
     self.extras = false
     self.window = window
     self.score = 0
@@ -31,10 +33,8 @@ class Game
   end
 
   def add_landing_strips
-    self.landing_strips << LandingStrip.new(self,
-      window.center + Vector[-50, 0], -90)
-    self.landing_strips << LandingStrip.new(self,
-      window.center + Vector[30, 50], -135)
+    self.landing_strips << LandingStrip.new(self, window.center + Vector[-50, 0], -90)
+    self.landing_strips << LandingStrip.new(self, window.center + Vector[30, 50], -135)
   end
 
   def add_vehicle(type = nil)
@@ -114,7 +114,7 @@ class Game
     @sfx_muted
   end
 
-  def mouse_down(button, position)
+  def mouse_down(_button, position)
     if in_play?
       object = find_object(position, :clickable?)
 
@@ -165,11 +165,11 @@ class Game
   end
 
   def vehicle_count
-    objects.select { |o| o.is_a?(Vehicle) }.size
+    objects.count { |o| o.is_a?(Vehicle) }
   end
 
   def update_objects(diff, diff_fractional)
-    objects.each_with_index do |e, i|
+    objects.each do |e|
       e.update(diff, diff_fractional)
 
       objects.each do |o|

@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class Smoke < MovingSprite
   attr_accessor :life
 
   MaxLife = 150
   z_order 9
-  sprite_options :file => 'cloud'
+  sprite_options :file => "cloud"
 
   def initialize(game, position, velocity)
     super(game, position)

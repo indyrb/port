@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class LandingStrip < Sprite
   include Game::Constants
 
   z_order 1
-  sprite_options :file => 'landing_strip'
+  sprite_options :file => "landing_strip"
 
   attr_accessor :landing_point
 

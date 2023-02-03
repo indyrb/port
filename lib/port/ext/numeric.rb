@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Numeric
   def clamp(low, high)
     if self < low

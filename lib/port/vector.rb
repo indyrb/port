@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Vector
   attr_accessor :x, :y
 
@@ -108,7 +110,7 @@ class Vector
   end
 
   def inspect
-    "<Vector #{to_s}>"
+    "<Vector #{self}>"
   end
 
   def to_s

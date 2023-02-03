@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class Cloud < MovingSprite
   z_order 100
-  sprite_options :file => 'cloud'
+  sprite_options :file => "cloud"
 
   def initialize(game, position)
     super

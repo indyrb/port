@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Path < Sprite
   z_order 3
 
@@ -11,7 +13,7 @@ class Path < Sprite
     super(game, position)
   end
 
-  def update(diff, diff_fractional)
+  def update(_diff, _diff_fractional)
     if active && window.button_down?(Gosu::Button::MsLeft)
       polygon.points << window.mouse_position
       if landing_strip = game.in_landing_zone?(polygon.points.last(2))
@@ -60,7 +62,7 @@ class Path < Sprite
     landing_strip ? 0x8800ff00 : 0x88000000
   end
 
-  def contains?(check_x, check_y)
+  def contains?(_check_x, _check_y)
     false
   end
 
@@ -69,7 +71,7 @@ class Path < Sprite
     super
   end
 
-  def collided?(sprite)
+  def collided?(_sprite)
     false
   end
 

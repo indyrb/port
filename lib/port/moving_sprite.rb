@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MovingSprite < Sprite
   attr_accessor :velocity, :angular_velocity
 
@@ -8,7 +10,7 @@ class MovingSprite < Sprite
     self.angular_velocity = 0
   end
 
-  def update(diff, diff_fractional)
+  def update(_diff, _diff_fractional)
     position.x += velocity.x
     position.x += velocity.x
     self.angle += angular_velocity

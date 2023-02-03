@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Window < Gosu::Window
   attr_accessor :images, :sound, :sounds, :game, :application, :cursor, :assets, :field, :loops, :messages, :message_font
 
@@ -9,7 +11,7 @@ class Window < Gosu::Window
     self.sound = options[:sound]
     self.application = application
     self.assets = Assets.new(self)
-    self.cursor = assets.by_name('cursor')
+    self.cursor = assets.by_name("cursor")
     self.game = Game.new(self)
     self.field = Field.new(self)
 
@@ -20,7 +22,7 @@ class Window < Gosu::Window
   def sounds
     unless @sounds
       self.sounds = {}
-      Dir.glob(File.join(APP_ROOT, 'sounds', '*')).each do |file|
+      Dir.glob(File.join(APP_ROOT, "sounds", "*")).each do |file|
         self.sounds[File.basename(file, File.extname(file))] = Gosu::Sample.new(self, file)
       end
     end
@@ -36,7 +38,7 @@ class Window < Gosu::Window
   def loops
     unless @loops
       self.loops = {}
-      Dir.glob(File.join(APP_ROOT, 'loops', '*')).each do |file|
+      Dir.glob(File.join(APP_ROOT, "loops", "*")).each do |file|
         self.loops[File.basename(file, File.extname(file))] = Gosu::Song.new(self, file)
       end
     end
@@ -58,7 +60,7 @@ class Window < Gosu::Window
     self.messages = messages.collect do |message, time|
       [message, time - 1]
     end
-    messages.reject! { |m, t| t < 0 }
+    messages.reject! { |_m, t| t < 0 }
     messages.reverse.each_with_index do |message_and_time, index|
       message, time = message_and_time
       scale = time.to_f / 100
@@ -132,14 +134,14 @@ class Window < Gosu::Window
     end
   end
 
-  def quad(polygon, color, z_order, options = {})
+  def quad(polygon, color, z_order, _options = {})
     a, b, c, d = polygon.points
     draw_quad(
       a.x, a.y, color,
       b.x, b.y, color,
       d.x, d.y, color,  # reordered for solid drawing
       c.x, c.y, color,  # reordered for solid drawing
-      z_order
+      z_order,
     )
   end
 
@@ -204,26 +206,26 @@ class Window < Gosu::Window
 
   def handle_char_button_down(c)
     case c
-    when 'm' # mute all
+    when "m" # mute all
       self.sound = !sound unless game.sfx_muted?
       game.mute
       alert("mute #{game.muted? ? 'on' : 'off'}")
-    when 'b' # background music
+    when "b" # background music
       game.mute_music
       alert("music #{game.music_muted? ? 'off' : 'on'}")
-    when 's' # sound effects
+    when "s" # sound effects
       self.sound = !sound unless game.muted?
       game.mute_sfx
       alert("sound effects #{game.sfx_muted? ? 'off' : 'on'}")
-    when 'd'
+    when "d"
       game.debugging = !game.debugging
       alert("debug mode #{game.debugging ? 'on' : 'off'}")
-    when 'v'
+    when "v"
       game.add_vehicle
-    when 'p'
+    when "p"
       game.pause
       alert("#{game.paused? ? 'paused' : 'unpaused'}")
-    when 'e'
+    when "e"
       game.extras = !game.extras
       alert("extras #{game.extras ? 'on' : 'off'}")
     else
@@ -233,7 +235,7 @@ class Window < Gosu::Window
     return true
   end
 
-  def handle_char_button_up(c)
+  def handle_char_button_up(_c)
     false
   end
 
