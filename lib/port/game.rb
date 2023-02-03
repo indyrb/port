@@ -8,7 +8,7 @@ class Game
 
   attr_accessor :score, :objects, :level, :logger, :window, :active_path, :fps_counter, :debugging, :extras, :landing_strips
 
-  def initialize(window)
+  def initialize(window, options = {})
     @start_time = nil
     @end_time = nil
     @fps_text = Gosu::Font.new(window, Gosu::default_font_name, 15)
@@ -19,7 +19,7 @@ class Game
     self.window = window
     self.score = 0
     self.objects = []
-    self.logger = Application.logger
+    self.logger = options[:logger]
     self.fps_counter = FpsCounter.new
 
     @music = window.choose_random_loop
@@ -119,7 +119,7 @@ class Game
       object = find_object(position, :clickable?)
 
       if object
-        logger.debug("Selected #{object.object_id}")
+        logger&.debug("Selected #{object.object_id}")
         add_path(object)
       end
     end
@@ -177,7 +177,7 @@ class Game
           window.play_sound("crash#{1 + rand(3)}")
           o.destroy
           e.destroy
-          logger.debug("Crash #{o.position} and #{e.position}")
+          logger&.debug("Crash #{o.position} and #{e.position}")
           # Game over, mother fucker.
         end
       end

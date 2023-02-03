@@ -34,10 +34,6 @@ require "port/vehicles/stealth_bomber"
 class Application
   attr_accessor :window
 
-  def self.logger
-    @logger ||= Logger.new(STDOUT)
-  end
-
   def initialize(options = {})
     self.window = Window.new(self, options)
   end
@@ -45,5 +41,4 @@ class Application
   def run
     @window.show
   end
-
 end

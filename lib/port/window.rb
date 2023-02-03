@@ -13,7 +13,7 @@ class Window < Gosu::Window
     self.application = application
     self.assets = Assets.new(self)
     self.cursor = assets.by_name("cursor")
-    self.game = Game.new(self)
+    self.game = Game.new(self, options.slice(:logger))
     self.field = Field.new(self)
 
     self.messages = []

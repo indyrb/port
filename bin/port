@@ -38,12 +38,19 @@ end
 $: << File.join(APP_ROOT, "lib")
 require "port"
 
+if console
+  puts "Logger disabled when running console"
+else
+  options[:logger] = Logger.new(STDOUT)
+end
+
 @app = Application.new(options)
 @window = @app.window
 @game = @window.game
 
 if console
   require "irb"
+  STDOUT.sync = true
 
   Thread.new do
     puts "Instantiated variables: "

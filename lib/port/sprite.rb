@@ -40,7 +40,7 @@ class Sprite
     self.angle = angle
     self.scale = 1
     self.color = 0xffffffff
-    logger.debug "Added #{self.class} at #{position}"
+    logger&.debug "Added #{self.class} at #{position}"
   end
 
   def z_order
