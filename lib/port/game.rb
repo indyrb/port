@@ -18,7 +18,7 @@ class Game
     @fps_text = Gosu::Font.new(window, Gosu::default_font_name, 15)
     @landing_strips = Array.new
 
-    self.extras = false
+    self.extras = true
     self.window = window
     self.score = 0
     self.objects = []
